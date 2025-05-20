@@ -36,13 +36,6 @@ const AdminLogin = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-100">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-brand-purple">
-            FundraiserConnect
-          </h1>
-          <p className="text-gray-600 mt-2">Admin Portal</p>
-        </div>
-
         <Card className="shadow-lg border border-gray-200">
           <CardHeader className="space-y-1 text-center">
             <CardTitle className="text-2xl">Admin Login</CardTitle>
