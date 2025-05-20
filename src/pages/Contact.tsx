@@ -200,11 +200,7 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold text-lg">Email Us</h3>
                       <p className="text-gray-600">
-                        General Inquiries: info@fundraiserconnect.org
-                        <br />
-                        Support: support@fundraiserconnect.org
-                        <br />
-                        Verification: verify@fundraiserconnect.org
+                        General Inquiries: info@2africa.org
                       </p>
                     </div>
                   </div>
@@ -282,9 +278,7 @@ const Contact = () => {
                   Are there fees for using the platform?
                 </h3>
                 <p className="text-gray-600">
-                  FundraiserConnect charges a small platform fee of 2.5% on
-                  donations to cover operational costs. Payment processors may
-                  charge additional fees.
+                  No, we do not chart any fees to use the platform.
                 </p>
               </div>
               <div className="py-5">

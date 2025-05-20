@@ -17,20 +17,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAppContext } from "@/context/AppContext";
 import { FALLBACK_IMAGE } from "@/lib/utils";
 import {
-  BarChart3,
   CheckCircle,
   Eye,
   File,
   FileCheck,
   FileX,
   LogOut,
-  Settings,
   XCircle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -148,8 +145,8 @@ const AdminDashboard = () => {
             <TabsTrigger value="verification">NGO Verification</TabsTrigger>
             <TabsTrigger value="ngos">Verified NGOs</TabsTrigger>
             <TabsTrigger value="campaigns">Campaigns</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+            {/* <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger> */}
           </TabsList>
 
           {/* Verification Tab */}
@@ -659,7 +656,7 @@ const AdminDashboard = () => {
           </TabsContent>
 
           {/* Analytics Tab */}
-          <TabsContent value="analytics">
+          {/* <TabsContent value="analytics">
             <Card>
               <CardHeader>
                 <CardTitle>Platform Analytics</CardTitle>
@@ -703,10 +700,10 @@ const AdminDashboard = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent> */}
 
           {/* Settings Tab */}
-          <TabsContent value="settings">
+          {/* <TabsContent value="settings">
             <Card>
               <CardHeader>
                 <CardTitle>Admin Settings</CardTitle>
@@ -727,7 +724,8 @@ const AdminDashboard = () => {
                           <Label htmlFor="admin-name">Admin Name</Label>
                           <Input
                             id="admin-name"
-                            value="Admin User"
+                            value=""
+                            placeholder="Admin User"
                             className="mt-1"
                           />
                         </div>
@@ -735,7 +733,8 @@ const AdminDashboard = () => {
                           <Label htmlFor="admin-email">Email</Label>
                           <Input
                             id="admin-email"
-                            value="admin@fundraiserconnect.org"
+                            value=""
+                            placeholder="admin@fundraiserconnect.org"
                             disabled
                             className="mt-1"
                           />
@@ -761,7 +760,7 @@ const AdminDashboard = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent> */}
         </Tabs>
       </main>
     </div>
