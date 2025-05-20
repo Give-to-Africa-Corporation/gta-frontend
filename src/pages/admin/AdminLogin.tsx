@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { useAppContext } from "@/context/AppContext";
 import { AlertCircle } from "lucide-react";
 import { useState } from "react";
@@ -18,8 +17,8 @@ import { useNavigate } from "react-router-dom";
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { login, isLoading } = useAppContext();
-  const [email, setEmail] = useState("admin@2africa.org");
-  const [password, setPassword] = useState("P@$$w0rd@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -87,14 +86,6 @@ const AdminLogin = () => {
               >
                 {isLoading ? "Logging in..." : "Log in to Admin Portal"}
               </Button>
-
-              <Separator />
-
-              <div className="text-center text-sm text-gray-500">
-                <p>For demo purposes:</p>
-                <p>Email: admin@fundraiserconnect.org</p>
-                <p>Password: admin123</p>
-              </div>
             </CardFooter>
           </form>
         </Card>
