@@ -1,14 +1,13 @@
-
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Loader2, ArrowLeft } from "lucide-react";
 import PaymentForm from "@/components/payments/PaymentForm";
+import { Button } from "@/components/ui/button";
 import { useAppContext } from "@/context/AppContext";
 import { Campaign } from "@/lib/types";
 import { campaignApi } from "@/service/apiService";
-import { toast } from "sonner";
 import { loadStripe } from "@stripe/stripe-js";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -40,7 +39,7 @@ const PaymentPage = () => {
           const foundCampaign = campaigns.find(
             (c) => c._id === id || c.campaignSlug === id
           );
-          
+
           if (foundCampaign) {
             setCampaign(foundCampaign);
           } else {
@@ -78,7 +77,7 @@ const PaymentPage = () => {
       ).toString();
 
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/payment/create-checkout-session`,
+        `${import.meta.env.VITE_API_URL}/payment/create-checkout-session`,
         {
           method: "POST",
           headers: {
@@ -143,33 +142,37 @@ const PaymentPage = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <p className="text-xl mb-4">Campaign not found</p>
-        <Button onClick={() => navigate("/campaigns")}>Back to Campaigns</Button>
+        <Button onClick={() => navigate("/campaigns")}>
+          Back to Campaigns
+        </Button>
       </div>
     );
   }
 
   return (
     <div className="container-custom max-w-7xl py-8">
-      <Button 
-        variant="outline" 
-        onClick={() => navigate(`/campaigns/${campaign.campaignSlug || campaign._id}`)}
+      <Button
+        variant="outline"
+        onClick={() =>
+          navigate(`/campaigns/${campaign.campaignSlug || campaign._id}`)
+        }
         className="mb-6 flex items-center"
       >
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to Campaign
       </Button>
-      
+
       <div className="mb-8">
         <h1 className="text-3xl font-bold">{campaign.title}</h1>
         <p className="text-gray-600 mt-2">
           Make a donation to support this cause
         </p>
       </div>
-      
+
       <div className="bg-white p-6 md:p-8 rounded-lg shadow-md">
-        <PaymentForm 
-          onSubmit={handleDonationSubmit} 
-          isProcessing={isDonationProcessing} 
-          campaignId={campaign._id || ""} 
+        <PaymentForm
+          onSubmit={handleDonationSubmit}
+          isProcessing={isDonationProcessing}
+          campaignId={campaign._id || ""}
         />
       </div>
     </div>
