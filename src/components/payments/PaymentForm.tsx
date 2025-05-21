@@ -54,7 +54,7 @@ const PaymentForm = ({
   const createPayPalOrder = async () => {
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/paypal/orders`,
+        `${import.meta.env.VITE_API_URL}/paypal/orders`,
         {
           amount,
           campaignId,
@@ -96,7 +96,7 @@ const PaymentForm = ({
   const createVaultSetupToken = async () => {
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/paypal/vault`,
+        `${import.meta.env.VITE_API_URL}/paypal/vault`,
         {
           amount,
           payment_source: {
@@ -163,7 +163,7 @@ const PaymentForm = ({
       if (frequency === "monthly") {
         // Handle recurring payment approval
         const { data: paymentTokenData } = await axios.post(
-          `${import.meta.env.VITE_BASE_URL}/paypal/vault/payment-tokens`,
+          `${import.meta.env.VITE_API_URL}/paypal/vault/payment-tokens`,
           {
             payment_source: {
               token: {
@@ -189,7 +189,7 @@ const PaymentForm = ({
       } else {
         // Handle one-time payment approval
         const { data: captureData } = await axios.post(
-          `${import.meta.env.VITE_BASE_URL}/paypal/orders/${
+          `${import.meta.env.VITE_API_URL}/paypal/orders/${
             data.orderID
           }/capture`,
           {
@@ -260,7 +260,7 @@ const PaymentForm = ({
       axios
         .post(
           `${
-            import.meta.env.VITE_BASE_URL
+            import.meta.env.VITE_API_URL
           }/campaigns/${campaignId}/pending-payment`,
           {
             amount,

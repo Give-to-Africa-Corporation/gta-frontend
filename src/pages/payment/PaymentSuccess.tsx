@@ -30,7 +30,7 @@ const PaymentSuccess = () => {
     const verifyPayment = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/payment/verify-session/${sessionId}`
+          `${import.meta.env.VITE_API_URL}/payment/verify-session/${sessionId}`
         );
         const data = await response.json();
 
