@@ -173,6 +173,7 @@ const PaymentPage = () => {
           onSubmit={handleDonationSubmit}
           isProcessing={isDonationProcessing}
           campaignId={campaign._id || ""}
+          campaignTitle={campaign.title}
         />
       </div>
     </div>

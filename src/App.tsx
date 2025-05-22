@@ -13,6 +13,7 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import CampaignDetail from "./pages/campaigns/CampaignDetail";
+import CampaignEmbed from "./pages/campaigns/CampaignEmbed";
 import CampaignsPage from "./pages/campaigns/CampaignsPage";
 import CreateCampaign from "./pages/campaigns/CreateCampaign";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -45,11 +46,12 @@ const App = () => (
             />
             <Route path="/campaigns" element={<CampaignsPage />} />
             <Route path="/campaigns/:id" element={<CampaignDetail />} />
-            <Route path="/campaigns/:id/payment" element={<PaymentPage />} />
+            <Route path="/campaigns/:id/donate" element={<PaymentPage />} />
             <Route
               path="/campaigns/:id/payment/success"
               element={<PaymentSuccess />}
             />
+            <Route path="/campaigns/:id/embed" element={<CampaignEmbed />} />
             <Route path="/contact" element={<Contact />} />
 
             {/* Protected NGO Routes */}

@@ -200,7 +200,7 @@ export const FeaturedCausesSection = () => {
         <div className="text-center mt-12">
           <Link to="/campaigns">
             <Button className="bg-brand-purple hover:bg-brand-purple-dark">
-              View All Projects
+              View All Grassroot Champions
               <ArrowRight size={18} className="ml-1" />
             </Button>
           </Link>

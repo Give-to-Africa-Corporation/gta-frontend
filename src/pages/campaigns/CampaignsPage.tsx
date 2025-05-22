@@ -314,6 +314,20 @@ export default function CampaignsPage() {
                       </span>
                     )}
                   </div>
+                  <Button
+                    variant="default"
+                    className="w-full"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(
+                        `/campaigns/${
+                          campaign.campaignSlug || campaign._id || campaign.id
+                        }/donate`
+                      );
+                    }}
+                  >
+                    Donate Now
+                  </Button>
                 </div>
               </CardContent>
             </Card>

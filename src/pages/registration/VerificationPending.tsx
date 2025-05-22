@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useAppContext } from "@/context/AppContext";
-import { ClipboardCheck, Clock, RefreshCw } from "lucide-react";
+import { ClipboardCheck, Clock, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -76,19 +76,22 @@ const VerificationPending = () => {
                     <p className="text-gray-600 text-sm">
                       Our verification team will review your submitted documents
                       and may contact you if additional information is needed.
+                      We'll notify you of the approval or rejection via email.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <div className="bg-gray-100 p-2 rounded-full">
-                    <Clock className="h-5 w-5 text-gray-600" />
+                    <Mail className="h-5 w-5 text-gray-600" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Estimated Time</h3>
+                    <h3 className="font-medium">Check Your Email</h3>
                     <p className="text-gray-600 text-sm">
-                      Estimated time for review:{" "}
-                      <span className="font-medium">{timeLeft}</span>
+                      Please check your email inbox for updates regarding your
+                      verification status. Don't forget to check your spam/junk
+                      folder as well. The email will contain detailed
+                      information about your approval or rejection status.
                     </p>
                   </div>
                 </div>
@@ -96,24 +99,7 @@ const VerificationPending = () => {
 
               <div className="pt-4 flex flex-col space-y-3">
                 <Button
-                  onClick={handleCheckStatus}
-                  disabled={refreshing}
-                  className="w-full"
-                >
-                  {refreshing ? (
-                    <>
-                      <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                      Checking status...
-                    </>
-                  ) : (
-                    <>
-                      <RefreshCw className="mr-2 h-4 w-4" />
-                      Check Status
-                    </>
-                  )}
-                </Button>
-                <Button
-                  variant="outline"
+                  variant="default"
                   onClick={() => {
                     logout();
                     navigate("/");
