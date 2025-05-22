@@ -50,6 +50,7 @@ export interface NgoProfile {
   instagram?: string;
   twitter?: string;
   facebook?: string;
+  linkedin?: string;
   registrationDate?: string;
   documents?: {
     registrationCertificate?: string;
@@ -218,6 +219,7 @@ export interface UpdateProfileRequest {
   instagram?: string;
   twitter?: string;
   facebook?: string;
+  linkedin?: string;
 }
 
 export interface BankDetails {

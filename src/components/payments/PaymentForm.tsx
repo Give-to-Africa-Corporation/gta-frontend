@@ -27,6 +27,7 @@ interface PaymentFormProps {
   ) => void;
   isProcessing: boolean;
   campaignId: string;
+  campaignTitle: string;
 }
 
 interface PayPalApproveData {
@@ -38,6 +39,7 @@ const PaymentForm = ({
   onSubmit,
   isProcessing,
   campaignId,
+  campaignTitle,
 }: PaymentFormProps) => {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [frequency, setFrequency] = useState("once");
@@ -626,7 +628,7 @@ const PaymentForm = ({
               htmlFor="show-note"
               className="text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Add a note for South African College High School
+              Add a note for {campaignTitle}
             </label>
           </div>
 

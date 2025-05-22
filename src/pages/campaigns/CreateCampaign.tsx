@@ -132,14 +132,27 @@ const CreateCampaign = () => {
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setCoverImage(e.target.files[0]);
+      const file = e.target.files[0];
+      if (file.size > 500 * 1024) {
+        // 500KB in bytes
+        toast.error("Cover image must be under 500KB");
+        return;
+      }
+      setCoverImage(file);
       setCurrentCoverImageUrl(null); // Clear the current URL since we're uploading a new image
     }
   };
 
   const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
+      const newFiles = Array.from(e.target.files).filter((file) => {
+        if (file.size > 500 * 1024) {
+          // 500KB in bytes
+          toast.error(`${file.name} is too large. Images must be under 500KB`);
+          return false;
+        }
+        return true;
+      });
       setMediaFiles((prev) => [...prev, ...newFiles].slice(0, 2)); // Limit to 2 additional images as per API
       setCurrentAdditionalImages([]); // Clear current additional images
     }
@@ -331,7 +344,7 @@ const CreateCampaign = () => {
                       </div>
                     </div>
 
-                    <div>
+                    {/* <div>
                       <Label htmlFor="campaignSlug">
                         Custom URL (Optional)
                       </Label>
@@ -346,7 +359,7 @@ const CreateCampaign = () => {
                       <p className="text-xs text-gray-500 mt-1">
                         Leave blank to generate automatically from title
                       </p>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -452,6 +465,9 @@ const CreateCampaign = () => {
                           <p className="text-xs text-gray-500">
                             Recommended size: 1200 × 630 pixels
                           </p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            Maximum file size: 500KB
+                          </p>
                         </div>
                         <input
                           id="cover-image"
@@ -503,7 +519,7 @@ const CreateCampaign = () => {
                         </label>{" "}
                         or drag and drop
                         <p className="text-xs text-gray-500">
-                          Images only (max. 2 files)
+                          Images only (max. 2 files, 500KB per image)
                         </p>
                       </div>
                       <input

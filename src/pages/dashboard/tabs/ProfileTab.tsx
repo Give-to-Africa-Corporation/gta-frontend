@@ -36,6 +36,7 @@ const ProfileTab = () => {
     facebook: "",
     twitter: "",
     instagram: "",
+    linkedin: "",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -59,6 +60,7 @@ const ProfileTab = () => {
           facebook: response.data.ngo.facebook || "",
           twitter: response.data.ngo.twitter || "",
           instagram: response.data.ngo.instagram || "",
+          linkedin: response.data.ngo.linkedin || "",
         });
       } else {
         toast.error("Failed to load profile data");
@@ -124,6 +126,7 @@ const ProfileTab = () => {
         facebook: ngoData.facebook,
         twitter: ngoData.twitter,
         instagram: ngoData.instagram,
+        linkedin: ngoData.linkedin,
       };
 
       // Add bank details if present in the profileData
@@ -174,6 +177,7 @@ const ProfileTab = () => {
         facebook: profileData.ngo.facebook || "",
         twitter: profileData.ngo.twitter || "",
         instagram: profileData.ngo.instagram || "",
+        linkedin: profileData.ngo.linkedin || "",
       });
     }
     setIsEditing(false);
@@ -331,7 +335,7 @@ const ProfileTab = () => {
             {/* Social Media Links */}
             <div>
               <h3 className="text-lg font-medium mb-4">Social Media</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
                   <Label htmlFor="facebook">Facebook</Label>
                   <Input
@@ -362,6 +366,18 @@ const ProfileTab = () => {
                     id="instagram"
                     name="instagram"
                     value={ngoData.instagram}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className="flex-1"
+                    placeholder="username or full URL"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="linkedin">LinkedIn</Label>
+                  <Input
+                    id="linkedin"
+                    name="linkedin"
+                    value={ngoData.linkedin}
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     className="flex-1"

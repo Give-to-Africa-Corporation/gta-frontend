@@ -1,4 +1,3 @@
-
 import Image from "@/components/ui/Image";
 import { ArrowRight, Building, Compass, Heart, Users } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -12,7 +11,7 @@ export const CTAGridSection = () => {
         "Get verified, receive online donations, and become a recognized Grassroots Champion on Give to Africa. Register now to connect with global donors who believe in local, community-led impact.",
       icon: <Building className="w-8 h-8 text-white" />,
       bgColor: "bg-brand-purple",
-      link: "/",
+      link: "/signup",
       image: "/images/4.jpg",
       linkText: "Register now",
     },
@@ -23,7 +22,8 @@ export const CTAGridSection = () => {
         "Need a trusted way to receive tax-deductible international donations for your work in Africa? Register now to unlock global giving—without the burden of registering abroad.",
       icon: <Users className="w-8 h-8 text-white" />,
       bgColor: "bg-brand-orange",
-      link: "https://forms.monday.com/forms/4b2a4909ec7fa99814a6dec876201cc6?r=use1&text_mkp2hsst=",
+      link: "https://2africa.org/causes/",
+      // link: "https://forms.monday.com/forms/4b2a4909ec7fa99814a6dec876201cc6?r=use1&text_mkp2hsst=",
       image: "/images/6.jpg",
       linkText: "Register now",
       external: true,
@@ -40,10 +40,10 @@ export const CTAGridSection = () => {
       linkText: "Explore",
     },
     {
-      title: "Advisory Services",
+      title: "Become a Philanthropist",
       subtitle: "DAFs/ Corporate Giving/ Foundations",
       description:
-        "Our advisory services connect global philanthropy with high-impact charitable programs across Africa. We build strategic partnerships between donors and trusted grassroots organizations to address urgent local challenges.",
+        "Set up a family foundation or donor-advised fund (DAF) through Give to Africa and support causes close to your heart. Whether you're giving as a family or individual, we make it easy to create impact across Africa. Start your journey in meaningful giving today.",
       icon: <Compass className="w-8 h-8 text-white" />,
       bgColor: "bg-[#6b46c1]",
       link: "https://2africa.org/advisory-services/",
