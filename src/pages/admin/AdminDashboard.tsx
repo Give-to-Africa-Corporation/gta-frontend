@@ -306,7 +306,7 @@ const AdminDashboard = () => {
                                                   window.open(
                                                     `${
                                                       import.meta.env
-                                                        .VITE_API_URL
+                                                        .VITE_BE_URL
                                                     }${
                                                       ngo.documents
                                                         ?.registrationCertificate
@@ -345,7 +345,7 @@ const AdminDashboard = () => {
                                                   window.open(
                                                     `${
                                                       import.meta.env
-                                                        .VITE_API_URL
+                                                        .VITE_BE_URL
                                                     }${
                                                       ngo.documents
                                                         ?.leadershipProof
@@ -383,7 +383,7 @@ const AdminDashboard = () => {
                                                   window.open(
                                                     `${
                                                       import.meta.env
-                                                        .VITE_API_URL
+                                                        .VITE_BE_URL
                                                     }${
                                                       ngo.documents
                                                         ?.additionalDocument
