@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Image } from "@/components/ui/Image";
-import { Progress } from "@/components/ui/progress";
 import { useAppContext } from "@/context/AppContext";
 import { Campaign as ApiCampaign } from "@/lib/types";
 import { FALLBACK_IMAGE } from "@/lib/utils";
@@ -275,7 +274,13 @@ const CampaignDetail = () => {
                 </div>
 
                 <div className="prose max-w-none">
-                  <p>{campaign.description}</p>
+                  <p
+                    style={{
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {campaign.description}
+                  </p>
                 </div>
 
                 {/* Campaign NGO Info */}
@@ -480,7 +485,7 @@ const CampaignDetail = () => {
                   <CardContent className="pt-6 space-y-6">
                     {/* Donation Amount Section */}
                     <div className="space-y-4">
-                      <div className="flex items-baseline justify-between">
+                      {/* <div className="flex items-baseline justify-between">
                         <h3 className="font-bold text-2xl text-brand-purple">
                           $
                           {(
@@ -494,10 +499,10 @@ const CampaignDetail = () => {
                             ? "raised so far"
                             : `of $${campaign.fundingGoal?.toLocaleString()}`}
                         </span>
-                      </div>
+                      </div> */}
 
                       {/* Progress Section */}
-                      {!isPerpetual && (
+                      {/* {!isPerpetual && (
                         <div className="space-y-2">
                           <Progress
                             value={progressPercent}
@@ -516,17 +521,17 @@ const CampaignDetail = () => {
                             </span>
                           </div>
                         </div>
-                      )}
+                      )} */}
 
                       {/* Donors Count */}
-                      <div className="bg-gray-50 rounded-lg p-4 text-center">
+                      {/* <div className="bg-gray-50 rounded-lg p-4 text-center">
                         <span className="font-bold text-xl text-brand-purple">
                           {campaign.donations?.length || campaign.donors || 0}
                         </span>
                         <p className="text-sm text-gray-600 mt-1">
                           Generous Donors
                         </p>
-                      </div>
+                      </div> */}
                     </div>
 
                     {/* Campaign Status Badge */}

@@ -1,110 +1,49 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Image } from "@/components/ui/Image";
 import { Progress } from "@/components/ui/progress";
+import { Campaign } from "@/lib/types";
+import { FALLBACK_IMAGE } from "@/lib/utils";
+import { campaignApi } from "@/service/apiService";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const FeaturedCausesSection = () => {
-  const mockCampaigns = [
-    {
-      media: {
-        mainImage: "/images/3.jpg",
-        additionalImages: ["/images/5.jpg", "/images/7.jpg"],
-      },
-      _id: "681a878733acf567e05dab0c",
-      title: "Clean Water for Rural Communities",
-      description:
-        "Providing clean water access to remote villages across Ghana, improving health and quality of life for thousands of families.",
-      ngoId: {
-        _id: "681a7a3b408008ec6b6c4157",
-        name: "Water Access Initiative",
-        orgName: "Africa Water Foundation",
-      },
-      fundingGoal: 25000,
-      totalRaised: 18750,
-      cause: "water",
-      country: "Ghana",
-      status: "ongoing",
-      deadline: 1719792000000,
-      campaignSlug: "clean-water-rural-ghana",
-      createdAt: "2024-08-15T10:23:18.129Z",
-      updatedAt: "2024-08-15T10:23:18.129Z",
-      __v: 0,
-    },
-    {
-      media: {
-        mainImage: "/images/2.jpg",
-        additionalImages: ["/images/4.jpg", "/images/8.jpg"],
-      },
-      _id: "681a878733acf567e05dab0d",
-      title: "Education for Girls in Rural Kenya",
-      description:
-        "Supporting education access for girls in underserved communities in Kenya, providing scholarships, supplies, and safe transportation.",
-      ngoId: {
-        _id: "681a7a3b408008ec6b6c4158",
-        name: "Bright Future Initiative",
-        orgName: "Pan-African Education Trust",
-      },
-      fundingGoal: 35000,
-      totalRaised: 24500,
-      cause: "education",
-      country: "Kenya",
-      status: "ongoing",
-      deadline: 1724976000000,
-      campaignSlug: "education-girls-kenya",
-      createdAt: "2024-07-20T14:08:45.129Z",
-      updatedAt: "2024-07-20T14:08:45.129Z",
-      __v: 0,
-    },
-    {
-      media: {
-        mainImage: "/images/6.jpg",
-        additionalImages: ["/images/1.jpg"],
-      },
-      _id: "681a878733acf567e05dab0e",
-      title: "Healthcare Outreach for Rural Nigeria",
-      description:
-        "Mobile healthcare clinics bringing essential medical services to isolated communities across rural Nigeria.",
-      ngoId: {
-        _id: "681a7a3b408008ec6b6c4159",
-        name: "Healthcare Access Network",
-        orgName: "West African Medical Outreach",
-      },
-      fundingGoal: 42000,
-      totalRaised: 16800,
-      cause: "healthcare",
-      country: "Nigeria",
-      status: "ongoing",
-      deadline: 1730160000000,
-      campaignSlug: "healthcare-rural-nigeria",
-      createdAt: "2024-08-01T09:52:33.129Z",
-      updatedAt: "2024-08-01T09:52:33.129Z",
-      __v: 0,
-    },
-  ];
+  const navigate = useNavigate();
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const response = await campaignApi.getAllCampaigns();
+        // Sort by creation date (newest first) and take top 3
+        const sortedCampaigns = response.data
+          .sort((a: Campaign, b: Campaign) => {
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+            return dateB.getTime() - dateA.getTime();
+          })
+          .slice(0, 3);
+        setCampaigns(sortedCampaigns);
+      } catch (error) {
+        console.error("Failed to fetch campaigns:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCampaigns();
+  }, []);
 
   // Calculate days left for each campaign
   const getDaysLeft = (deadline: number) => {
-    // Use future dates for the demo
-    const futureDeadlines: Record<string, number> = {
-      "681a878733acf567e05dab0c": 30, // Clean Water - 30 days left
-      "681a878733acf567e05dab0d": 45, // Education - 45 days left
-      "681a878733acf567e05dab0e": 60, // Healthcare - 60 days left
-    };
-
-    // Get the campaign ID from the deadline parameter (we'll extract it from the component rendering)
-    const campaignId = mockCampaigns.find((c) => c.deadline === deadline)?._id;
-
-    if (campaignId && futureDeadlines[campaignId]) {
-      return futureDeadlines[campaignId];
-    }
-
-    // Fallback to date calculation if needed
     const today = new Date();
     const endDate = new Date(deadline);
     const diffTime = endDate.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays > 0 ? diffDays : 30; // Default to 30 days if date is in past
+    return diffDays > 0 ? diffDays : 0;
   };
 
   // Get cause label
@@ -119,6 +58,16 @@ export const FeaturedCausesSection = () => {
     };
     return causeMap[cause] || "Other";
   };
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-white">
+        <div className="container-custom">
+          <div className="text-center">Loading campaigns...</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-white">
@@ -138,7 +87,7 @@ export const FeaturedCausesSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {mockCampaigns.map((campaign) => (
+          {campaigns.map((campaign) => (
             <Card
               key={campaign._id}
               className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
@@ -152,16 +101,25 @@ export const FeaturedCausesSection = () => {
 
               {/* Image */}
               <div className="h-52 overflow-hidden">
-                <img
-                  src={campaign.media.mainImage}
+                <Image
+                  src={
+                    campaign.media.mainImage.startsWith("http")
+                      ? campaign.media.mainImage
+                      : `${import.meta.env.VITE_BE_URL}${
+                          campaign.media.mainImage
+                        }`
+                  }
                   alt={campaign.title}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  className="w-full h-full object-cover"
+                  fallback={FALLBACK_IMAGE}
                 />
               </div>
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="font-bold text-xl mb-2">{campaign.title}</h3>
+                <h3 className="font-bold text-xl mb-2">
+                  {campaign.title.slice(0, 20)}...
+                </h3>
                 <div className="flex items-center text-sm text-muted-foreground mb-3">
                   <MapPin className="h-4 w-4 mr-1" />
                   <span>{campaign.country}</span>
@@ -192,6 +150,22 @@ export const FeaturedCausesSection = () => {
                     </span>
                   </div>
                 </div>
+
+                {/* Donate Now Button */}
+                <Button
+                  variant="default"
+                  className="w-full bg-brand-purple hover:bg-brand-purple-dark"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(
+                      `/campaigns/${
+                        campaign.campaignSlug || campaign._id
+                      }/donate`
+                    );
+                  }}
+                >
+                  Donate Now
+                </Button>
               </div>
             </Card>
           ))}
