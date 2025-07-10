@@ -1,3 +1,4 @@
+"use client";
 import { Footer } from "@/components/shared/Footer";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -25,10 +26,10 @@ import {
   User,
 } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 const Registration = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("ngo-info");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -160,7 +161,7 @@ const Registration = () => {
         }
 
         // Only navigate if both API calls were successful
-        navigate("/verification-pending");
+        router.push("/verification-pending");
       } else {
         throw new Error("Required documents are missing");
       }
@@ -169,14 +170,15 @@ const Registration = () => {
 
       // Check for specific error types
       if (
-        error.message?.includes("unauthorized") ||
-        error.message?.includes("401")
+        error instanceof Error &&
+        (error.message?.includes("unauthorized") ||
+          error.message?.includes("401"))
       ) {
         setError("Your session has expired. Please log in again to continue.");
       } else {
         // Handle other errors
         setError(
-          error.message || "An unexpected error occurred during registration"
+          error instanceof Error ? error.message : "An unexpected error occurred during registration"
         );
       }
 

@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -98,7 +99,7 @@ const ProfileTab = () => {
       if (response.success && response.data) {
         setNgoData((prev) => ({
           ...prev,
-          profileImage: response.data.profileImage,
+          profileImage: response?.data?.profileImage || "",
         }));
         toast.success("Profile image uploaded successfully");
       } else {
@@ -226,7 +227,7 @@ const ProfileTab = () => {
                         src={
                           ngoData.profileImage.startsWith("http")
                             ? ngoData.profileImage
-                            : `${import.meta.env.VITE_BE_URL}${
+                            : `${process.env.NEXT_PUBLIC_BE_URL}${
                                 ngoData.profileImage
                               }`
                         }

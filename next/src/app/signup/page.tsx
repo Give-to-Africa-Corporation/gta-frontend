@@ -1,3 +1,4 @@
+"use client";
 import { Footer } from "@/components/shared/Footer";
 import { Navbar } from "@/components/shared/Navbar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -16,11 +17,12 @@ import { useAppContext } from "@/context/AppContext";
 import { authApi } from "@/service/apiService";
 import { AlertCircle, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const Signup = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { isLoading, refreshUserData } = useAppContext();
   const [formData, setFormData] = useState({
     name: "",
@@ -90,7 +92,7 @@ const Signup = () => {
       toast.success("Account created successfully!");
 
       // If successful, redirect to registration form
-      navigate("/registration");
+      router.push("/registration");
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Registration failed";
@@ -210,7 +212,7 @@ const Signup = () => {
                 <div className="text-center text-sm">
                   Already have an account?{" "}
                   <Link
-                    to="/login"
+                    href="/login"
                     className="text-brand-purple hover:underline"
                   >
                     Log in

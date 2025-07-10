@@ -1,3 +1,4 @@
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -203,7 +204,7 @@ const DonationsTab = () => {
                 <SelectContent>
                   <SelectItem value="all">All Campaigns</SelectItem>
                   {campaignNames.map((campaign) => (
-                    <SelectItem key={campaign} value={campaign}>
+                    <SelectItem key={campaign} value={campaign as string}>
                       {campaign}
                     </SelectItem>
                   ))}

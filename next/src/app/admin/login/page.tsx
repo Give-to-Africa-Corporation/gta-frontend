@@ -1,3 +1,4 @@
+"use client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,10 +13,10 @@ import { Label } from "@/components/ui/label";
 import { useAppContext } from "@/context/AppContext";
 import { AlertCircle } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 const AdminLogin = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { login, isLoading } = useAppContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,9 +28,9 @@ const AdminLogin = () => {
 
     try {
       await login(email, password, "admin");
-      navigate("/admin/dashboard");
+      router.push("/admin/dashboard");
     } catch (error: any) {
-      setError(error.message || "An error occurred during login.");
+      setError(error?.message || "An error occurred during login.");
     }
   };
 

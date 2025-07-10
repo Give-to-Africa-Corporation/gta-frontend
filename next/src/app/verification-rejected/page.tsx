@@ -1,3 +1,4 @@
+"use client";
 import { Footer } from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,22 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useAppContext } from "@/context/AppContext";
-import { ClipboardCheck, Clock, Mail } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { AlertCircle, FileX, RefreshCw } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const VerificationPending = () => {
-  const navigate = useNavigate();
+const VerificationRejected = () => {
+  const router = useRouter();
   const { user, ngos, logout } = useAppContext();
-  const [timeLeft, setTimeLeft] = useState("...");
   const [refreshing, setRefreshing] = useState(false);
-
-  // Calculate estimated time for review
-  useEffect(() => {
-    // Mock calculation - in a real app this would come from the server
-    const estimatedMinutes = Math.floor(Math.random() * 60) + 30; // 30-90 minutes
-    setTimeLeft(`${estimatedMinutes} minutes`);
-  }, []);
 
   const handleCheckStatus = async () => {
     setRefreshing(true);
@@ -49,60 +42,76 @@ const VerificationPending = () => {
         <div className="w-full max-w-lg">
           <Card className="shadow-lg">
             <CardHeader className="text-center pb-6">
-              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="h-8 w-8 text-amber-600" />
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AlertCircle className="h-8 w-8 text-red-600" />
               </div>
-              <CardTitle className="text-2xl">Verification Pending</CardTitle>
+              <CardTitle className="text-2xl">Verification Rejected</CardTitle>
               <CardDescription className="text-lg">
-                Your NGO registration is under review
+                Your NGO registration was not approved
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
-                <p className="text-amber-800">
-                  Thank you for submitting your registration. Our team is
-                  reviewing your application and documents. This process
-                  typically takes 24-48 hours.
+              <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                <p className="text-red-800">
+                  We regret to inform you that your NGO registration application
+                  has been rejected. This could be due to incomplete
+                  documentation, verification issues, or not meeting our
+                  platform's requirements.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="bg-gray-100 p-2 rounded-full">
-                    <ClipboardCheck className="h-5 w-5 text-gray-600" />
+                    <FileX className="h-5 w-5 text-gray-600" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Review Process</h3>
+                    <h3 className="font-medium">Next Steps</h3>
                     <p className="text-gray-600 text-sm">
-                      Our verification team will review your submitted documents
-                      and may contact you if additional information is needed.
-                      We'll notify you of the approval or rejection via email.
+                      You can review your application and submit a new one with
+                      updated information and documents. Please ensure all
+                      required documents are complete and valid.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <div className="bg-gray-100 p-2 rounded-full">
-                    <Mail className="h-5 w-5 text-gray-600" />
+                    <RefreshCw className="h-5 w-5 text-gray-600" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Check Your Email</h3>
+                    <h3 className="font-medium">Need Help?</h3>
                     <p className="text-gray-600 text-sm">
-                      Please check your email inbox for updates regarding your
-                      verification status. Don't forget to check your spam/junk
-                      folder as well. The email will contain detailed
-                      information about your approval or rejection status.
+                      If you believe this was an error or need assistance,
+                      please contact our support team.
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="pt-4 flex flex-col space-y-3">
+                {/* <Button
+                  onClick={handleCheckStatus}
+                  disabled={refreshing}
+                  className="w-full"
+                >
+                  {refreshing ? (
+                    <>
+                      <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                      Checking status...
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      Check Status
+                    </>
+                  )}
+                </Button> */}
                 <Button
-                  variant="default"
+                  variant="outline"
                   onClick={() => {
                     logout();
-                    navigate("/");
+                    router.push("/");
                   }}
                 >
                   Return to Home
@@ -117,4 +126,4 @@ const VerificationPending = () => {
   );
 };
 
-export default VerificationPending;
+export default VerificationRejected;

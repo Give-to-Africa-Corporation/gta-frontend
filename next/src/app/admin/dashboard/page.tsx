@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -31,10 +32,10 @@ import {
   XCircle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 const AdminDashboard = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const {
     user,
     logout,
@@ -55,7 +56,7 @@ const AdminDashboard = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/admin/login");
+    router.push("/admin/login");
   };
 
   // Filter NGOs based on search query
@@ -240,7 +241,7 @@ const AdminDashboard = () => {
                                     variant="outline"
                                     size="sm"
                                     onClick={() =>
-                                      setSelectedNGO(ngo._id || ngo.id)
+                                      setSelectedNGO(ngo._id ?? ngo.id ?? "")
                                     }
                                   >
                                     <Eye className="h-4 w-4 mr-1" /> View
@@ -305,8 +306,8 @@ const AdminDashboard = () => {
                                                 onClick={() =>
                                                   window.open(
                                                     `${
-                                                      import.meta.env
-                                                        .VITE_BE_URL
+                                                      process.env
+                                                        .NEXT_PUBLIC_BE_URL
                                                     }${
                                                       ngo.documents
                                                         ?.registrationCertificate
@@ -344,8 +345,8 @@ const AdminDashboard = () => {
                                                 onClick={() =>
                                                   window.open(
                                                     `${
-                                                      import.meta.env
-                                                        .VITE_BE_URL
+                                                      process.env
+                                                        .NEXT_PUBLIC_BE_URL
                                                     }${
                                                       ngo.documents
                                                         ?.leadershipProof
@@ -382,8 +383,8 @@ const AdminDashboard = () => {
                                                 onClick={() =>
                                                   window.open(
                                                     `${
-                                                      import.meta.env
-                                                        .VITE_BE_URL
+                                                      process.env
+                                                        .NEXT_PUBLIC_BE_URL
                                                     }${
                                                       ngo.documents
                                                         ?.additionalDocument
@@ -412,7 +413,7 @@ const AdminDashboard = () => {
                                         <Button
                                           variant="destructive"
                                           onClick={() => {
-                                            rejectNGO(ngo._id || ngo.id);
+                                            rejectNGO(ngo._id ?? ngo.id ?? "");
                                             setSelectedNGO(null);
                                           }}
                                           disabled={
@@ -425,7 +426,7 @@ const AdminDashboard = () => {
                                         </Button>
                                         <Button
                                           onClick={() => {
-                                            approveNGO(ngo._id || ngo.id);
+                                            approveNGO(ngo._id ?? ngo.id ?? "");
                                             setSelectedNGO(null);
                                           }}
                                           disabled={
@@ -448,7 +449,7 @@ const AdminDashboard = () => {
                                     variant="default"
                                     size="sm"
                                     onClick={() =>
-                                      approveNGO(ngo._id || ngo.id)
+                                      approveNGO(ngo._id ?? ngo.id ?? "")
                                     }
                                     disabled={isLoading}
                                   >
@@ -458,7 +459,9 @@ const AdminDashboard = () => {
                                   <Button
                                     variant="destructive"
                                     size="sm"
-                                    onClick={() => rejectNGO(ngo._id || ngo.id)}
+                                    onClick={() =>
+                                      rejectNGO(ngo._id ?? ngo.id ?? "")
+                                    }
                                     disabled={isLoading}
                                   >
                                     <XCircle className="h-4 w-4 mr-1" /> Reject
@@ -513,7 +516,7 @@ const AdminDashboard = () => {
                             (c) => c.ngoId === ngo.id
                           );
                           const totalRaised = ngoCampaigns.reduce(
-                            (sum, c) => sum + c.raised,
+                            (sum, c) => sum + (c.raised || 0),
                             0
                           );
 
@@ -639,7 +642,7 @@ const AdminDashboard = () => {
                             size="sm"
                             className="w-full mt-4"
                             onClick={() =>
-                              navigate(
+                              router.push(
                                 `/campaigns/${campaign._id || campaign.id}`
                               )
                             }

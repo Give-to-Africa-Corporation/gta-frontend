@@ -1,3 +1,4 @@
+"use client";
 import { Footer } from "@/components/shared/Footer";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -14,17 +15,18 @@ import { useAppContext } from "@/context/AppContext";
 import { authApi } from "@/service/apiService";
 import { AlertCircle, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { refreshUserData } = useAppContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(
-    location.state?.message || null
+    searchParams?.get("message") || null
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -60,16 +62,16 @@ const Login = () => {
 
       // Handle redirection based on status
       if (userData?.status === "approved") {
-        navigate("/dashboard");
+        router.push("/dashboard");
       } else if (userData?.status === "pending" && !userData?.profileComplete) {
-        navigate("/registration");
+        router.push("/registration");
       } else if (userData.status === "pending") {
-        navigate("/verification-pending");
+        router.push("/verification-pending");
       } else if (userData.status === "rejected") {
-        navigate("/verification-rejected");
+        router.push("/verification-rejected");
       } else {
-        const redirectPath = location.state?.from || "/dashboard";
-        navigate(redirectPath);
+        const redirectPath = searchParams?.get("from") || "/dashboard";
+        router.push(redirectPath);
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -158,7 +160,7 @@ const Login = () => {
                 <div className="text-center text-sm">
                   Don't have an account?{" "}
                   <Link
-                    to="/signup"
+                    href="/signup"
                     className="text-brand-purple hover:underline"
                   >
                     Sign up

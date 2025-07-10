@@ -1,3 +1,4 @@
+"use client";
 import { Footer } from "@/components/shared/Footer";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -35,12 +36,13 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useRouter, useParams } from "next/navigation";
 import { toast } from "sonner";
 
 const CreateCampaign = () => {
-  const navigate = useNavigate();
-  const { campaignId } = useParams();
+  const router = useRouter();
+  const params = useParams();
+  const campaignId = params?.campaignId as string;
   const isEditMode = !!campaignId;
   const [isLoading, setIsLoading] = useState(false);
   const [isPerpetual, setIsPerpetual] = useState(false);
@@ -81,28 +83,28 @@ const CreateCampaign = () => {
 
         // Set form data from campaign
         setFormData({
-          title: campaign.title,
-          description: campaign.description,
-          fundingGoal: campaign.fundingGoal.toString(),
-          endDate: campaign.deadline
-            ? new Date(campaign.deadline).toISOString().split("T")[0]
+          title: campaign?.title || "",
+          description: campaign?.description || "",
+          fundingGoal: campaign?.fundingGoal?.toString() || "",
+          endDate: campaign?.deadline
+            ? new Date(campaign?.deadline).toISOString().split("T")[0]
             : "",
-          cause: campaign.cause,
-          country: campaign.country,
-          campaignSlug: campaign.campaignSlug || "",
-          status: campaign.status,
+          cause: campaign?.cause || "",
+          country: campaign?.country || "",
+          campaignSlug: campaign?.campaignSlug || "",
+          status: campaign?.status || "",
         });
 
         // Set perpetual status based on deadline
-        setIsPerpetual(!campaign.deadline);
+        setIsPerpetual(!campaign?.deadline);
 
         // Set current images
-        if (campaign.media?.mainImage) {
-          setCurrentCoverImageUrl(campaign.media.mainImage);
+        if (campaign?.media?.mainImage) {
+          setCurrentCoverImageUrl(campaign?.media?.mainImage);
         }
 
-        if (campaign.media?.additionalImages?.length) {
-          setCurrentAdditionalImages(campaign.media.additionalImages);
+        if (campaign?.media?.additionalImages?.length) {
+          setCurrentAdditionalImages(campaign?.media?.additionalImages);
         }
       } catch (error) {
         const errorMessage =
@@ -252,7 +254,7 @@ const CreateCampaign = () => {
       toast.success(
         `Campaign ${isEditMode ? "updated" : "created"} successfully!`
       );
-      navigate("/dashboard?tab=campaigns");
+      router.push("/dashboard?tab=campaigns");
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "An unexpected error occurred";
@@ -273,7 +275,7 @@ const CreateCampaign = () => {
                 variant="ghost"
                 size="sm"
                 className="mr-4"
-                onClick={() => navigate("/dashboard")}
+                onClick={() => router.push("/dashboard")}
               >
                 <ArrowLeft className="h-4 w-4 mr-1" /> Back
               </Button>
@@ -551,7 +553,7 @@ const CreateCampaign = () => {
                               src={
                                 imageUrl.startsWith("http")
                                   ? imageUrl
-                                  : `${import.meta.env.VITE_BE_URL}${imageUrl}`
+                                  : `${process.env.NEXT_PUBLIC_BE_URL}${imageUrl}`
                               }
                               alt={`Media ${index + 1}`}
                               className="w-full h-full object-cover"
@@ -611,7 +613,7 @@ const CreateCampaign = () => {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => router.push("/dashboard")}
                 >
                   Cancel
                 </Button>

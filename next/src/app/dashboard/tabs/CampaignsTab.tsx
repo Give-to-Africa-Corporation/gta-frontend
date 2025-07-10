@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,7 +36,8 @@ import {
   Trash,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 // Map of campaign causes with labels
@@ -56,7 +58,7 @@ interface CampaignsTabProps {
 }
 
 const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { campaigns: allCampaigns, user } = useAppContext();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -219,7 +221,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Your Campaigns</h2>
-        <Link to="/dashboard/campaigns/new">
+        <Link href="/dashboard/campaigns/new">
           <Button className="flex items-center gap-2">
             <PlusCircle className="h-4 w-4" />
             Create Campaign
@@ -238,7 +240,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
               Start your first fundraising campaign to connect with donors and
               make an impact through your NGO's mission.
             </p>
-            <Button onClick={() => navigate("/dashboard/campaigns/new")}>
+            <Button onClick={() => router.push("/dashboard/campaigns/new")}>
               Create Your First Campaign
             </Button>
           </CardContent>
@@ -263,7 +265,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
               >
                 <div className="relative h-48 overflow-hidden">
                   <Image
-                    src={`${import.meta.env.VITE_BE_URL}${
+                    src={`${process.env.NEXT_PUBLIC_BE_URL}${
                       campaign.media?.mainImage
                     }`}
                     alt={campaign.title}
@@ -340,7 +342,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
                         size="sm"
                         className="flex-1 flex items-center justify-center gap-1"
                         onClick={() =>
-                          navigate(
+                          router.push(
                             `/campaigns/${
                               campaign.campaignSlug || campaign._id
                             }`
@@ -354,7 +356,9 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
                         size="sm"
                         className="flex-1 flex items-center justify-center gap-1"
                         onClick={() =>
-                          navigate(`/dashboard/campaigns/edit/${campaign._id}`)
+                          router.push(
+                            `/dashboard/campaigns/edit/${campaign._id}`
+                          )
                         }
                       >
                         <Edit className="h-4 w-4" /> Edit

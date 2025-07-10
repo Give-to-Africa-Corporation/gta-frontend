@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -24,22 +25,23 @@ import { useAppContext } from "@/context/AppContext";
 import { NgoStats } from "@/lib/types";
 import { FileText, LayoutDashboard, LogOut, PieChart } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import CampaignsTab from "./tabs/CampaignsTab";
 import DonationsTab from "./tabs/DonationsTab";
 import DonorsTab from "./tabs/DonorsTab";
 import ProfileTab from "./tabs/ProfileTab";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { user, logout, profileData } = useAppContext();
   const [activeTab, setActiveTab] = useState("profile");
   const [mounted, setMounted] = useState(false);
 
   // Get tab from URL or use default
   useEffect(() => {
-    const tab = searchParams.get("tab");
+    const tab = searchParams?.get("tab");
     if (tab && ["profile", "donors", "donations", "campaigns"].includes(tab)) {
       setActiveTab(tab);
     }
@@ -66,7 +68,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    router.push("/");
   };
 
   // Get NGO initials for avatar
@@ -86,7 +88,7 @@ const Dashboard = () => {
     // If no token or no user, redirect to login
     if (!token) {
       console.error("No token found when accessing Dashboard");
-      navigate("/login");
+      router.push("/login");
     }
   }, []);
 
@@ -106,7 +108,7 @@ const Dashboard = () => {
                     src={
                       profileData.ngo.profileImage.startsWith("http")
                         ? profileData.ngo.profileImage
-                        : `${import.meta.env.VITE_BE_URL}${
+                        : `${process.env.NEXT_PUBLIC_BE_URL}${
                             profileData.ngo.profileImage
                           }`
                     }
@@ -131,7 +133,7 @@ const Dashboard = () => {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="Dashboard">
-                  <Link to="/dashboard">
+                  <Link href="/dashboard">
                     <LayoutDashboard className="mr-3 h-5 w-5" />
                     <span>Dashboard</span>
                   </Link>
@@ -140,7 +142,7 @@ const Dashboard = () => {
 
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="Create Campaign">
-                  <Link to="/dashboard/campaigns/new">
+                  <Link href="/dashboard/campaigns/new">
                     <FileText className="mr-3 h-5 w-5" />
                     <span>Create Campaign</span>
                   </Link>
@@ -149,7 +151,7 @@ const Dashboard = () => {
 
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="View Campaigns">
-                  <Link to="/campaigns">
+                  <Link href="/campaigns">
                     <PieChart className="mr-3 h-5 w-5" />
                     <span>View Campaigns</span>
                   </Link>
