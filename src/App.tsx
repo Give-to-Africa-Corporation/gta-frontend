@@ -22,6 +22,7 @@ import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import Registration from "./pages/registration/Registration";
 import VerificationPending from "./pages/registration/VerificationPending";
 import VerificationRejected from "./pages/registration/VerificationRejected";
+import FrontlineFund from "./pages/FrontLine";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Navbar />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/frontline-fund" element={<FrontlineFund />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/registration" element={<Registration />} />
