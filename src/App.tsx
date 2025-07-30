@@ -22,6 +22,7 @@ import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import Registration from "./pages/registration/Registration";
 import VerificationPending from "./pages/registration/VerificationPending";
 import VerificationRejected from "./pages/registration/VerificationRejected";
+import AfricaYouthCouncil from "./components/ayc/AfricaYouthCouncil";
 
 const queryClient = new QueryClient();
 
@@ -90,6 +91,8 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            {/* Africa Youth Council Routes */}
+            <Route path="/ayc" element={<AfricaYouthCouncil />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
