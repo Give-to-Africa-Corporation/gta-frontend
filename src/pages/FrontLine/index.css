@@ -1,0 +1,202 @@
+/* Design system variables */
+@import url('https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;700&display=swap');
+
+:root {
+  --background: hsl(35, 100%, 97%);
+  --foreground: hsl(25, 15%, 15%);
+
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(25, 15%, 15%);
+
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(25, 15%, 15%);
+
+  --primary: hsl(22, 100%, 55%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --primary-glow: hsl(25, 100%, 65%);
+
+  --secondary: hsl(35, 50%, 85%);
+  --secondary-foreground: hsl(25, 15%, 15%);
+
+  --muted: hsl(40, 30%, 90%);
+  --muted-foreground: hsl(25, 15%, 45%);
+
+  --accent: hsl(45, 100%, 60%);
+  --accent-foreground: hsl(25, 15%, 15%);
+
+  --cta: hsl(15, 90%, 58%);
+  --cta-foreground: hsl(0, 0%, 100%);
+
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+
+  --border: hsl(40, 20%, 85%);
+  --input: hsl(40, 20%, 85%);
+  --ring: hsl(22, 100%, 55%);
+
+  --gradient-hero: linear-gradient(135deg, var(--primary) 0%, var(--primary-glow) 50%, var(--accent) 100%);
+  --gradient-warm: linear-gradient(45deg, var(--cta) 0%, var(--primary) 100%);
+  --gradient-subtle: linear-gradient(180deg, var(--background) 0%, var(--secondary) 100%);
+
+  --shadow-warm: 0 10px 30px -10px hsl(22, 100%, 55%, 0.3);
+  --shadow-glow: 0 0 40px hsl(25, 100%, 65%, 0.4);
+  --shadow-card: 0 8px 25px -8px hsl(22, 100%, 55%, 0.15);
+
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius: 1rem;
+
+  --sidebar-background: hsl(0, 0%, 98%);
+  --sidebar-foreground: hsl(240, 5.3%, 26.1%);
+  --sidebar-primary: hsl(240, 5.9%, 10%);
+  --sidebar-primary-foreground: hsl(0, 0%, 98%);
+  --sidebar-accent: hsl(240, 4.8%, 95.9%);
+  --sidebar-accent-foreground: hsl(240, 5.9%, 10%);
+  --sidebar-border: hsl(220, 13%, 91%);
+  --sidebar-ring: hsl(217.2, 91.2%, 59.8%);
+}
+
+.dark {
+  --background: hsl(25, 25%, 8%);
+  --foreground: hsl(35, 50%, 95%);
+  --card: hsl(25, 25%, 12%);
+  --card-foreground: hsl(35, 50%, 95%);
+  --popover: hsl(25, 25%, 12%);
+  --popover-foreground: hsl(35, 50%, 95%);
+  --primary: hsl(22, 100%, 65%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --primary-glow: hsl(25, 100%, 75%);
+  --secondary: hsl(30, 20%, 20%);
+  --secondary-foreground: hsl(35, 50%, 95%);
+  --muted: hsl(30, 15%, 18%);
+  --muted-foreground: hsl(35, 30%, 70%);
+  --accent: hsl(45, 100%, 70%);
+  --accent-foreground: hsl(25, 25%, 8%);
+  --cta: hsl(15, 90%, 68%);
+  --cta-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(30, 15%, 25%);
+  --input: hsl(30, 15%, 25%);
+  --ring: hsl(22, 100%, 65%);
+  --sidebar-background: hsl(240, 5.9%, 10%);
+  --sidebar-foreground: hsl(240, 4.8%, 95.9%);
+  --sidebar-primary: hsl(224.3, 76.3%, 48%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(240, 3.7%, 15.9%);
+  --sidebar-accent-foreground: hsl(240, 4.8%, 95.9%);
+  --sidebar-border: hsl(240, 3.7%, 15.9%);
+  --sidebar-ring: hsl(217.2, 91.2%, 59.8%);
+}
+
+/* Base reset */
+* {
+  border-color: var(--border);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Ruda', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Ruda', sans-serif !important;
+  font-weight: bold;
+}
+
+/* Component classes */
+.hero-button-frontline {
+  background-image: linear-gradient(to right, var(--primary), var(--primary-glow));
+  color: var(--primary-foreground);
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  font-size: 1.125rem;
+  transition: var(--transition-smooth);
+  background-color: #ffca22 !important;
+}
+
+.frontline-testimonial{
+  color: #ecaf18 !important;
+}
+
+.frontline-truthSection{
+  color: #117735 !important;
+}
+
+.frontline-truthsection2{
+  color: #ffca22 !important;
+}
+
+.hero-button-frontline:hover {
+  box-shadow: var(--shadow-glow);
+  transform: scale(1.05);
+}
+
+.object-cover-front-line{
+  object-fit: contain;
+  height: 15rem !important;
+}
+
+.cta-button {
+  background-image: linear-gradient(to right, var(--cta), var(--primary));
+  color: var(--cta-foreground);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: var(--transition-smooth);
+}
+
+.cta-button:hover {
+  box-shadow: var(--shadow-warm);
+  transform: scale(1.05);
+}
+
+.quote-card {
+  background-color: hsla(var(--card), 0.8);
+  backdrop-filter: blur(4px);
+  border: 1px solid hsla(var(--border), 0.5);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition-smooth);
+}
+
+.quote-card:hover {
+  box-shadow: var(--shadow-warm);
+  transform: translateY(-0.25rem);
+}
+
+.impact-card {
+  background-image: linear-gradient(to bottom right, hsla(var(--secondary), 0.5), hsla(var(--accent), 0.2));
+  border: 1px solid hsla(var(--border), 0.3);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: var(--transition-smooth);
+}
+
+.impact-card:hover {
+  box-shadow: var(--shadow-card);
+  transform: scale(1.05);
+}
+
+.section-padding {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .section-padding {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
