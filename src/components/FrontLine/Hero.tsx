@@ -1,8 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   const handleOpenLink = () => {
-    window.open("https://2africa.org/g2a-campaign-copy/", "_blank");
+    // Navigate to the Frontline Fund donation page
+    navigate("/frontline/donate");
   };
   return (
     <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-[#034623]">

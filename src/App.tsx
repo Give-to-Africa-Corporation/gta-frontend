@@ -3,9 +3,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 
+import AfricaYouthCouncil from "./components/ayc/AfricaYouthCouncil";
 import { Navbar } from "./components/shared/Navbar";
 import ProtectedRoute from "./components/shared/ProtectedRoute";
 import Contact from "./pages/Contact";
+import FrontlineFund from "./pages/FrontLine";
+import FrontLineDonationPage from "./pages/FrontLine/DonationPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -22,8 +25,6 @@ import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import Registration from "./pages/registration/Registration";
 import VerificationPending from "./pages/registration/VerificationPending";
 import VerificationRejected from "./pages/registration/VerificationRejected";
-import AfricaYouthCouncil from "./components/ayc/AfricaYouthCouncil";
-import FrontlineFund from "./pages/FrontLine";
 
 const queryClient = new QueryClient();
 
@@ -35,7 +36,11 @@ const App = () => (
           <Navbar />
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/frontline-fund" element={<FrontlineFund />} />
+            <Route path="/frontline" element={<FrontlineFund />} />
+            <Route
+              path="/frontline/donate"
+              element={<FrontLineDonationPage />}
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/registration" element={<Registration />} />
