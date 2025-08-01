@@ -8,7 +8,6 @@ import { Navbar } from "./components/shared/Navbar";
 import ProtectedRoute from "./components/shared/ProtectedRoute";
 import Contact from "./pages/Contact";
 import FrontlineFund from "./pages/FrontLine";
-import FrontLineDonationPage from "./pages/FrontLine/DonationPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -37,10 +36,6 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/frontline" element={<FrontlineFund />} />
-            <Route
-              path="/frontline/donate"
-              element={<FrontLineDonationPage />}
-            />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/registration" element={<Registration />} />
