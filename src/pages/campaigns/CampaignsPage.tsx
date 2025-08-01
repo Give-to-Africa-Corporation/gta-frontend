@@ -9,7 +9,15 @@ import {
 } from "@/components/ui/card";
 import { Image } from "@/components/ui/Image";
 import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import {
   Select,
   SelectContent,
@@ -20,7 +28,7 @@ import {
 import { useAppContext } from "@/context/AppContext";
 import { campaignCauses } from "@/lib/types";
 import { FALLBACK_IMAGE } from "@/lib/utils";
-import { CalendarDays, Infinity, MapPin, Search } from "lucide-react";
+import { MapPin, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -71,6 +79,8 @@ export default function CampaignsPage() {
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [countryFilter, setCountryFilter] = useState<string>("");
   const [causeFilter, setCauseFilter] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9; // Show 9 campaigns per page (3x3 grid)
 
   // Get unique countries from campaigns
   const countries = useMemo(() => {
@@ -150,7 +160,10 @@ export default function CampaignsPage() {
             <Input
               placeholder="Search campaigns..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setCurrentPage(1);
+              }}
               className="pl-10"
             />
           </div>
@@ -158,7 +171,13 @@ export default function CampaignsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
+        <Select
+          value={statusFilter}
+          onValueChange={(value) => {
+            setStatusFilter(value);
+            setCurrentPage(1);
+          }}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
@@ -170,7 +189,13 @@ export default function CampaignsPage() {
           </SelectContent>
         </Select>
 
-        <Select value={countryFilter} onValueChange={setCountryFilter}>
+        <Select
+          value={countryFilter}
+          onValueChange={(value) => {
+            setCountryFilter(value);
+            setCurrentPage(1);
+          }}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Filter by country" />
           </SelectTrigger>
@@ -184,7 +209,13 @@ export default function CampaignsPage() {
           </SelectContent>
         </Select>
 
-        <Select value={causeFilter} onValueChange={setCauseFilter}>
+        <Select
+          value={causeFilter}
+          onValueChange={(value) => {
+            setCauseFilter(value);
+            setCurrentPage(1);
+          }}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Filter by Keyword" />
           </SelectTrigger>
@@ -204,6 +235,7 @@ export default function CampaignsPage() {
             setStatusFilter("");
             setCountryFilter("");
             setCauseFilter("");
+            setCurrentPage(1);
           }}
           className="h-10"
         >
@@ -212,111 +244,58 @@ export default function CampaignsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredCampaigns.map((campaign) => {
-          const progressPercent = Math.min(
-            Math.round(
-              ((campaign.totalRaised || campaign.raised || 0) /
-                (campaign.fundingGoal || campaign.goal || 1)) *
-                100
-            ),
-            100
-          );
+        {filteredCampaigns
+          .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+          .map((campaign) => {
+            const daysLeft = getDaysLeft(campaign.deadline, campaign.endDate);
+            const isPerpetual = isCampaignPerpetual(campaign);
 
-          const daysLeft = getDaysLeft(campaign.deadline, campaign.endDate);
-          const isPerpetual = isCampaignPerpetual(campaign);
+            // Handle image from both models
+            const imageUrl = campaign.media?.mainImage || campaign.image;
 
-          // Handle image from both models
-          const imageUrl = campaign.media?.mainImage || campaign.image;
-
-          return (
-            <Card
-              key={campaign._id || campaign.id}
-              className="cursor-pointer hover:shadow-lg transition-shadow"
-              onClick={() =>
-                navigate(
-                  `/campaigns/${
-                    campaign.campaignSlug || campaign._id || campaign.id
-                  }`
-                )
-              }
-            >
-              <div className="h-48 w-full relative">
-                <Image
-                  src={
-                    imageUrl.startsWith("http")
-                      ? imageUrl
-                      : `${import.meta.env.VITE_BE_URL}${imageUrl}`
-                  }
-                  alt={campaign.title}
-                  className="h-full w-full object-cover rounded-t-lg"
-                  fallback={FALLBACK_IMAGE}
-                />
-                <div className="absolute top-2 right-2">
-                  {getCauseBadge(campaign.cause)}
-                </div>
-              </div>
-              <CardHeader className="pb-2">
-                <CardTitle className="line-clamp-1">{campaign.title}</CardTitle>
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4 mr-1" />
-                  <span>{campaign.country}</span>
-                </div>
-                <CardDescription className="line-clamp-2">
-                  {campaign.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="font-medium">
-                        $
-                        {(
-                          campaign.totalRaised ||
-                          campaign.raised ||
-                          0
-                        ).toLocaleString()}{" "}
-                        raised
-                      </span>
-                      {!isPerpetual && (
-                        <span className="text-gray-500">
-                          of $
-                          {(
-                            campaign.fundingGoal ||
-                            campaign.goal ||
-                            0
-                          ).toLocaleString()}
-                        </span>
-                      )}
-                    </div>
-                    {!isPerpetual && (
-                      <Progress value={progressPercent} className="h-2" />
-                    )}
+            return (
+              <Card
+                key={campaign._id || campaign.id}
+                className="cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() =>
+                  navigate(
+                    `/campaigns/${
+                      campaign.campaignSlug || campaign._id || campaign.id
+                    }`
+                  )
+                }
+              >
+                <div className="h-48 w-full relative">
+                  <Image
+                    src={
+                      imageUrl.startsWith("http")
+                        ? imageUrl
+                        : `${import.meta.env.VITE_BE_URL}${imageUrl}`
+                    }
+                    alt={campaign.title}
+                    className="h-full w-full object-cover rounded-t-lg"
+                    fallback={FALLBACK_IMAGE}
+                  />
+                  <div className="absolute top-2 right-2">
+                    {getCauseBadge(campaign.cause)}
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span>{campaign.donors || 0} donors</span>
-                    {isPerpetual ? (
-                      <span className="flex items-center text-brand-purple">
-                        <Infinity className="h-4 w-4 mr-1" /> Ongoing
-                      </span>
-                    ) : campaign.status === "ongoing" ? (
-                      <span className="flex items-center">
-                        <CalendarDays className="h-4 w-4 mr-1" />
-                        {daysLeft > 0
-                          ? `${daysLeft} days left`
-                          : "Ending today"}
-                      </span>
-                    ) : (
-                      <span>
-                        {campaign.status === "completed"
-                          ? "Ended"
-                          : campaign.status}
-                      </span>
-                    )}
+                </div>
+                <CardHeader className="pb-2">
+                  <CardTitle className="line-clamp-1">
+                    {campaign.title}
+                  </CardTitle>
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    <span>{campaign.country}</span>
                   </div>
+                  <CardDescription className="line-clamp-2">
+                    {campaign.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
                   <Button
                     variant="default"
-                    className="w-full"
+                    className="w-full mt-4"
                     onClick={(e) => {
                       e.stopPropagation();
                       navigate(
@@ -328,11 +307,10 @@ export default function CampaignsPage() {
                   >
                     Donate Now
                   </Button>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+                </CardContent>
+              </Card>
+            );
+          })}
 
         {filteredCampaigns.length === 0 && (
           <div className="col-span-full text-center py-8">
@@ -342,6 +320,82 @@ export default function CampaignsPage() {
           </div>
         )}
       </div>
+
+      {filteredCampaigns.length > 0 && (
+        <div className="mt-8 flex justify-center">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  className={
+                    currentPage === 1
+                      ? "pointer-events-none opacity-50"
+                      : "cursor-pointer"
+                  }
+                />
+              </PaginationItem>
+
+              {Array.from({
+                length: Math.ceil(filteredCampaigns.length / itemsPerPage),
+              }).map((_, index) => {
+                const pageNumber = index + 1;
+                // Show first page, last page, current page, and pages around current page
+                if (
+                  pageNumber === 1 ||
+                  pageNumber ===
+                    Math.ceil(filteredCampaigns.length / itemsPerPage) ||
+                  (pageNumber >= currentPage - 1 &&
+                    pageNumber <= currentPage + 1)
+                ) {
+                  return (
+                    <PaginationItem key={pageNumber}>
+                      <PaginationLink
+                        onClick={() => setCurrentPage(pageNumber)}
+                        isActive={currentPage === pageNumber}
+                        className="cursor-pointer"
+                      >
+                        {pageNumber}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                } else if (
+                  pageNumber === currentPage - 2 ||
+                  pageNumber === currentPage + 2
+                ) {
+                  return (
+                    <PaginationItem key={pageNumber}>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  );
+                }
+                return null;
+              })}
+
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() =>
+                    setCurrentPage((prev) =>
+                      Math.min(
+                        prev + 1,
+                        Math.ceil(filteredCampaigns.length / itemsPerPage)
+                      )
+                    )
+                  }
+                  className={
+                    currentPage ===
+                    Math.ceil(filteredCampaigns.length / itemsPerPage)
+                      ? "pointer-events-none opacity-50"
+                      : "cursor-pointer"
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </div>
   );
 }
