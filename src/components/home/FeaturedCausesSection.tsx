@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Image } from "@/components/ui/Image";
-import { Progress } from "@/components/ui/progress";
 import { Campaign } from "@/lib/types";
 import { FALLBACK_IMAGE } from "@/lib/utils";
 import { campaignApi } from "@/service/apiService";
-import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -127,29 +126,6 @@ export const FeaturedCausesSection = () => {
                 <p className="text-gray-600 mb-4 line-clamp-2">
                   {campaign.description}
                 </p>
-
-                {/* Progress */}
-                <div className="mb-4">
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="font-medium text-brand-purple">
-                      ${campaign.totalRaised.toLocaleString()}
-                    </span>
-                    <span className="text-gray-500">
-                      Goal: ${campaign.fundingGoal.toLocaleString()}
-                    </span>
-                  </div>
-                  <Progress
-                    value={(campaign.totalRaised / campaign.fundingGoal) * 100}
-                    className="h-2 bg-gray-100"
-                  />
-                  <div className="flex justify-between text-sm mt-2">
-                    <span>{Math.floor(Math.random() * 50) + 10} donors</span>
-                    <span className="flex items-center">
-                      <CalendarDays className="h-4 w-4 mr-1" />
-                      {getDaysLeft(campaign.deadline)} days left
-                    </span>
-                  </div>
-                </div>
 
                 {/* Donate Now Button */}
                 <Button
