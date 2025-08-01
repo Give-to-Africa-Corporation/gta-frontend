@@ -28,6 +28,7 @@ interface PaymentFormProps {
   isProcessing: boolean;
   campaignId: string;
   campaignTitle: string;
+  isFrontline?: boolean;
 }
 
 interface PayPalApproveData {
@@ -40,6 +41,7 @@ const PaymentForm = ({
   isProcessing,
   campaignId,
   campaignTitle,
+  isFrontline = false,
 }: PaymentFormProps) => {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [frequency, setFrequency] = useState("once");
@@ -301,7 +303,7 @@ const PaymentForm = ({
   };
 
   // Payment methods configuration
-  const paymentMethods = [
+  const allPaymentMethods = [
     {
       id: "card",
       name: "Card",
@@ -344,6 +346,11 @@ const PaymentForm = ({
     },
   ];
 
+  // Filter payment methods based on whether it's the Frontline page
+  const paymentMethods = isFrontline
+    ? allPaymentMethods.filter((method) => method.id === "card")
+    : allPaymentMethods;
+
   // Default donation amounts
   const defaultAmounts = [20, 60, 100, 200];
 
@@ -354,158 +361,164 @@ const PaymentForm = ({
       } gap-4 w-full max-w-7xl mx-auto`}
     >
       {/* Payment Methods Column */}
-      <div className={`${isMobile ? "w-full" : "w-1/3"}`}>
-        <h3 className="text-lg font-medium mb-2">Payment Method</h3>
-        <div className="space-y-2 bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100">
-          {paymentMethods.map((method) => {
-            // Define colors for each payment method
-            const getMethodStyles = (id: string) => {
-              switch (id) {
-                case "card":
-                  return {
-                    selected:
-                      "bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100/50 border-blue-500 text-blue-700 shadow-sm",
-                    icon: "bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 text-white shadow-md",
-                    hover: "hover:bg-blue-50/50 hover:shadow-sm",
-                    border: "border-l-4",
-                  };
-                case "bank_transfer":
-                  return {
-                    selected:
-                      "bg-gradient-to-r from-emerald-100 via-emerald-50 to-emerald-100/50 border-emerald-500 text-emerald-700 shadow-sm",
-                    icon: "bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 text-white shadow-md",
-                    hover: "hover:bg-emerald-50/50 hover:shadow-sm",
-                    border: "border-l-4",
-                  };
-                case "google_pay":
-                  return {
-                    selected:
-                      "bg-gradient-to-r from-indigo-100 via-indigo-50 to-indigo-100/50 border-indigo-500 text-indigo-700 shadow-sm",
-                    icon: "bg-gradient-to-br from-indigo-500 via-indigo-600 to-indigo-700 text-white shadow-md",
-                    hover: "hover:bg-indigo-50/50 hover:shadow-sm",
-                    border: "border-l-4",
-                  };
-                case "crypto":
-                  return {
-                    selected:
-                      "bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100/50 border-amber-500 text-amber-700 shadow-sm",
-                    icon: "bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white shadow-md",
-                    hover: "hover:bg-amber-50/50 hover:shadow-sm",
-                    border: "border-l-4",
-                  };
-                case "stocks":
-                  return {
-                    selected:
-                      "bg-gradient-to-r from-violet-100 via-violet-50 to-violet-100/50 border-violet-500 text-violet-700 shadow-sm",
-                    icon: "bg-gradient-to-br from-violet-500 via-violet-600 to-violet-700 text-white shadow-md",
-                    hover: "hover:bg-violet-50/50 hover:shadow-sm",
-                    border: "border-l-4",
-                  };
-                case "daf":
-                  return {
-                    selected:
-                      "bg-gradient-to-r from-cyan-100 via-cyan-50 to-cyan-100/50 border-cyan-500 text-cyan-700 shadow-sm",
-                    icon: "bg-gradient-to-br from-cyan-500 via-cyan-600 to-cyan-700 text-white shadow-md",
-                    hover: "hover:bg-cyan-50/50 hover:shadow-sm",
-                    border: "border-l-4",
-                  };
-                case "paypal":
-                  return {
-                    selected:
-                      "bg-gradient-to-r from-sky-100 via-sky-50 to-sky-100/50 border-sky-500 text-sky-700 shadow-sm",
-                    icon: "bg-gradient-to-br from-sky-500 via-sky-600 to-sky-700 text-white shadow-md",
-                    hover: "hover:bg-sky-50/50 hover:shadow-sm",
-                    border: "border-l-4",
-                  };
-                case "venmo":
-                  return {
-                    selected:
-                      "bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100/50 border-blue-500 text-blue-700 shadow-sm",
-                    icon: "bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 text-white shadow-md",
-                    hover: "hover:bg-blue-50/50 hover:shadow-sm",
-                    border: "border-l-4",
-                  };
-                default:
-                  return {
-                    selected:
-                      "bg-gradient-to-r from-primary/20 via-primary/10 to-primary/5 border-primary text-primary shadow-sm",
-                    icon: "bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white shadow-md",
-                    hover: "hover:bg-gray-50/50 hover:shadow-sm",
-                    border: "border-l-4",
-                  };
-              }
-            };
+      {!isFrontline && (
+        <div className={`${isMobile ? "w-full" : "w-1/3"}`}>
+          <h3 className="text-lg font-medium mb-2">Payment Method</h3>
+          <div className="space-y-2 bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100">
+            {paymentMethods.map((method) => {
+              // Define colors for each payment method
+              const getMethodStyles = (id: string) => {
+                switch (id) {
+                  case "card":
+                    return {
+                      selected:
+                        "bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100/50 border-blue-500 text-blue-700 shadow-sm",
+                      icon: "bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 text-white shadow-md",
+                      hover: "hover:bg-blue-50/50 hover:shadow-sm",
+                      border: "border-l-4",
+                    };
+                  case "bank_transfer":
+                    return {
+                      selected:
+                        "bg-gradient-to-r from-emerald-100 via-emerald-50 to-emerald-100/50 border-emerald-500 text-emerald-700 shadow-sm",
+                      icon: "bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 text-white shadow-md",
+                      hover: "hover:bg-emerald-50/50 hover:shadow-sm",
+                      border: "border-l-4",
+                    };
+                  case "google_pay":
+                    return {
+                      selected:
+                        "bg-gradient-to-r from-indigo-100 via-indigo-50 to-indigo-100/50 border-indigo-500 text-indigo-700 shadow-sm",
+                      icon: "bg-gradient-to-br from-indigo-500 via-indigo-600 to-indigo-700 text-white shadow-md",
+                      hover: "hover:bg-indigo-50/50 hover:shadow-sm",
+                      border: "border-l-4",
+                    };
+                  case "crypto":
+                    return {
+                      selected:
+                        "bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100/50 border-amber-500 text-amber-700 shadow-sm",
+                      icon: "bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-white shadow-md",
+                      hover: "hover:bg-amber-50/50 hover:shadow-sm",
+                      border: "border-l-4",
+                    };
+                  case "stocks":
+                    return {
+                      selected:
+                        "bg-gradient-to-r from-violet-100 via-violet-50 to-violet-100/50 border-violet-500 text-violet-700 shadow-sm",
+                      icon: "bg-gradient-to-br from-violet-500 via-violet-600 to-violet-700 text-white shadow-md",
+                      hover: "hover:bg-violet-50/50 hover:shadow-sm",
+                      border: "border-l-4",
+                    };
+                  case "daf":
+                    return {
+                      selected:
+                        "bg-gradient-to-r from-cyan-100 via-cyan-50 to-cyan-100/50 border-cyan-500 text-cyan-700 shadow-sm",
+                      icon: "bg-gradient-to-br from-cyan-500 via-cyan-600 to-cyan-700 text-white shadow-md",
+                      hover: "hover:bg-cyan-50/50 hover:shadow-sm",
+                      border: "border-l-4",
+                    };
+                  case "paypal":
+                    return {
+                      selected:
+                        "bg-gradient-to-r from-sky-100 via-sky-50 to-sky-100/50 border-sky-500 text-sky-700 shadow-sm",
+                      icon: "bg-gradient-to-br from-sky-500 via-sky-600 to-sky-700 text-white shadow-md",
+                      hover: "hover:bg-sky-50/50 hover:shadow-sm",
+                      border: "border-l-4",
+                    };
+                  case "venmo":
+                    return {
+                      selected:
+                        "bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100/50 border-blue-500 text-blue-700 shadow-sm",
+                      icon: "bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 text-white shadow-md",
+                      hover: "hover:bg-blue-50/50 hover:shadow-sm",
+                      border: "border-l-4",
+                    };
+                  default:
+                    return {
+                      selected:
+                        "bg-gradient-to-r from-primary/20 via-primary/10 to-primary/5 border-primary text-primary shadow-sm",
+                      icon: "bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white shadow-md",
+                      hover: "hover:bg-gray-50/50 hover:shadow-sm",
+                      border: "border-l-4",
+                    };
+                }
+              };
 
-            const styles = getMethodStyles(method.id);
+              const styles = getMethodStyles(method.id);
 
-            return (
-              <button
-                key={method.name}
-                type="button"
-                className={`flex items-center w-full p-4 text-left gap-3 transition-all duration-200 ${
-                  paymentMethod === method.id
-                    ? `${styles.selected} ${styles.border}`
-                    : styles.hover
-                }`}
-                onClick={() => setPaymentMethod(method.id)}
-              >
-                <div
-                  className={`flex items-center justify-center w-10 h-10 rounded-full ${
+              return (
+                <button
+                  key={method.name}
+                  type="button"
+                  className={`flex items-center w-full p-4 text-left gap-3 transition-all duration-200 ${
                     paymentMethod === method.id
-                      ? `${styles.icon} ring-2 ring-offset-2 ring-white`
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  } transition-all duration-200`}
+                      ? `${styles.selected} ${styles.border}`
+                      : styles.hover
+                  }`}
+                  onClick={() => setPaymentMethod(method.id)}
                 >
-                  {React.cloneElement(method.icon, {
-                    className: `h-5 w-5 ${
-                      paymentMethod === method.id ? "text-white" : ""
-                    }`,
-                  })}
-                </div>
-                <div className="flex flex-col">
-                  <span
-                    className={`font-medium ${
+                  <div
+                    className={`flex items-center justify-center w-10 h-10 rounded-full ${
                       paymentMethod === method.id
-                        ? styles.selected.split(" ")[3]
-                        : "text-gray-700"
-                    }`}
+                        ? `${styles.icon} ring-2 ring-offset-2 ring-white`
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    } transition-all duration-200`}
                   >
-                    {method.name}
-                  </span>
-                  <span
-                    className={`text-xs ${
-                      paymentMethod === method.id
-                        ? styles.selected.split(" ")[3]
-                        : "text-gray-500"
-                    }`}
-                  >
-                    {method.id === "card"
-                      ? "Credit/Debit Card"
-                      : method.id === "bank_transfer"
-                      ? "Direct Bank Transfer"
-                      : method.id === "google_pay"
-                      ? "Google Pay"
-                      : method.id === "crypto"
-                      ? "Cryptocurrency"
-                      : method.id === "stocks"
-                      ? "Stock Donation"
-                      : method.id === "daf"
-                      ? "Donor Advised Fund"
-                      : method.id === "paypal"
-                      ? "PayPal"
-                      : method.id === "venmo"
-                      ? "Venmo"
-                      : method.name}
-                  </span>
-                </div>
-              </button>
-            );
-          })}
+                    {React.cloneElement(method.icon, {
+                      className: `h-5 w-5 ${
+                        paymentMethod === method.id ? "text-white" : ""
+                      }`,
+                    })}
+                  </div>
+                  <div className="flex flex-col">
+                    <span
+                      className={`font-medium ${
+                        paymentMethod === method.id
+                          ? styles.selected.split(" ")[3]
+                          : "text-gray-700"
+                      }`}
+                    >
+                      {method.name}
+                    </span>
+                    <span
+                      className={`text-xs ${
+                        paymentMethod === method.id
+                          ? styles.selected.split(" ")[3]
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {method.id === "card"
+                        ? "Credit/Debit Card"
+                        : method.id === "bank_transfer"
+                        ? "Direct Bank Transfer"
+                        : method.id === "google_pay"
+                        ? "Google Pay"
+                        : method.id === "crypto"
+                        ? "Cryptocurrency"
+                        : method.id === "stocks"
+                        ? "Stock Donation"
+                        : method.id === "daf"
+                        ? "Donor Advised Fund"
+                        : method.id === "paypal"
+                        ? "PayPal"
+                        : method.id === "venmo"
+                        ? "Venmo"
+                        : method.name}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Form Column */}
-      <div className={`${isMobile ? "w-full" : "w-2/3"} space-y-4`}>
+      <div
+        className={`${
+          isMobile ? "w-full" : isFrontline ? "w-full" : "w-2/3"
+        } space-y-4`}
+      >
         <form onSubmit={handleSubmit}>
           {/* Frequency Section */}
           <div className="space-y-2">

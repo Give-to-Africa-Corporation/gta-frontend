@@ -121,6 +121,7 @@ export function DonationDialog({
             isProcessing={isDonationProcessing}
             campaignId={campaignId}
             campaignTitle={campaignTitle}
+            isFrontline={campaignId === "frontline-fund"}
           />
         </div>
       </DialogContent>
