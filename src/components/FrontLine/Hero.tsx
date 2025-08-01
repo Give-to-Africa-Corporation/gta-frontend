@@ -1,13 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { DonationDialog } from "@/components/payments/DonationDialog";
 
 const Hero = () => {
-  const navigate = useNavigate();
-
-  const handleOpenLink = () => {
-    // Navigate to the Frontline Fund donation page
-    navigate("/frontline/donate");
-  };
   return (
     <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-[#034623]">
       {/* Split Layout Container */}
@@ -41,12 +34,13 @@ const Hero = () => {
           </p>
 
           <div className="space-y-4">
-            <Button
-              className="hero-button-frontline text-xl px-12 py-6"
-              onClick={handleOpenLink}
-            >
-              DONATE NOW
-            </Button>
+            <DonationDialog
+              trigger={
+                <button className="hero-button-frontline text-lg px-8 py-4 bg-white text-primary hover:bg-white/90 font-bold rounded-xl hover:scale-105 transition-all duration-300">
+                  DONATE NOW
+                </button>
+              }
+            />
 
             <p className="text-lg font-medium">
               100% of your gift supports vetted frontline NGOs across Africa.

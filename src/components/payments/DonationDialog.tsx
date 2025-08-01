@@ -1,16 +1,32 @@
-import PaymentForm from "@/components/payments/PaymentForm";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { loadStripe } from "@stripe/stripe-js";
-import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import PaymentForm from "./PaymentForm";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-const FrontLineDonationPage = () => {
-  const navigate = useNavigate();
+interface DonationDialogProps {
+  trigger?: React.ReactNode;
+  campaignId?: string;
+  campaignTitle?: string;
+}
+
+export function DonationDialog({
+  trigger,
+  campaignId = "frontline-fund",
+  campaignTitle = "The Frontline Fund",
+}: DonationDialogProps) {
   const [isDonationProcessing, setIsDonationProcessing] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDonationSubmit = async (
     amount: string,
@@ -38,8 +54,8 @@ const FrontLineDonationPage = () => {
           body: JSON.stringify({
             items: [
               {
-                name: "The Frontline Fund",
-                description: "Donation to The Frontline Fund",
+                name: campaignTitle,
+                description: `Donation to ${campaignTitle}`,
                 amount: Math.round(parseFloat(amount) * 100),
                 quantity: 1,
               },
@@ -47,7 +63,7 @@ const FrontLineDonationPage = () => {
             paymentMethod,
             frequency,
             successUrl,
-            campaignId: "frontline-fund",
+            campaignId,
             donorName,
             donorEmail,
           }),
@@ -82,32 +98,32 @@ const FrontLineDonationPage = () => {
   };
 
   return (
-    <div className="container-custom max-w-7xl py-8">
-      <Button
-        variant="outline"
-        onClick={() => navigate("/frontline")}
-        className="mb-6 flex items-center"
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Frontline Fund
-      </Button>
-
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">The Frontline Fund</h1>
-        <p className="text-gray-600 mt-2">
-          Support Africa's grassroots leaders making a difference
-        </p>
-      </div>
-
-      <div className="bg-white p-6 md:p-8 rounded-lg shadow-md">
-        <PaymentForm
-          onSubmit={handleDonationSubmit}
-          isProcessing={isDonationProcessing}
-          campaignId="frontline-fund"
-          campaignTitle="The Frontline Fund"
-        />
-      </div>
-    </div>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        {trigger || (
+          <Button size="lg" className="font-semibold">
+            Donate Now
+          </Button>
+        )}
+      </DialogTrigger>
+      <DialogContent className="max-w-5xl h-fit">
+        <DialogHeader className="space-y-2">
+          <DialogTitle className="text-2xl font-bold">
+            {campaignTitle}
+          </DialogTitle>
+          <DialogDescription className="text-base">
+            Support Africa's grassroots leaders making a difference
+          </DialogDescription>
+        </DialogHeader>
+        <div className="mt-2">
+          <PaymentForm
+            onSubmit={handleDonationSubmit}
+            isProcessing={isDonationProcessing}
+            campaignId={campaignId}
+            campaignTitle={campaignTitle}
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
   );
-};
-
-export default FrontLineDonationPage;
+}
