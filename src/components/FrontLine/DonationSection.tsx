@@ -1,31 +1,30 @@
 import { DonationDialog } from "@/components/payments/DonationDialog";
-import { Card } from "@/components/ui/card";
-import { Check, DollarSign } from "lucide-react";
+import { Check } from "lucide-react";
 
 const DonationSection = () => {
-  const donationTiers = [
-    {
-      amount: 25,
-      impact: "Feeds a community and supports trauma care for one week",
-    },
-    {
-      amount: 50,
-      impact: "Buys seeds and tools for a community-led farming collective",
-    },
-    {
-      amount: 100,
-      impact: "Sponsors access for frontline humanitarian teams",
-    },
-    {
-      amount: 250,
-      impact: "Helps a community rebuild their lives post-disaster",
-    },
-    {
-      amount: 500,
-      impact: "Fuels regranting to vetted, high-impact African NGOs",
-      featured: true,
-    },
-  ];
+  // const donationTiers = [
+  //   {
+  //     amount: 25,
+  //     impact: "Feeds a community and supports trauma care for one week",
+  //   },
+  //   {
+  //     amount: 50,
+  //     impact: "Buys seeds and tools for a community-led farming collective",
+  //   },
+  //   {
+  //     amount: 100,
+  //     impact: "Sponsors access for frontline humanitarian teams",
+  //   },
+  //   {
+  //     amount: 250,
+  //     impact: "Helps a community rebuild their lives post-disaster",
+  //   },
+  //   {
+  //     amount: 500,
+  //     impact: "Fuels regranting to vetted, high-impact African NGOs",
+  //     featured: true,
+  //   },
+  // ];
 
   const benefits = [
     "100% tax-deductible",
@@ -50,7 +49,7 @@ const DonationSection = () => {
 
         {/* Donation Tiers */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {donationTiers.map((tier, index) => (
+          {/* {donationTiers.map((tier, index) => (
             <Card
               key={index}
               className={`impact-card text-center ${
@@ -75,7 +74,7 @@ const DonationSection = () => {
                 </div>
               )}
             </Card>
-          ))}
+          ))} */}
         </div>
 
         {/* Benefits */}
@@ -103,8 +102,8 @@ const DonationSection = () => {
 
           <DonationDialog
             trigger={
-              <button className="bg-white text-primary hover:bg-white/90 font-bold text-xl px-12 py-6 rounded-2xl hover:scale-105 transition-all duration-300">
-                GIVE NOW
+              <button className="hero-button-frontline text-lg px-8 py-4 bg-white text-primary hover:bg-white/90 font-bold rounded-xl hover:scale-105 transition-all duration-300">
+                DONATE NOW
               </button>
             }
           />
