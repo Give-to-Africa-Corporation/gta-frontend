@@ -25,10 +25,17 @@ export const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link
-              to="/"
+              to="https://2africa.org"
               className="text-gray-700 hover:text-brand-purple transition-colors"
+              target="_blank"
             >
               Home
+            </Link>
+            <Link
+              to="/frontline-fund"
+              className="text-gray-700 hover:text-brand-purple transition-colors"
+            >
+              Frontline Fund
             </Link>
             <Link
               to="/campaigns"
