@@ -35,7 +35,7 @@ const App = () => (
           <Navbar />
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/frontline" element={<FrontlineFund />} />
+            <Route path="/frontline-fund" element={<FrontlineFund />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/registration" element={<Registration />} />
