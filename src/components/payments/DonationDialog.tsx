@@ -41,7 +41,7 @@ export function DonationDialog({
 
       const successUrl = new URL(
         campaignId === "frontline-fund"
-          ? `/frontline/payment/success?session_id={CHECKOUT_SESSION_ID}`
+          ? `/frontline-fund/payment/success?session_id={CHECKOUT_SESSION_ID}`
           : `/campaigns/${campaignId}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
         window.location.origin
       ).toString();
