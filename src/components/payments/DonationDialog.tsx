@@ -40,7 +40,9 @@ export function DonationDialog({
       setIsDonationProcessing(true);
 
       const successUrl = new URL(
-        `/frontline/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+        campaignId === "frontline-fund"
+          ? `/frontline/payment/success?session_id={CHECKOUT_SESSION_ID}`
+          : `/campaigns/${campaignId}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
         window.location.origin
       ).toString();
 
@@ -106,14 +108,31 @@ export function DonationDialog({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-5xl h-fit">
-        <DialogHeader className="space-y-2">
+      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="space-y-2 sticky top-0 bg-background z-10 pb-4">
           <DialogTitle className="text-2xl font-bold">
             {campaignTitle}
           </DialogTitle>
           <DialogDescription className="text-base">
             Support Africa's grassroots leaders making a difference
           </DialogDescription>
+          <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-primary"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+            </svg>
+            You'll be securely redirected to Stripe to complete your donation
+          </div>
         </DialogHeader>
         <div className="mt-2">
           <PaymentForm
