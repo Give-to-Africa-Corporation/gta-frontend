@@ -33,41 +33,54 @@ const TruthSection = () => {
         </div>
 
         {/* Mission Section */}
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center text-foreground frontline-truthsection2">
-            That is Give to Africa's Mission
-          </h2>
+        <div className="mb-16 relative rounded-xl overflow-hidden">
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0">
+            <img
+              src="/images/front-line2.png"
+              alt="Mission Background"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-brand-green opacity-70"></div>
+          </div>
 
-          <div className="max-w-4xl mx-auto">
-            <p className="text-lg leading-relaxed mb-8 text-muted-foreground">
-              Give to Africa is a transformative 501(c)(3) nonprofit bridging
-              the gap between compassionate global donors and visionary
-              African-led organizations. Through strategic regrants,
-              cutting-edge digital tools, and comprehensive training programs,
-              we empower local nonprofits to create lasting change across the
-              African continent.
-            </p>
+          {/* Content */}
+          <div className="relative z-10 p-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center text-white frontline-truthsection2">
+              That is Give to Africa's Mission
+            </h2>
 
-            <div className="bg-primary/10 border-l-4 border-primary p-8 rounded-r-2xl mb-8">
-              <p className="text-2xl font-semibold text-foreground">
-                We believe those closest to the challenges are the architects of
-                sustainable solutions.
+            <div className="max-w-4xl mx-auto">
+              <p className="text-lg leading-relaxed mb-8 text-white/90">
+                Give to Africa is a transformative 501(c)(3) nonprofit bridging
+                the gap between compassionate global donors and visionary
+                African-led organizations. Through strategic regrants,
+                cutting-edge digital tools, and comprehensive training programs,
+                we empower local nonprofits to create lasting change across the
+                African continent.
               </p>
-              <p className="text-lg mt-3 text-muted-foreground">
-                Our mission is to amplify local voices and support indigenous
-                innovation.
+
+              <div className="bg-white/10 border-l-4 border-white p-8 rounded-r-2xl mb-8">
+                <p className="text-2xl font-semibold text-white">
+                  We believe those closest to the challenges are the architects
+                  of sustainable solutions.
+                </p>
+                <p className="text-lg mt-3 text-white/90">
+                  Our mission is to amplify local voices and support indigenous
+                  innovation.
+                </p>
+              </div>
+
+              <p className="text-lg leading-relaxed text-white/90">
+                When you give to Give to Africa, you become part of a powerful
+                movement.{" "}
+                <span className="frontline-truthSection font-medium text-white">
+                  Your contribution doesn't just fund projects — it empowers
+                  communities, fuels innovation, and builds lasting partnerships
+                  for positive change.
+                </span>
               </p>
             </div>
-
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              When you give to Give to Africa, you become part of a powerful
-              movement.{" "}
-              <span className="frontline-truthSection font-medium">
-                Your contribution doesn't just fund projects — it empowers
-                communities, fuels innovation, and builds lasting partnerships
-                for positive change.
-              </span>
-            </p>
           </div>
         </div>
 
