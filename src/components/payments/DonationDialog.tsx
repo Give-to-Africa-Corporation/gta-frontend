@@ -22,7 +22,7 @@ interface DonationDialogProps {
 
 export function DonationDialog({
   trigger,
-  campaignId = "frontline-fund",
+  campaignId = "688d5445cea70a7c2c17cc22",
   campaignTitle = "The Frontline Fund",
 }: DonationDialogProps) {
   const [isDonationProcessing, setIsDonationProcessing] = useState(false);
@@ -40,9 +40,7 @@ export function DonationDialog({
       setIsDonationProcessing(true);
 
       const successUrl = new URL(
-        campaignId === "frontline-fund"
-          ? `/frontline-fund/payment/success?session_id={CHECKOUT_SESSION_ID}`
-          : `/campaigns/${campaignId}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+        `/campaigns/${campaignId}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
         window.location.origin
       ).toString();
 

@@ -34,8 +34,11 @@ const PaymentSuccess = () => {
         );
         const data = await response.json();
 
+        console.log("Payment verification response:", data);
+
         setVerificationStatus(data.success ? "success" : "error");
       } catch (error) {
+        console.error("Payment verification error:", error);
         setVerificationStatus("error");
       } finally {
         setIsVerifying(false);
