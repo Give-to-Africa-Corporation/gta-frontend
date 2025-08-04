@@ -101,7 +101,7 @@ export function DonationDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button size="lg" className="font-semibold">
+          <Button size="default" className="font-semibold w-full sm:w-auto">
             Donate Now
           </Button>
         )}

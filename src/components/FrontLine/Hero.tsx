@@ -2,7 +2,7 @@ import { DonationDialog } from "@/components/payments/DonationDialog";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-[#034623]">
+    <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-[#034623] pt-20">
       {/* Split Layout Container */}
       <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
         {/* Hero Image */}
@@ -33,7 +33,7 @@ const Hero = () => {
             way — with little to no support.
           </p>
 
-          <div className="space-y-4">
+          <div className="space-y-4 mb-10">
             <DonationDialog
               trigger={
                 <button className="hero-button-frontline text-lg px-8 py-4 bg-white text-primary hover:bg-white/90 font-bold rounded-xl hover:scale-105 transition-all duration-300">
