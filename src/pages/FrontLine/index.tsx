@@ -1,4 +1,3 @@
-import DonationSection from "@/components/FrontLine/DonationSection";
 import FAQSection from "@/components/FrontLine/FAQSection";
 import Hero from "@/components/FrontLine/Hero";
 import TestimonialSection from "@/components/FrontLine/TestimonialSection";
@@ -41,14 +40,14 @@ const Index = () => {
           <TruthSection />
         </motion.div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
           <DonationSection />
-        </motion.div>
+        </motion.div> */}
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
