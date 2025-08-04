@@ -133,7 +133,7 @@ const TruthSection = () => {
         <div className="mb-24">
           <DonationDialog
             trigger={
-              <button className="hero-button-frontline text-lg px-8 py-4 bg-white text-primary hover:bg-white/90 font-bold rounded-xl hover:scale-105 transition-all duration-300">
+              <button className="w-1/4 mx-auto hero-button-frontline text-lg px-8 py-4 bg-white text-primary hover:bg-white/90 font-bold rounded-xl hover:scale-105 transition-all duration-300">
                 DONATE NOW
               </button>
             }
@@ -142,8 +142,6 @@ const TruthSection = () => {
 
         {/* Impact Section */}
         <div className="max-w-5xl mx-auto">
-          <h3 className="text-3xl font-bold mb-12">Your Impact</h3>
-
           <div className="grid md:grid-cols-3 gap-12">
             <div className="bg-white/5 p-6 rounded-xl flex items-start gap-6 group hover:bg-white/10 transition-colors">
               <div className="p-2 rounded-full bg-brand-green/20 group-hover:bg-brand-green/30 transition-colors">
