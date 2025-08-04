@@ -5,41 +5,40 @@ import { DonationDialog } from "../payments/DonationDialog";
 
 const TruthSection = () => {
   return (
-    <section className="section-padding bg-background">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 px-6 md:px-12 bg-background">
+      <div className="max-w-[1400px] mx-auto">
         {/* The Hard Truth */}
-        <div className="text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-foreground frontline-truthSection">
+        <div className="text-center mb-24">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-foreground frontline-truthSection">
             The Hard Truth
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <Card className="impact-card text-center">
-              <AlertTriangle className="text-cta mx-auto mb-4" size={48} />
-              <h3 className="text-3xl font-bold mb-2 text-foreground">200+</h3>
-              <p className="text-lg text-muted-foreground">
+          <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+            <Card className="impact-card text-center p-8 border-2 border-cta shadow-lg">
+              <AlertTriangle className="text-cta mx-auto mb-2" size={36} />
+              <h3 className="text-4xl font-bold mb-2 text-cta">200+</h3>
+              <p className="text-sm font-medium text-foreground">
                 NGOs have lost critical U.S. funding in just the last year
               </p>
             </Card>
 
-            <Card className="impact-card text-center">
-              <Heart className="text-primary mx-auto mb-4" size={48} />
-              <h3 className="text-3xl font-bold mb-2 text-foreground">
-                Millions
-              </h3>
-              <p className="text-lg text-muted-foreground">
+            <Card className="impact-card text-center p-5 border-2 border-primary shadow-lg">
+              <Heart className="text-primary mx-auto mb-2" size={36} />
+              <h3 className="text-4xl font-bold mb-2 text-primary">Millions</h3>
+              <p className="text-sm font-medium text-foreground">
                 of lives now depend on leaders working without reliable funding
               </p>
             </Card>
           </div>
         </div>
         {/* Mission Section */}
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center frontline-truthsection2">
-            That is Give to Africa's Mission
-          </h2>
+        <div className="mb-24">
+          <p className="text-3xl font-bold mb-16 text-center">
+            We have ensured trusted giving. Give Where It Matters. Stand With
+            African-Led Change.
+          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {/* One */}
             <div className="rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 relative h-[500px] group">
               <div className="absolute inset-0">
@@ -51,7 +50,7 @@ const TruthSection = () => {
                 <div className="absolute inset-0 bg-brand-purple opacity-80 group-hover:opacity-90 transition-opacity"></div>
               </div>
 
-              <div className="relative z-10 h-full p-8 flex flex-col justify-between text-white">
+              <div className="relative z-10 h-full p-10 flex flex-col justify-between text-white">
                 <div>
                   <p className="text-lg leading-relaxed mb-6">
                     Give to Africa is a transformative 501(c)(3) nonprofit
@@ -130,25 +129,23 @@ const TruthSection = () => {
           </div>
         </div>
       </div>
-      <div className="text-center space-y-12">
-        <DonationDialog
-          trigger={
-            <button className="hero-button-frontline text-lg px-8 py-4 bg-white text-primary hover:bg-white/90 font-bold rounded-xl hover:scale-105 transition-all duration-300">
-              DONATE NOW
-            </button>
-          }
-        />
+      <div className="text-center">
+        <div className="mb-24">
+          <DonationDialog
+            trigger={
+              <button className="hero-button-frontline text-lg px-8 py-4 bg-white text-primary hover:bg-white/90 font-bold rounded-xl hover:scale-105 transition-all duration-300">
+                DONATE NOW
+              </button>
+            }
+          />
+        </div>
 
         {/* Impact Section */}
-        <div className="max-w-4xl mx-auto px-4">
-          <h3 className="text-3xl font-bold mb-6">Your Impact</h3>
-          <p className="text-xl mb-8">
-            We have ensured trusted giving. Give Where It Matters. Stand With
-            African-Led Change.
-          </p>
+        <div className="max-w-5xl mx-auto">
+          <h3 className="text-3xl font-bold mb-12">Your Impact</h3>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white/5 p-2 rounded-xl flex items-start gap-4 group hover:bg-white/10 transition-colors">
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="bg-white/5 p-6 rounded-xl flex items-start gap-6 group hover:bg-white/10 transition-colors">
               <div className="p-2 rounded-full bg-brand-green/20 group-hover:bg-brand-green/30 transition-colors">
                 <Check className="w-6 h-6 text-brand-green" />
               </div>
