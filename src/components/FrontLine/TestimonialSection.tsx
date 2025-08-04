@@ -204,7 +204,7 @@ const TestimonialSection = () => {
             trigger={
               <button
                 className={cn(
-                  "w-1/4 mx-auto hero-button-frontline text-lg px-8 py-4",
+                  "lg:w-1/4 mx-auto hero-button-frontline text-lg px-8 py-4",
                   "bg-white text-primary hover:bg-white/90 font-bold rounded-xl",
                   "hover:scale-105 transition-all duration-300",
                   "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"

@@ -4,6 +4,27 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+const navigationItems = [
+  {
+    to: "https://2africa.org",
+    label: "Home",
+    external: true,
+  },
+  {
+    to: "/frontline-fund",
+    label: "Frontline Fund",
+  },
+  {
+    to: "/campaigns",
+    label: "Campaigns",
+  },
+  {
+    to: "https://www.2africa.org/contact",
+    label: "Contact",
+    external: true,
+  },
+];
+
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAppContext();
@@ -24,32 +45,16 @@ export const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link
-              to="https://2africa.org"
-              className="text-gray-700 hover:text-brand-purple transition-colors"
-              target="_blank"
-            >
-              Home
-            </Link>
-            <Link
-              to="/frontline-fund"
-              className="text-gray-700 hover:text-brand-purple transition-colors"
-            >
-              Frontline Fund
-            </Link>
-            <Link
-              to="/campaigns"
-              className="text-gray-700 hover:text-brand-purple transition-colors"
-            >
-              Campaigns
-            </Link>
-            <Link
-              to="https://www.2africa.org/contact"
-              className="text-gray-700 hover:text-brand-purple transition-colors"
-              target="_blank"
-            >
-              Contact
-            </Link>
+            {navigationItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="text-gray-700 hover:text-brand-purple transition-colors"
+                target={item.external ? "_blank" : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
             {user ? (
               <Link
                 to={user.role === "admin" ? "/admin/dashboard" : "/dashboard"}
@@ -81,28 +86,17 @@ export const Navbar = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 space-y-4 mt-2">
-            <Link
-              to="/"
-              className="block text-gray-700 hover:text-brand-purple py-2 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              to="/campaigns"
-              className="block text-gray-700 hover:text-brand-purple py-2 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Campaigns
-            </Link>
-            <Link
-              to="https://www.2africa.org/contact"
-              target="_blank"
-              className="block text-gray-700 hover:text-brand-purple py-2 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact
-            </Link>
+            {navigationItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="block text-gray-700 hover:text-brand-purple py-2 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+                target={item.external ? "_blank" : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
             {user ? (
               <Link
                 to={user.role === "admin" ? "/admin/dashboard" : "/dashboard"}

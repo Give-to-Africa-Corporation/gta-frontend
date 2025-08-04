@@ -133,7 +133,7 @@ const TruthSection = () => {
         <div className="mb-24">
           <DonationDialog
             trigger={
-              <button className="w-1/4 mx-auto hero-button-frontline text-lg px-8 py-4 bg-white text-primary hover:bg-white/90 font-bold rounded-xl hover:scale-105 transition-all duration-300">
+              <button className="mx-auto lg:w-1/4 hero-button-frontline text-lg px-8 py-4 bg-white text-primary hover:bg-white/90 font-bold rounded-xl hover:scale-105 transition-all duration-300">
                 DONATE NOW
               </button>
             }
