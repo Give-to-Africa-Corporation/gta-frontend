@@ -38,6 +38,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 const CreateCampaign = () => {
   const navigate = useNavigate();
   const { campaignId } = useParams();
@@ -171,6 +176,7 @@ const CreateCampaign = () => {
     setCurrentCoverImageUrl(null);
   };
 
+
   const handleSubmit = async (
     e: React.FormEvent,
     submitStatus: "draft" | "ongoing"
@@ -245,7 +251,7 @@ const CreateCampaign = () => {
       if (!response.success) {
         throw new Error(
           response.error ||
-            `Failed to ${isEditMode ? "update" : "create"} campaign`
+          `Failed to ${isEditMode ? "update" : "create"} campaign`
         );
       }
 
@@ -262,6 +268,7 @@ const CreateCampaign = () => {
       setIsLoading(false);
     }
   };
+
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -603,8 +610,11 @@ const CreateCampaign = () => {
                       </div>
                     </div>
                   )}
+
+
                 </CardContent>
               </Card>
+
 
               {/* Submit Buttons */}
               <CardFooter className="flex justify-between px-0">
@@ -634,8 +644,8 @@ const CreateCampaign = () => {
                         ? "Updating..."
                         : "Creating..."
                       : isEditMode
-                      ? "Update Campaign"
-                      : "Publish Campaign"}
+                        ? "Update Campaign"
+                        : "Publish Campaign"}
                   </Button>
                 </div>
               </CardFooter>
