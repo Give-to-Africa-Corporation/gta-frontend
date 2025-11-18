@@ -27,6 +27,8 @@ import VerificationPending from "./pages/registration/VerificationPending";
 import VerificationRejected from "./pages/registration/VerificationRejected";
 import NgoCampaignPage from "./pages/ngocampaignpage/NgoCampaignPage";
 import NgoSearchPage from "./pages/ngocampaignpage/NgoSearchPage";
+import ProfileComplete from "./pages/registration/ProfileComplete";
+import PaypalComplete from "./pages/PaypalComplete";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +66,7 @@ const App = () => (
             />
             <Route path="/campaigns/:id/embed" element={<CampaignEmbed />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/ngo/:ngoId/paypal-complete" element={<PaypalComplete />} />
 
             {/* Protected NGO Routes */}
             <Route
@@ -71,6 +74,14 @@ const App = () => (
               element={
                 <ProtectedRoute role="ngo">
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/profile/complete"
+              element={
+                <ProtectedRoute role="ngo">
+                  <ProfileComplete />
                 </ProtectedRoute>
               }
             />
@@ -111,7 +122,7 @@ const App = () => (
       </TooltipProvider>
     </AppProvider>
   </QueryClientProvider>
-  
+
 );
 
 export default App;

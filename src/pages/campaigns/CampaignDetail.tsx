@@ -40,7 +40,7 @@ const CampaignDetail = () => {
 
       try {
         // Try to fetch from API first
-        const response = await campaignApi.getCampaign(id);
+        const response = await campaignApi.getCampaign(id); 
 
         if (response.success && response.data) {
           // Add id field (create alias for _id) for consistency

@@ -57,6 +57,8 @@ export interface NgoProfile {
     leadershipProof?: string;
     additionalDocument?: string;
   };
+  NGOAccountReady?: boolean;
+  paypalStatus: String;
 }
 
 // NGO Profile Stats

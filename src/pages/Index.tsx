@@ -4,6 +4,7 @@ import { CTASection } from "@/components/home/CTASection";
 import { FeaturedCausesSection } from "@/components/home/FeaturedCausesSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { DonationHighlight } from "@/components/home/DonationHighlight";
+import { RecentDonations } from "@/components/home/RecentDonations";
 import { ProblemSection } from "@/components/home/ProblemSection";
 import { SolutionSection} from "@/components/home/SolutionSection";
 import { KeyFeatures } from "@/components/home/KeyFeatures";
@@ -37,13 +38,14 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow">
         <HeroSection />
-        <DonationHighlight />
-        <ProblemSection />
-        <SolutionSection />
-        <KeyFeatures/>
-        <HowItWorks />
-        <NewTestimonialsSection />
-        <CallToAction />
+        <RecentDonations />
+        {/* <DonationHighlight /> */}
+        {/* <ProblemSection /> */}
+        {/* <SolutionSection /> */}
+        {/* <KeyFeatures/> */}
+        {/* <HowItWorks /> */}
+        {/* <NewTestimonialsSection /> */}
+        {/* <CallToAction /> */}
         {/* <CTAGridSection />
         <MissionSection />
         <FeaturedCausesSection />

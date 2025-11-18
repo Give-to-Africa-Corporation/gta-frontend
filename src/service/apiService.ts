@@ -79,6 +79,28 @@ export const handleError = (error: any): ApiResponse<any> => {
   };
 };
 
+export const handleErrorBank = (error: any) => {
+  if (axios.isAxiosError(error)) {
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      "Unexpected server error occurred.";
+    return {
+      success: false,
+      message,
+      data: null,
+      missingFields: error.response?.data?.missingFields || [],
+    };
+  }
+
+  return {
+    success: false,
+    message: "An unknown error occurred.",
+    data: null,
+  };
+};
+
+
 // Create FormData from object
 const createFormData = (data: Record<string, any>): FormData => {
   const formData = new FormData();
@@ -152,6 +174,18 @@ export const ngoApi = {
       return handleError(error);
     }
   },
+
+  completeBankDetails: async (
+    data: any
+  ): Promise<ApiResponse<any>> => {
+    try {
+      const response = await api.post("/ngos/complete-bank-details", data);
+      return handleResponse(response);
+    } catch (error) {
+      return handleErrorBank(error);
+    }
+  },
+
 
   updateProfile: async (
     data: UpdateProfileRequest

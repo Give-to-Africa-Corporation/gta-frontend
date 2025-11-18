@@ -25,11 +25,11 @@ const Header = () => {
             <div className="w-10 h-10 rounded-full overflow-hidden">
               <img 
                 src={logoImage} 
-                alt="Campaign to Raising Africa" 
+                alt="Campaign to YENDAA" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-xl font-bold text-foreground">Campaign to Raising Africa</span>
+            <span className="text-xl font-bold text-foreground">Campaign to YENDAA</span>
           </div>
 
           {/* Desktop Navigation */}

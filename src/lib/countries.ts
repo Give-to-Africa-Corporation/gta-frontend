@@ -245,4 +245,97 @@ export const africanCountries = [
   { name: "Uganda", code: "UG" },
   { name: "Zambia", code: "ZM" },
   { name: "Zimbabwe", code: "ZW" },
+  { name: "UnitedStates", code: "US" },
 ];
+
+export const africanProvinces = {
+  Nigeria: [
+    "Lagos",
+    "Abuja (FCT)",
+    "Kano",
+    "Kaduna",
+    "Oyo",
+    "Rivers",
+    "Anambra",
+  ],
+  Kenya: [
+    "Nairobi",
+    "Mombasa",
+    "Kisumu",
+    "Nakuru",
+    "Uasin Gishu",
+    "Kiambu",
+  ],
+  SouthAfrica: [
+    "Gauteng",
+    "Western Cape",
+    "KwaZulu-Natal",
+    "Eastern Cape",
+    "Limpopo",
+    "Mpumalanga",
+    "Free State",
+  ],
+  Egypt: [
+    "Cairo",
+    "Alexandria",
+    "Giza",
+    "Port Said",
+    "Suez",
+  ],
+  Ghana: [
+    "Greater Accra",
+    "Ashanti",
+    "Northern",
+    "Eastern",
+    "Western",
+  ],
+  US: [
+    "New York",
+  ],
+};
+
+export const africanCities = {
+  Nigeria: {
+    Lagos: ["Ikeja", "Epe", "Ikorodu", "Badagry"],
+    "Abuja (FCT)": ["Garki", "Wuse", "Maitama", "Asokoro"],
+    Kano: ["Nassarawa", "Tarauni", "Fagge", "Kumbotso"],
+    Kaduna: ["Zaria", "Kaduna North", "Kaduna South"],
+    Oyo: ["Ibadan", "Ogbomoso", "Oyo Town"],
+    Rivers: ["Port Harcourt", "Obio-Akpor"],
+    Anambra: ["Onitsha", "Awka"],
+  },
+  Kenya: {
+    Nairobi: ["Westlands", "Karen", "Langata", "Embakasi"],
+    Mombasa: ["Kisauni", "Likoni", "Changamwe"],
+    Kisumu: ["Kisumu Central", "Kisumu East"],
+  },
+  SouthAfrica: {
+    Gauteng: ["Johannesburg", "Pretoria", "Soweto"],
+    "Western Cape": ["Cape Town", "Stellenbosch", "Paarl"],
+    "KwaZulu-Natal": ["Durban", "Pietermaritzburg"],
+  },
+  Egypt: {
+    Cairo: ["Heliopolis", "Nasr City", "Maadi"],
+    Alexandria: ["Montaza", "Sidi Gaber", "Attarin"],
+  },
+  Ghana: {
+    "Greater Accra": ["Accra", "Tema", "Madina"],
+    Ashanti: ["Kumasi", "Obuasi"],
+  },
+  US: {
+    "New York": [
+      "New York City",
+      "Buffalo",
+      "Rochester",
+      "Yonkers",
+      "Syracuse",
+      "Albany",
+      "Niagara Falls",
+      "Utica",
+      "White Plains",
+      "Troy",
+    ],
+  },
+};
+
+

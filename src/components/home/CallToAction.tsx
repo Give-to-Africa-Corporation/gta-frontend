@@ -8,10 +8,10 @@ export const CallToAction: React.FC = () => {
         {/* Left Section */}
         <div className="flex-1 text-center md:text-left">
           <h2 className="text-3xl md:text-4xl font-bold text-[#0a1a44] leading-snug mb-3 hidden md:block">
-            Raising Africa <br /> The All-in-One Platform
+            YENDAA <br /> The All-in-One Platform
           </h2>
           <h2 className="text-3xl md:text-4xl font-bold text-[#0a1a44] leading-snug mb-3 block md:hidden">
-            Raising Africa – The All-in-One Platform
+            YENDAA – The All-in-One Platform
           </h2>
 
           <p className="text-lg text-gray-700 mb-6">
@@ -35,7 +35,7 @@ export const CallToAction: React.FC = () => {
         <div className="flex-1 flex justify-center hidden md:block">
           <img
             src="/images/cta123.png"
-            alt="Raising Africa"
+            alt="YENDAA"
             className="max-w-full h-auto"
           />
         </div>

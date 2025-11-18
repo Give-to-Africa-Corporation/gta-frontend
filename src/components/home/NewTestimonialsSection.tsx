@@ -13,7 +13,7 @@ export const NewTestimonialsSection: React.FC = () => {
         {/* Card 1 */}
         <div className="bg-[#dcfce7] rounded-2xl shadow-sm p-6 flex flex-col justify-between">
           <p className="text-[#0a1a44] italic text-lg leading-relaxed mb-6">
-           “Raising Africa helped us raise funds and find volunteers from across the world.”
+           “YENDAA helped us raise funds and find volunteers from across the world.”
           </p>
           <div className="bg-white border border-[#d4f1d4] rounded-xl px-4 py-3 mt-auto">
             <p className="font-semibold text-[#0a1a44]">NGO Partner</p>
@@ -39,7 +39,7 @@ export const NewTestimonialsSection: React.FC = () => {
         {/* Card 3 (NEW) */}
         <div className="bg-[#dcfce7] rounded-2xl shadow-sm p-6 flex flex-col justify-between">
           <p className="text-[#0a1a44] italic text-lg leading-relaxed mb-6">
-            “With Raising Africa, we reached more people in just weeks than we could in years on our own.”
+            “With YENDAA, we reached more people in just weeks than we could in years on our own.”
           </p>
           <div className="bg-white border border-[#d4f1d4] rounded-xl px-4 py-3 mt-auto">
             <p className="font-semibold text-[#0a1a44]">Community Leader</p>

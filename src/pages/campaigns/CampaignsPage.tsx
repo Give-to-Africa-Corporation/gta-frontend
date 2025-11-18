@@ -80,7 +80,7 @@ export default function CampaignsPage() {
   const [countryFilter, setCountryFilter] = useState<string>("");
   const [causeFilter, setCauseFilter] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9; // Show 9 campaigns per page (3x3 grid)
+  const itemsPerPage = 12; // Show 9 campaigns per page (3x3 grid)
 
   // Get unique countries from campaigns
   const countries = useMemo(() => {
@@ -119,8 +119,8 @@ export default function CampaignsPage() {
     const end = deadline
       ? new Date(deadline)
       : endDate
-      ? new Date(endDate)
-      : null;
+        ? new Date(endDate)
+        : null;
     if (!end) return null;
 
     const today = new Date();
@@ -150,7 +150,7 @@ export default function CampaignsPage() {
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold">Campaign to Raising Africa Campaigns</h1>
+        <h1 className="text-3xl font-bold">Campaign to YENDAA Campaigns</h1>
         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
           <div className="relative flex-1 md:flex-initial">
             <Search
@@ -243,82 +243,82 @@ export default function CampaignsPage() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-5 h-full">
         {filteredCampaigns
           .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-          .map((campaign) => {
-            const daysLeft = getDaysLeft(campaign.deadline, campaign.endDate);
-            const isPerpetual = isCampaignPerpetual(campaign);
+          .map((campaign, index) => {
+            const imageUrl =
+              campaign.media?.mainImage || campaign.image || FALLBACK_IMAGE;
+            const resolvedImage = imageUrl.startsWith("http")
+              ? imageUrl
+              : `${import.meta.env.VITE_BE_URL}${imageUrl}`;
 
-            // Handle image from both models
-            const imageUrl = campaign.media?.mainImage || campaign.image;
+            const staggerClass =
+              index > 0
+                ? index % 4 === 1 || index % 4 === 3
+                  ? "mt-0 sm:mt-8" // mobile pe 0, sm+ pe stagger
+                  : ""
+                : "";
 
             return (
-              <Card
-                key={campaign._id || campaign.id}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() =>
-                  navigate(
-                    `/campaigns/${
-                      campaign.campaignSlug || campaign._id || campaign.id
-                    }`
-                  )
-                }
-              >
-                <div className="h-48 w-full relative">
-                  <Image
-                    src={
-                      imageUrl.startsWith("http")
-                        ? imageUrl
-                        : `${import.meta.env.VITE_BE_URL}${imageUrl}`
-                    }
-                    alt={campaign.title}
-                    className="h-full w-full object-cover rounded-t-lg"
-                    fallback={FALLBACK_IMAGE}
-                  />
-                  <div className="absolute top-2 right-2">
-                    {getCauseBadge(campaign.cause)}
+              <div key={campaign._id || campaign.id} className={staggerClass}>
+                <Card
+                  className="cursor-pointer hover:shadow-xl transition-all duration-300 rounded-2xl bg-white border border-gray-100 overflow-hidden group"
+                  onClick={() =>
+                    navigate(`/campaigns/${campaign.campaignSlug || campaign._id}`)
+                  }
+                >
+                  {/* Image Section with overlay */}
+                  <div className="h-48 w-full relative overflow-hidden">
+                    <img
+                      src={resolvedImage}
+                      alt={campaign.title}
+                      className="h-full w-full object-cover rounded-t-2xl transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                    {/* subtle overlay badge */}
+                    <div className="absolute bg-black text-white text-xs font-semibold px-3 py-1 rounded-full shadow top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {campaign.cause}
+                    </div>
                   </div>
-                </div>
-                <CardHeader className="pb-2">
-                  <CardTitle className="line-clamp-1">
-                    {campaign.title}
-                  </CardTitle>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    <span>{campaign.country}</span>
-                  </div>
-                  <CardDescription className="line-clamp-2">
-                    {campaign.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button
-                    variant="default"
-                    className="w-full mt-4"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(
-                        `/campaigns/${
-                          campaign.campaignSlug || campaign._id || campaign.id
-                        }/donate`
-                      );
-                    }}
-                  >
-                    Donate Now
-                  </Button>
-                </CardContent>
-              </Card>
+
+                  {/* Card Content */}
+                  <CardHeader className="p-4">
+                    <CardDescription className="line-clamp-2 text-gray-400">
+                      {campaign.cause}
+                    </CardDescription>
+                    <CardTitle className="line-clamp-1 text-lg font-semibold text-gray-800 transition-colors">
+                      {campaign.title}
+                    </CardTitle>
+
+                    <div className="flex items-center text-sm text-gray-500 mt-1">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      <span>{campaign.country}</span>
+                    </div>
+
+                    <CardDescription className="line-clamp-2 text-gray-600 mt-2">
+                      {campaign.description}
+                    </CardDescription>
+                  </CardHeader>
+
+                  <CardContent className="p-4 pt-0">
+                    <Button
+                      variant="default"
+                      className="mt-4 rounded-xl transition-colors shadow-md"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(
+                          `/campaigns/${campaign.campaignSlug || campaign._id}/donate`
+                        );
+                      }}
+                    >
+                      Donate Now
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+
             );
           })}
-
-        {filteredCampaigns.length === 0 && (
-          <div className="col-span-full text-center py-8">
-            <p className="text-gray-500">
-              No campaigns found matching your criteria.
-            </p>
-          </div>
-        )}
       </div>
 
       {filteredCampaigns.length > 0 && (
@@ -346,7 +346,7 @@ export default function CampaignsPage() {
                 if (
                   pageNumber === 1 ||
                   pageNumber ===
-                    Math.ceil(filteredCampaigns.length / itemsPerPage) ||
+                  Math.ceil(filteredCampaigns.length / itemsPerPage) ||
                   (pageNumber >= currentPage - 1 &&
                     pageNumber <= currentPage + 1)
                 ) {
@@ -386,7 +386,7 @@ export default function CampaignsPage() {
                   }
                   className={
                     currentPage ===
-                    Math.ceil(filteredCampaigns.length / itemsPerPage)
+                      Math.ceil(filteredCampaigns.length / itemsPerPage)
                       ? "pointer-events-none opacity-50"
                       : "cursor-pointer"
                   }

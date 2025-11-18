@@ -7,7 +7,7 @@ export const DonationHighlight = () => {
       <div className="container-custom relative z-10 text-center max-w-6xl mx-auto px-4">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-brand-yellow">
-          Together, we are raising Africa.
+          Together, we are YENDAA.
         </h2>
 
         {/* Text */}

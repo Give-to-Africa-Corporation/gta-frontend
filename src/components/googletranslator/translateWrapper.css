@@ -105,6 +105,7 @@ body *[title] {
 
 .goog-te-gadget-simple img {
   background-image: url('/images/glob.png') !important;
+  filter: invert(1);
   /* background-image: url('http://localhost:8080//give.png') !important; */
   background-size: cover;
   width: 20px;

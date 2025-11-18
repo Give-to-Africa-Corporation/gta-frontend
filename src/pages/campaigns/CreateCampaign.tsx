@@ -38,10 +38,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-interface FAQItem {
-  question: string;
-  answer: string;
-}
+// interface FAQItem {
+//   question: string;
+//   answer: string;
+// }
 
 const CreateCampaign = () => {
   const navigate = useNavigate();
@@ -68,6 +68,10 @@ const CreateCampaign = () => {
     string[]
   >([]);
   const [error, setError] = useState<string | null>(null);
+  // faqs
+  // const [faqs, setFaqs] = useState<FAQItem[]>([]);
+  // const [newQuestion, setNewQuestion] = useState("");
+  // const [newAnswer, setNewAnswer] = useState("");
 
   // Fetch campaign data if in edit mode
   useEffect(() => {
@@ -109,6 +113,20 @@ const CreateCampaign = () => {
         if (campaign.media?.additionalImages?.length) {
           setCurrentAdditionalImages(campaign.media.additionalImages);
         }
+        
+        // if (campaign.faqs && Array.isArray(campaign.faqs)) {
+        //   setFaqs(campaign.faqs);
+        // } else if (typeof campaign.faqs === "string") {
+        //   try {
+        //     const parsedFaqs = JSON.parse(campaign.faqs);
+        //     if (Array.isArray(parsedFaqs)) {
+        //       setFaqs(parsedFaqs);
+        //     }
+        //   } catch (err) {
+        //     console.error("Failed to parse faqs", err);
+        //   }
+        // }
+
       } catch (error) {
         const errorMessage =
           error instanceof Error
@@ -176,6 +194,17 @@ const CreateCampaign = () => {
     setCurrentCoverImageUrl(null);
   };
 
+  // faq
+  // const addFAQ = () => {
+  //   if (newQuestion.trim() === "" || newAnswer.trim() === "") return;
+  //   setFaqs([...faqs, { question: newQuestion, answer: newAnswer }]);
+  //   setNewQuestion("");
+  //   setNewAnswer("");
+  // };
+
+  // const removeFAQ = (index: number) => {
+  //   setFaqs(faqs.filter((_, i) => i !== index));
+  // };
 
   const handleSubmit = async (
     e: React.FormEvent,
@@ -202,6 +231,15 @@ const CreateCampaign = () => {
         throw new Error("Please upload a cover image for your campaign");
       }
 
+      // if (!faqs || faqs.length === 0) {
+      //   throw new Error("Please add at least one FAQ for your campaign");
+      // }
+      // for (const faq of faqs) {
+      //   if (!faq.question.trim() || !faq.answer.trim()) {
+      //     throw new Error("Each FAQ must have a question and an answer");
+      //   }
+      // }
+
       // Prepare campaign data
       const campaignData = {
         title: formData.title,
@@ -215,6 +253,7 @@ const CreateCampaign = () => {
           !isPerpetual && formData.endDate
             ? new Date(formData.endDate).getTime()
             : undefined,
+        // faqs: JSON.stringify(faqs),
       };
 
       // Prepare media files
@@ -615,6 +654,52 @@ const CreateCampaign = () => {
                 </CardContent>
               </Card>
 
+              {/* FAQ */}
+              {/* <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>FAQ</CardTitle>
+                </CardHeader>
+
+                <CardContent className="space-y-6">
+                  <div>
+                    <Input
+                      type="text"
+                      placeholder="Enter Question"
+                      value={newQuestion}
+                      onChange={(e) => setNewQuestion(e.target.value)}
+                      className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <Textarea
+                      placeholder="Enter Answer"
+                      value={newAnswer}
+                      onChange={(e) => setNewAnswer(e.target.value)}
+                      className="w-full mt-2 border rounded px-3 py-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <Button
+                      onClick={addFAQ}
+                      type="button"
+                      className="px-4 py-2 border mt-2 rounded transition"
+                    >
+                      Add FAQ
+                    </Button>
+                  </div>
+                  <div>
+                    {faqs.map((faq, index) => (
+                      <div key={index} className="border mb-2 rounded p-3 bg-gray-50">
+                        <p className="font-medium mb-2">{faq.question}</p>
+                        <hr />
+                        <p className="mt-2 whitespace-pre-wrap">{faq.answer}</p>
+                        <button
+                          onClick={() => removeFAQ(index)}
+                          className="my-3 text-[#fff] bg-red-500 hover:bg-red-400 py-1 px-2 rounded"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card> */}
 
               {/* Submit Buttons */}
               <CardFooter className="flex justify-between px-0">

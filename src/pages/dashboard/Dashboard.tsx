@@ -22,18 +22,22 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAppContext } from "@/context/AppContext";
 import { NgoStats } from "@/lib/types";
-import { FileText, LayoutDashboard, LogOut, PieChart } from "lucide-react";
+import { Banknote, FileText, LayoutDashboard, LogOut, PieChart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import CampaignsTab from "./tabs/CampaignsTab";
 import DonationsTab from "./tabs/DonationsTab";
 import DonorsTab from "./tabs/DonorsTab";
 import ProfileTab from "./tabs/ProfileTab";
+import axios from "axios";
+import { toast } from "sonner";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { user, logout, profileData } = useAppContext();
+  console.log(profileData?.ngo?._id, "ngo id")
+  const ngoId = profileData?.ngo?._id;
   const [activeTab, setActiveTab] = useState("profile");
   const [mounted, setMounted] = useState(false);
 
@@ -64,6 +68,8 @@ const Dashboard = () => {
     uniqueDonors: 0,
   };
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -81,20 +87,41 @@ const Dashboard = () => {
 
   // Add near the top of your component
   useEffect(() => {
-    // Debug authentication at Dashboard load
     const token = localStorage.getItem("token");
-    // If no token or no user, redirect to login
     if (!token) {
       console.error("No token found when accessing Dashboard");
       navigate("/login");
     }
   }, []);
 
+  // paypal onboarding
+  const handleConnectPayPal = async () => {
+    try {
+      setLoading(true);
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/ngos/${ngoId}/paypal-onboarding`
+      );
+
+      const { onboardingLink } = response.data;
+
+      if (onboardingLink) {
+        window.location.href = onboardingLink;
+      } else {
+        toast.error("Failed to get PayPal onboarding link");
+      }
+    } catch (error: any) {
+      console.error(error.response?.data || error.message);
+      toast.error(error.response?.data || "Error connecting to PayPal. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SidebarProvider
-      className={`${
-        mounted ? "opacity-100" : "opacity-0"
-      } transition-opacity duration-500`}
+      className={`${mounted ? "opacity-100" : "opacity-0"
+        } transition-opacity duration-500`}
     >
       <div className="flex min-h-screen w-full">
         <Sidebar>
@@ -106,9 +133,8 @@ const Dashboard = () => {
                     src={
                       profileData.ngo.profileImage.startsWith("http")
                         ? profileData.ngo.profileImage
-                        : `${import.meta.env.VITE_BE_URL}${
-                            profileData.ngo.profileImage
-                          }`
+                        : `${import.meta.env.VITE_BE_URL}${profileData.ngo.profileImage
+                        }`
                     }
                     alt="Profile"
                   />
@@ -139,8 +165,34 @@ const Dashboard = () => {
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Create Campaign">
-                  <Link to="/dashboard/campaigns/new">
+                <SidebarMenuButton
+                  asChild
+                  tooltip="Complete Bank Details"
+                >
+                  <Link to="/dashboard/profile/complete">
+                    <Banknote className="mr-3 h-5 w-5" />
+                    <span>Complete Bank Details</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="Create Campaign"
+                  disabled={!profileData?.ngo?.NGOAccountReady}
+                  className={
+                    !profileData?.ngo?.NGOAccountReady &&
+                      profileData?.ngo?.paypalStatus === "pending"
+                      ? "opacity-50 pointer-events-none"
+                      : ""
+                  }
+                >
+                  <Link to="/dashboard/campaigns/new"
+                    className={
+                      !profileData?.ngo?.NGOAccountReady &&
+                        profileData?.ngo?.paypalStatus === "pending"
+                        ? "pointer-events-none"
+                        : ""
+                    }>
                     <FileText className="mr-3 h-5 w-5" />
                     <span>Create Campaign</span>
                   </Link>
@@ -176,6 +228,33 @@ const Dashboard = () => {
 
         <SidebarInset>
           <div className="p-4 md:p-6 lg:p-8">
+            {!profileData?.ngo?.NGOAccountReady && (
+              <div className="text-sm bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded-md flex flex-col md:flex-row items-center justify-between">
+                <p>
+                  Please complete your remaining bank details first. Once your details are verified, your Stripe account will be created.
+                </p>
+                <div className="mt-2 sm:mt-0">
+                  <Link
+                    to="/dashboard/profile/complete"
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm"
+                  >
+                    Complete Bank Details
+                  </Link>
+                </div>
+              </div>
+            )}
+            {profileData?.ngo?.paypalStatus === "pending" && (
+              <div className="text-sm bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded-md flex flex-col md:flex-row items-center justify-between">
+                <p>⚠️ PayPal account not connected! To receive donations, please connect your PayPal account.</p>
+                <div className="mt-2 sm:mt-0">
+                  <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm"
+                    onClick={handleConnectPayPal}
+                    disabled={loading}>
+                    {loading ? "Connecting..." : "Connect PayPal"}
+                  </button>
+                </div>
+              </div>
+            )}
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h1 className="text-3xl font-bold">
@@ -198,7 +277,7 @@ const Dashboard = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-green-600">
+                  <p className="text-sm text-brand-purple">
                     From {stats.totalDonations || "all"} donations
                   </p>
                 </CardContent>
@@ -228,7 +307,7 @@ const Dashboard = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-green-600">
+                  <p className="text-sm text-brand-purple">
                     {stats.uniqueDonors > 0
                       ? `Supporting your cause`
                       : "Start campaigns to attract donors"}
@@ -279,7 +358,7 @@ const Dashboard = () => {
           </div>
         </SidebarInset>
       </div>
-    </SidebarProvider>
+    </SidebarProvider >
   );
 };
 
