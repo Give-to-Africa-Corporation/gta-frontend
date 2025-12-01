@@ -37,7 +37,8 @@ export const RecentDonations = () => {
               {/* Image */}
               <div className="relative h-48 mt-3">
                 <img
-                  src={item.media?.mainImage ? BASE_URL + item.media.mainImage : item.image || "/placeholder.jpg"}
+                //   src={item.media?.mainImage ? BASE_URL + item.media.mainImage : item.image || "/placeholder.jpg"}
+                  src={item.media?.mainImage || "/placeholder.jpg"}
                   alt={item.title}
                   className="w-full h-full object-cover"
                 />
