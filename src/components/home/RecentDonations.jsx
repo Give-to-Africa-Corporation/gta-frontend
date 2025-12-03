@@ -32,7 +32,7 @@ export const RecentDonations = () => {
                         <Card
                             key={item._id || item.id}
                             className={`group rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-all duration-300 flex flex-col
-              ${index % 2 === 0 ? "mt-0" : "mt-8"}`}
+              ${index % 2 === 0 ? "mt-0" : "mt-8"} cursor-pointer`}
                             onClick={() =>
                                 navigate(`/campaigns/${item.campaignSlug || item._id}`)
                             }
@@ -45,7 +45,7 @@ export const RecentDonations = () => {
                                     className="h-full w-full object-cover rounded-t-2xl transform group-hover:scale-105 transition-transform duration-500"
                                 />
                                 {/* Overlay badge */}
-                                <div className="absolute bg-black text-white text-xs font-semibold px-3 py-1 rounded-full shadow top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="absolute bg-black text-white text-xs font-semibold px-3 py-1 rounded-full shadow top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                                     {item.cause}
                                 </div>
                             </div>
@@ -76,6 +76,15 @@ export const RecentDonations = () => {
                             </CardContent>
                         </Card>
                     ))}
+                </div>
+                {/* Show More Button */}
+                <div className="flex justify-center mt-10">
+                    <Button
+                        className="bg-brand-purple hover:bg-brand-purple-light text-white rounded-full px-6 py-2 text-sm shadow"
+                        onClick={() => navigate("/campaigns")}
+                    >
+                        Show More
+                    </Button>
                 </div>
             </div>
         </div>
