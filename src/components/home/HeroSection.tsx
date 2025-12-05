@@ -221,7 +221,7 @@ export const HeroSection = () => {
           const section = document.getElementById("recent-donations");
           section?.scrollIntoView({ behavior: "smooth" });
         }}>
-        See Campaigns <ChevronDown size={20} className="" />
+        See Causes <ChevronDown size={20} className="" />
       </div>
     </section>
   );

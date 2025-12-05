@@ -1138,12 +1138,12 @@ const PaymentForm = ({
         if (confirmData.success) {
           toast.success("Donation recorded successfully ✅");
         } else {
-          toast.error(confirmData.message || "Payment succeeded but donation not saved");
+          // toast.error(confirmData.message || "Payment succeeded but donation not saved");
         }
       }
     } catch (err: any) {
       console.error(err);
-      toast.error(err.message || "Something went wrong");
+      // toast.error(err.message || "Something went wrong");
     } finally {
       setIsProcessing(false);
     }
@@ -1426,11 +1426,11 @@ const PaymentForm = ({
     //   icon: <CircleDollarSign className="h-5 w-5 text-primary" />,
     // },
 
-    {
-      id: "paypal",
-      name: "PayPal",
-      icon: <DollarSign className="h-5 w-5 text-primary" />,
-    },
+    // {
+    //   id: "paypal",
+    //   name: "PayPal",
+    //   icon: <DollarSign className="h-5 w-5 text-primary" />,
+    // },
     // {
     //   id: "venmo",
     //   name: "Venmo",
