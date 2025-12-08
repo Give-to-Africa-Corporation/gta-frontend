@@ -1771,13 +1771,14 @@ const PaymentForm = ({
                   </div>
                   <hr />
                   <div className="flex justify-between py-3">
-                    <p>Donation for Equal Justice Initiative</p>
+                    {/* <p>Donation for Equal Justice Initiative</p> */}
+                    <p>Donation for {campaign.title}</p>
                     <p>${amount}</p>
                   </div>
                   <hr />
                   <div className="flex justify-between py-3">
                     <p>
-                      Donation for Africa |{" "}
+                      Donation for YENDAA |{" "}
                       <span
                         onClick={() => setIsEditing(true)}
                         className="text-gray-500 cursor-pointer"
