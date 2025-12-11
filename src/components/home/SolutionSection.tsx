@@ -18,7 +18,7 @@ export const SolutionSection: React.FC = () => {
             A simple, secure, <br /> Africa-centered platform.
           </h2>
           <p className="text-white/70 mb-6">
-            With YENDAA, nonprofits can:
+            With YENDAA, causes can:
           </p>
           <ul className="space-y-3 text-lg">
             <li className="flex items-start gap-2">

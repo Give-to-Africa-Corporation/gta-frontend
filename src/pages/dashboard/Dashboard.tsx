@@ -200,10 +200,10 @@ const Dashboard = () => {
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="View Campaigns">
+                <SidebarMenuButton asChild tooltip="View Causes">
                   <Link to="/campaigns">
                     <PieChart className="mr-3 h-5 w-5" />
-                    <span>View Campaigns</span>
+                    <span>View Causes</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -285,7 +285,7 @@ const Dashboard = () => {
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardDescription>Ongoing Campaigns</CardDescription>
+                  <CardDescription>Ongoing Causes</CardDescription>
                   <CardTitle className="text-2xl">
                     {stats.activeCampaigns}
                   </CardTitle>
@@ -338,7 +338,7 @@ const Dashboard = () => {
             >
               <TabsList>
                 <TabsTrigger value="profile">Profile</TabsTrigger>
-                <TabsTrigger value="campaigns">Campaigns</TabsTrigger>
+                <TabsTrigger value="campaigns">Causes</TabsTrigger>
                 <TabsTrigger value="donors">Donors</TabsTrigger>
                 <TabsTrigger value="donations">Donations</TabsTrigger>
               </TabsList>

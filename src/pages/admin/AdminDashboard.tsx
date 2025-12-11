@@ -144,7 +144,7 @@ const AdminDashboard = () => {
           <TabsList className="mb-4">
             <TabsTrigger value="verification">NGO Verification</TabsTrigger>
             <TabsTrigger value="ngos">Verified NGOs</TabsTrigger>
-            <TabsTrigger value="campaigns">Campaigns</TabsTrigger>
+            <TabsTrigger value="campaigns">Causes</TabsTrigger>
             {/* <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger> */}
           </TabsList>
@@ -495,7 +495,7 @@ const AdminDashboard = () => {
                           Country
                         </th>
                         <th className="text-left py-3 px-4 font-medium">
-                          Campaigns
+                          Causes
                         </th>
                         <th className="text-left py-3 px-4 font-medium">
                           Raised
@@ -559,11 +559,11 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
-          {/* Campaigns Tab */}
+          {/* Causes Tab */}
           <TabsContent value="campaigns">
             <Card>
               <CardHeader>
-                <CardTitle>All Campaigns</CardTitle>
+                <CardTitle>All Causes</CardTitle>
                 <CardDescription>
                   Monitor all active fundraising campaigns
                 </CardDescription>

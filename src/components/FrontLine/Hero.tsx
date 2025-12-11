@@ -29,7 +29,7 @@ const Hero = () => {
           </p>
 
           <p className="text-lg mb-8 opacity-90">
-            From classrooms to crisis zones, local nonprofits are leading the
+            From classrooms to crisis zones, local causes are leading the
             way — with little to no support.
           </p>
 

@@ -70,7 +70,7 @@
 //             isLoaded ? "opacity-100" : "opacity-0 translate-y-3"
 //           }`}
 //         >
-//           Built for African nonprofits to raise funds, recruit volunteers, and
+//           Built for African causes to raise funds, recruit volunteers, and
 //           grow impact — all in one place.
 //         </p>
 
@@ -189,7 +189,7 @@ export const HeroSection = () => {
                     For donors — Give with purpose.
                   </h3>
                   <p className="text-gray-700 text-xs sm:text-sm">
-                    Donate your money, time, and expertise to verified African nonprofits, NGOs, and charities creating lasting change.
+                    Donate your money, time, and expertise to verified African causes, NGOs, and charities creating lasting change.
                   </p>
                 </div>
               </div>
@@ -202,7 +202,7 @@ export const HeroSection = () => {
                 </div>
                 <div className="text-left">
                   <h3 className="text-brand-purple font-semibold text-lg">
-                    For African NGOs / Nonprofits — Grow your impact.
+                    For African NGOs / Causes — Grow your impact.
                   </h3>
                   <p className="text-gray-700 text-xs sm:text-sm">
                     Receive donations, connect with skilled volunteers, and access tools to amplify your mission — all in one trusted platform.

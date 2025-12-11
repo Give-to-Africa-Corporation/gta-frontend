@@ -148,7 +148,7 @@
 //       <div className="min-h-screen flex flex-col items-center justify-center">
 //         <p className="text-xl mb-4">Campaign not found</p>
 //         <Button onClick={() => navigate("/campaigns")}>
-//           Back to Campaigns
+//           Back to Causes
 //         </Button>
 //       </div>
 //     );
@@ -262,7 +262,7 @@ const PaymentPage = () => {
       <div className="min-h-screen flex flex-col items-center justify-center">
         <p className="text-xl mb-4">Campaign not found</p>
         <Button onClick={() => navigate("/campaigns")}>
-          Back to Campaigns
+          Back to Causes
         </Button>
       </div>
     );

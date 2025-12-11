@@ -13,7 +13,7 @@ export const feature = [
   },
   {
     title: "SMART DASHBOARD",
-    text: "Track donations, manage volunteers, and monitor campaigns in one simple dashboard — helping nonprofits stay organized and efficient.",
+    text: "Track donations, manage volunteers, and monitor campaigns in one simple dashboard — helping causes stay organized and efficient.",
     img: "/images/kf3.png",
   },
   {

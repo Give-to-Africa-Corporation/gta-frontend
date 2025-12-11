@@ -27,7 +27,7 @@ export const Footer = () => {
               Easier giving. Greater good.
             </h2>
             <p className="text-2xl md:text-2xl font-light leading-snug text-white">
-              YENDAA simplifies online giving for nonprofits and donors in order to accelerate social impact around the world.
+              YENDAA simplifies online giving for causes and donors in order to accelerate social impact around the world.
             </p>
           </div>
           <div className="container-custom grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
@@ -60,7 +60,7 @@ export const Footer = () => {
                 <h3 className="text-3xl font-bold">Trusted</h3>
               </div>
               <p className="text-md text-white">
-                Used by more than 6,000 nonprofits for secure and reliable donation processing.
+                Used by more than 6,000 causes for secure and reliable donation processing.
               </p>
             </div>
           </div>
@@ -115,7 +115,7 @@ export const Footer = () => {
                     to="/campaigns"
                     className="text-gray-300 hover:text-brand-purple"
                   >
-                    Campaigns
+                    Causes
                   </Link>
                 </li>
                 <li>
@@ -129,7 +129,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    to="https://2africa.org/contact/"
+                    to="/contact/"
                     target="_blank"
                     className="text-gray-300 hover:text-brand-purple"
                   >

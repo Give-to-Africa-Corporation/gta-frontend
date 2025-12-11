@@ -16,7 +16,7 @@ const faqItems = [
     id: "item-2",
     question: "How will my donation be used?",
     answer:
-      "Your donation supports trusted, African-led nonprofits doing critical work in their communities. Funds are used for programs, operations, and regranting to vetted grassroots organizations across Africa.",
+      "Your donation supports trusted, African-led causes doing critical work in their communities. Funds are used for programs, operations, and regranting to vetted grassroots organizations across Africa.",
   },
   {
     id: "item-3",

@@ -21,7 +21,7 @@
 //           <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-md text-center">
 //             <DollarSign className="w-10 h-10 text-brand-yellow mx-auto mb-4" />
 //             <p className="text-sm text-white/90">
-//               Underfunding prevents nonprofits from achieving their missions
+//               Underfunding prevents causes from achieving their missions
 //             </p>
 //           </div>
 
@@ -60,7 +60,7 @@ export const ProblemSection = () => {
             The Problem
           </h2>
           <p className="text-3xl md:text-4xl font-light leading-snug text-white/90">
-            African nonprofits are underfunded, overlooked, and face challenges
+            African causes are underfunded, overlooked, and face challenges
             in attracting donors and volunteers.
           </p>
         </div>
@@ -75,7 +75,7 @@ export const ProblemSection = () => {
               className="w-12 h-12 mx-auto mb-4"
             />
             <p className="text-sm text-white/90">
-               African nonprofits are underfunded and overlooked
+               African causes are underfunded and overlooked
             </p>
           </div>
 

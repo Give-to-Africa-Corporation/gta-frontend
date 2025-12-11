@@ -116,7 +116,7 @@ const AfricaYouthCouncil = () => {
             </li>
             <li>Citizens or residents of across African region</li>
             <li>
-              Actively involved in community work, nonprofits, youth organizing,
+              Actively involved in community work, causes, youth organizing,
               or social innovation
             </li>
             <li>

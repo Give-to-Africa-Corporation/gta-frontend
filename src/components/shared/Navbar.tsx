@@ -20,7 +20,7 @@ const navigationItems = [
   },
   {
     to: "/campaigns",
-    label: "Campaigns",
+    label: "Causes",
   },
   {
     to: "/contact",
@@ -147,16 +147,16 @@ export const Navbar = () => {
                       About YENDAA
                     </li></Link>
                   <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
-                    For nonprofits
+                    For causes
                   </li>
                   <Link to="/signup">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
-                      For donors
+                      Signup
                     </li></Link>
                 </ul>
                 <div className="border-t border-gray-200 px-4 py-3 text-sm text-gray-500 flex flex-wrap gap-x-3">
                   <Link to="/"><span className="cursor-pointer hover:text-gray-700">Home</span></Link>
-                  <Link to="/campaigns"><span className="cursor-pointer hover:text-gray-700">Campaigns</span></Link>
+                  <Link to="/campaigns"><span className="cursor-pointer hover:text-gray-700">Causes</span></Link>
                   <Link to="/about-us"><span className="cursor-pointer hover:text-gray-700">About Us</span></Link>
                   <Link to="/contact"><span className="cursor-pointer hover:text-gray-700">Contact Us</span></Link>
                   <Link to="/faq"><span className="cursor-pointer hover:text-gray-700">FAQ</span></Link>

@@ -6,12 +6,12 @@ const steps = [
     id: 1,
     icon: <UserPlus size={40} className="text-brand-purple" />,
     title: "Sign Up",
-    text: "Nonprofits apply and get verified.",
+    text: "Causes apply and get verified.",
   },
   {
     id: 2,
     icon: <Megaphone size={40} className="text-brand-purple" />,
-    title: "Launch Campaigns",
+    title: "Launch Causes",
     text: "Start fundraising and post volunteer opportunities in minutes.",
   },
   {

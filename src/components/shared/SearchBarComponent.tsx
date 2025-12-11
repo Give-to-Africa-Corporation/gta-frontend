@@ -7,7 +7,7 @@ const SearchBarComponent = ({ query, setQuery, isOpen, setIsOpen }) => {
                 <Search size={20} className="text-gray-500 mr-2" />
                 <input
                     type="text"
-                    placeholder="Search nonprofits, people..."
+                    placeholder="Search causes, people..."
                     className="flex-1 outline-none text-gray-700"
                     value={query}
                     onFocus={() => setIsOpen(true)}

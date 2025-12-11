@@ -1455,16 +1455,16 @@ const PaymentForm = ({
 
   const faqs = [
     {
-      question: "How can I track my order?",
-      answer: "You can track your order from the 'My Orders' section after logging into your account.",
+      question: "How does Yendaa accept my donation?",
+      answer: "Your donation is made to Give to Africa, a U.S. 501(c)(3) public charity. Give to Africa will immediately send you a receipt by email.We then securely transfer your donation to the specific African nonprofit or project you selected.",
     },
     {
-      question: "Do you offer international shipping?",
-      answer: "Yes, we deliver worldwide. Shipping charges may vary depending on the country.",
+      question: "Are there any fees?",
+      answer: "Visa and Mastercard charge 2.2% + $0.30 per transaction. Amex charges 3.5%. There is an additional 1% fee for non-US cards. Don’t like fees? Neither do we! Donate via bank (ACH) and Give to Africa will cover the small ACH fee, so bank donations are free. Yendaa does not charge any platform fees, because we are a nonprofit dedicated to expanding generosity across Africa. Instead, we rely on optional donor tips to help fund our mission and keep the platform free for causes.",
     },
     {
-      question: "Can I return or exchange a product?",
-      answer: "Absolutely! You can return or exchange within 7 days if the product is unused and in original packaging.",
+      question: "Will I receive a tax-deductible receipt for my donation?",
+      answer: "Yes. After your donation payment is confirmed, you will immediately receive a tax-deductible receipt by email. Your donation is 100% tax-deductible to the extent allowed by U.S. law. Your donation is made to Give to Africa, a tax-exempt U.S. 501(c)(3) charity. If you have a Yendaa account, you can also access a single itemized annual receipt showing all your donations for the year.",
     },
   ];
 

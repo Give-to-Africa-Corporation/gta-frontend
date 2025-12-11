@@ -30,7 +30,7 @@ export const ProcessSection = () => {
     },
     {
       icon: <PenLine className="text-brand-purple" size={32} />,
-      title: "Create Campaigns",
+      title: "Create Causes",
       description:
         "Set up compelling fundraising campaigns with goals, stories, and media.",
     },

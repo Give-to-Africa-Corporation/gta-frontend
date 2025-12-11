@@ -40,7 +40,7 @@ export const MissionSection = () => {
             </h2>
 
             <p className="text-gray-600 text-lg leading-relaxed">
-              Connect generous donors with trusted local nonprofits across
+              Connect generous donors with trusted local causes across
               Africa. We make cross-border giving easier, more transparent, and
               more impactful—so communities can thrive on their own terms. From
               education to the environment, we support locally led solutions

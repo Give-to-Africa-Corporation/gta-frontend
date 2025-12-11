@@ -6,7 +6,7 @@ export const CTAGridSection = () => {
   const ctaItems = [
     {
       title: "Grassroot Champion",
-      subtitle: "NGOs / Nonprofits / Charities",
+      subtitle: "NGOs / Causes / Charities",
       description:
         "Get verified, receive online donations, and become a recognized Grassroots Champion on Campaign to YENDAA. Register now to connect with global donors who believe in local, community-led impact.",
       icon: <Building className="w-8 h-8 text-white" />,
@@ -69,7 +69,7 @@ export const CTAGridSection = () => {
             Easier giving. Greater good.
           </h2>
           <p className="text-xl text-brand-orange font-medium">
-            Built by a nonprofit for nonprofits.
+            Built by a nonprofit for causes.
           </p>
         </div>
 

@@ -417,13 +417,13 @@ const ProfileTab = () => {
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-500">Total Campaigns</p>
+                <p className="text-sm text-gray-500">Total Causes</p>
                 <p className="text-2xl font-bold">
                   {profileData.stats.totalCampaigns}
                 </p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-500">Ongoing Campaigns</p>
+                <p className="text-sm text-gray-500">Ongoing Causes</p>
                 <p className="text-2xl font-bold">
                   {profileData.stats.activeCampaigns}
                 </p>

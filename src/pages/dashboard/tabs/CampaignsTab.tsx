@@ -218,7 +218,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Your Campaigns</h2>
+        <h2 className="text-xl font-semibold">Your Causes</h2>
         <Link to="/dashboard/campaigns/new">
           <Button className="flex items-center gap-2">
             <PlusCircle className="h-4 w-4" />
@@ -233,7 +233,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
             <div className="rounded-full bg-gray-100 p-6 mb-4">
               <PlusCircle className="h-10 w-10 text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium mb-2">No Campaigns Yet</h3>
+            <h3 className="text-lg font-medium mb-2">No Causes Yet</h3>
             <p className="text-gray-500 mb-6 max-w-md">
               Start your first fundraising campaign to connect with donors and
               make an impact through your NGO's mission.
@@ -418,7 +418,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-gray-50 p-4 rounded-lg">
               <h3 className="text-sm font-medium text-gray-500">
-                Ongoing Campaigns
+                Ongoing Causes
               </h3>
               <p className="text-3xl font-bold mt-1">
                 {campaigns.filter((c) => c.status === "ongoing").length}

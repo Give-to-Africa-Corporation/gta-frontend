@@ -201,7 +201,7 @@ const DonationsTab = () => {
                   <SelectValue placeholder="Filter by campaign" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Campaigns</SelectItem>
+                  <SelectItem value="all">All Causes</SelectItem>
                   {campaignNames.map((campaign) => (
                     <SelectItem key={campaign} value={campaign}>
                       {campaign}

@@ -92,7 +92,7 @@ const TruthSection = () => {
                   </h3>
                   <p className="text-lg mb-6">
                     That's why we created The Frontline Fund — to stand with
-                    African-led nonprofits who continue serving, not for
+                    African-led causes who continue serving, not for
                     recognition, but because their communities depend on them.
                   </p>
                 </div>
