@@ -57,7 +57,7 @@ interface CampaignsTabProps {
 
 const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
   const navigate = useNavigate();
-  const { campaigns: allCampaigns, user } = useAppContext();
+  const { campaigns: allCampaigns, user, profileData } = useAppContext();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [campaigns, setCampaigns] = useState<ApiCampaign[]>([]);
@@ -195,7 +195,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
 
       // Remove the deleted campaign from the state
       setCampaigns(campaigns.filter((campaign) => campaign._id !== id));
-      toast.success("Campaign deleted successfully");
+      toast.success("Causes deleted successfully");
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "An unexpected error occurred";
@@ -211,7 +211,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
     0
   );
   const totalDonors = campaigns.reduce(
-    (total, campaign) => total + (campaign.donations?.length || 0),
+    (total, campaign) => total + (campaign.pendingPayments?.length || 0),
     0
   );
 
@@ -220,9 +220,9 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Your Causes</h2>
         <Link to="/dashboard/campaigns/new">
-          <Button className="flex items-center gap-2">
+          <Button disabled={!profileData?.ngo?.NGOAccountReady} className="flex items-center gap-2">
             <PlusCircle className="h-4 w-4" />
-            Create Campaign
+            Create Causes
           </Button>
         </Link>
       </div>
@@ -235,11 +235,11 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
             </div>
             <h3 className="text-lg font-medium mb-2">No Causes Yet</h3>
             <p className="text-gray-500 mb-6 max-w-md">
-              Start your first fundraising campaign to connect with donors and
+              Start your first fundraising causes to connect with donors and
               make an impact through your NGO's mission.
             </p>
-            <Button onClick={() => navigate("/dashboard/campaigns/new")}>
-              Create Your First Campaign
+            <Button disabled={!profileData?.ngo?.NGOAccountReady} onClick={() => navigate("/dashboard/campaigns/new")}>
+              Create Your First causes
             </Button>
           </CardContent>
         </Card>
@@ -290,7 +290,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
                     {isPerpetual ? (
                       <div className="flex items-center">
                         <Infinity className="h-4 w-4 mr-1" />
-                        Ongoing Campaign
+                        Ongoing Causes
                       </div>
                     ) : (
                       <div className="flex items-center">
@@ -324,13 +324,13 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
                       )}
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span>{campaign.donations?.length || 0} donors</span>
+                      <span>{campaign.pendingPayments?.length || 0} donors</span>
                       {isPerpetual ? (
                         <span className="text-brand-purple">Ongoing</span>
                       ) : campaign.status === "ongoing" ? (
                         <span>{daysLeft} days left</span>
                       ) : (
-                        <span>Campaign ended</span>
+                        <span>Causes ended</span>
                       )}
                     </div>
 
@@ -373,11 +373,11 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
                           <AlertDialogContent>
                             <AlertDialogHeader>
                               <AlertDialogTitle>
-                                Delete Campaign?
+                                Delete Causes?
                               </AlertDialogTitle>
                               <AlertDialogDescription>
                                 This action cannot be undone. This will
-                                permanently delete the campaign "
+                                permanently delete the cause "
                                 {campaign.title}" and remove it from the
                                 platform.
                               </AlertDialogDescription>
@@ -392,7 +392,7 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
                               >
                                 {deletingId === campaign._id
                                   ? "Deleting..."
-                                  : "Delete Campaign"}
+                                  : "Delete Cause"}
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
@@ -409,9 +409,9 @@ const CampaignsTab = ({ ngoCampaigns }: CampaignsTabProps) => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Campaign Performance</CardTitle>
+          <CardTitle>Causes Performance</CardTitle>
           <CardDescription>
-            Overview of all your campaign statistics
+            Overview of all your causes statistics
           </CardDescription>
         </CardHeader>
         <CardContent>

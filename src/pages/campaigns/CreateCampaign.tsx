@@ -83,7 +83,7 @@ const CreateCampaign = () => {
         const response = await campaignApi.getCampaign(campaignId!);
 
         if (!response.success) {
-          throw new Error(response.error || "Failed to fetch campaign data");
+          throw new Error(response.error || "Failed to fetch cause data");
         }
 
         const campaign = response.data;
@@ -228,7 +228,7 @@ const CreateCampaign = () => {
       }
 
       if (!coverImage && !currentCoverImageUrl) {
-        throw new Error("Please upload a cover image for your campaign");
+        throw new Error("Please upload a cover image for your cause");
       }
 
       // if (!faqs || faqs.length === 0) {
@@ -290,12 +290,12 @@ const CreateCampaign = () => {
       if (!response.success) {
         throw new Error(
           response.error ||
-          `Failed to ${isEditMode ? "update" : "create"} campaign`
+          `Failed to ${isEditMode ? "update" : "create"} cause`
         );
       }
 
       toast.success(
-        `Campaign ${isEditMode ? "updated" : "created"} successfully!`
+        `cause ${isEditMode ? "updated" : "created"} successfully!`
       );
       navigate("/dashboard?tab=campaigns");
     } catch (error: unknown) {
@@ -324,7 +324,7 @@ const CreateCampaign = () => {
                 <ArrowLeft className="h-4 w-4 mr-1" /> Back
               </Button>
               <h1 className="text-3xl font-bold">
-                {isEditMode ? "Edit Campaign" : "Create Campaign"}
+                {isEditMode ? "Edit Causes" : "Create Causes"}
               </h1>
             </div>
 
@@ -338,33 +338,33 @@ const CreateCampaign = () => {
               {/* Basic Information Card */}
               <Card className="mb-8">
                 <CardHeader>
-                  <CardTitle>Campaign Information</CardTitle>
+                  <CardTitle>causes Information</CardTitle>
                   <CardDescription>
-                    Basic details about your fundraising campaign
+                    Basic details about your fundraising causes
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <Label htmlFor="title">Campaign Title</Label>
+                    <Label htmlFor="title">cause Title</Label>
                     <Input
                       id="title"
                       name="title"
                       value={formData.title}
                       onChange={handleInputChange}
-                      placeholder="Give your campaign a clear, attention-grabbing title"
+                      placeholder="Give your cause a clear, attention-grabbing title"
                       required
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="description">Campaign Description</Label>
+                    <Label htmlFor="description">cause Description</Label>
                     <Textarea
                       id="description"
                       name="description"
                       rows={5}
                       value={formData.description}
                       onChange={handleInputChange}
-                      placeholder="Describe your campaign, its purpose, and how the funds will be used"
+                      placeholder="Describe your cause, its purpose, and how the funds will be used"
                       required
                     />
                   </div>
@@ -456,9 +456,9 @@ const CreateCampaign = () => {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
-                        <Label>Campaign Duration</Label>
+                        <Label>cause Duration</Label>
                         <p className="text-sm text-muted-foreground">
-                          Set if your campaign has an end date
+                          Set if your cause has an end date
                         </p>
                       </div>
                       <Switch
@@ -488,9 +488,9 @@ const CreateCampaign = () => {
               {/* Media Uploads Card */}
               <Card className="mb-8">
                 <CardHeader>
-                  <CardTitle>Campaign Media</CardTitle>
+                  <CardTitle>cause Media</CardTitle>
                   <CardDescription>
-                    Add visual content to make your campaign more compelling
+                    Add visual content to make your cause more compelling
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -729,8 +729,8 @@ const CreateCampaign = () => {
                         ? "Updating..."
                         : "Creating..."
                       : isEditMode
-                        ? "Update Campaign"
-                        : "Publish Campaign"}
+                        ? "Update cause"
+                        : "Publish cause"}
                   </Button>
                 </div>
               </CardFooter>

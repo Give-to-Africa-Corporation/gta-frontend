@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useAppContext } from "@/context/AppContext";
@@ -70,12 +71,10 @@ export const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center flex-shrink-0">
-          <Link to="/" className="flex items-center space-x-2">
-            <span className="text-3xl font-bold text-white">
-              YENDAA
-            </span>
-            {/* <img src="/give.png" alt="Campaign to Raising Africa" className="w-16 h-16" /> */}
-          </Link>
+            <Link to="/" className="flex items-center space-x-2">
+              <span className="text-3xl font-bold text-white">YENDAA</span>
+              {/* <img src="/give.png" alt="Campaign to Raising Africa" className="w-16 h-16" /> */}
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -91,11 +90,29 @@ export const Navbar = () => {
               </Link>
             ))}
           </div> */}
-          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-full max-w-[550px]" ref={searchRef}>
-            <SearchBarComponent query={query} setQuery={setQuery} isOpen={isOpen} setIsOpen={setIsOpen} />
+          <div
+            className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-full max-w-[550px]"
+            ref={searchRef}
+          >
+            <SearchBarComponent
+              query={query}
+              setQuery={setQuery}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
           </div>
 
-          <div className="flex items-center space-x-2 ml-auto">
+          <div className="flex items-center space-x-1 ml-auto">
+            <Link to="/pricing">
+              <Button
+                variant="outline"
+                size="sm"
+                className="mr-0 text-white hover:text-gray-400 text-md"
+                style={{ background: "none", border: "none" }}
+              >
+                Pricing
+              </Button>
+            </Link>
             {user ? (
               <Link
                 to={user.role === "admin" ? "/admin/dashboard" : "/dashboard"}
@@ -105,12 +122,23 @@ export const Navbar = () => {
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outline" size="sm" className="mr-0 text-white hover:text-gray-400 text-md" style={{ background: "none", border: "none" }}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mr-0 text-white hover:text-gray-400 text-md"
+                    style={{ background: "none", border: "none" }}
+                  >
                     Log In
                   </Button>
                 </Link>
                 <Link to="/signup">
-                  <Button size="sm" className="py-3 px-4" style={{ borderRadius: "30px" }}>Sign Up</Button>
+                  <Button
+                    size="sm"
+                    className="py-3 px-4"
+                    style={{ borderRadius: "30px" }}
+                  >
+                    Sign Up
+                  </Button>
                 </Link>
               </>
             )}
@@ -134,34 +162,67 @@ export const Navbar = () => {
             {open && (
               <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-xl border border-gray-100 z-50">
                 <ul className="py-2 text-sm text-gray-700">
-                  <Link to="/faq"><li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
-                    FAQ & support
-                  </li></Link>
+                  <Link to="/faq">
+                    <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
+                      FAQ & support
+                    </li>
+                  </Link>
                   <Link to="/signup">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                       Donate to YENDAA
-                    </li></Link>
+                    </li>
+                  </Link>
                   <hr className="my-2 border-gray-200" />
                   <Link to="/aboutus">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                       About YENDAA
-                    </li></Link>
+                    </li>
+                  </Link>
                   <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                     For causes
                   </li>
                   <Link to="/signup">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                       Signup
-                    </li></Link>
+                    </li>
+                  </Link>
                 </ul>
                 <div className="border-t border-gray-200 px-4 py-3 text-sm text-gray-500 flex flex-wrap gap-x-3">
-                  <Link to="/"><span className="cursor-pointer hover:text-gray-700">Home</span></Link>
-                  <Link to="/campaigns"><span className="cursor-pointer hover:text-gray-700">Causes</span></Link>
-                  <Link to="/aboutus"><span className="cursor-pointer hover:text-gray-700">About Us</span></Link>
-                  <Link to="/contact"><span className="cursor-pointer hover:text-gray-700">Contact Us</span></Link>
-                  <Link to="/faq"><span className="cursor-pointer hover:text-gray-700">FAQ</span></Link>
-                  <Link to="/termsuse"><span className="cursor-pointer hover:text-gray-700">Terms</span></Link>
-                  <Link to="/privacypolicy"><span className="cursor-pointer hover:text-gray-700">Privacy</span></Link>
+                  <Link to="/">
+                    <span className="cursor-pointer hover:text-gray-700">
+                      Home
+                    </span>
+                  </Link>
+                  <Link to="/campaigns">
+                    <span className="cursor-pointer hover:text-gray-700">
+                      Causes
+                    </span>
+                  </Link>
+                  <Link to="/aboutus">
+                    <span className="cursor-pointer hover:text-gray-700">
+                      About Us
+                    </span>
+                  </Link>
+                  <Link to="/contact">
+                    <span className="cursor-pointer hover:text-gray-700">
+                      Contact Us
+                    </span>
+                  </Link>
+                  <Link to="/faq">
+                    <span className="cursor-pointer hover:text-gray-700">
+                      FAQ
+                    </span>
+                  </Link>
+                  <Link to="/termsuse">
+                    <span className="cursor-pointer hover:text-gray-700">
+                      Terms
+                    </span>
+                  </Link>
+                  <Link to="/privacypolicy">
+                    <span className="cursor-pointer hover:text-gray-700">
+                      Privacy
+                    </span>
+                  </Link>
                 </div>
               </div>
             )}
@@ -221,8 +282,16 @@ export const Navbar = () => {
           </div>
         )} */}
       </div>
-      <div className="block md:hidden pb-3 px-3 relative w-full max-w-[550px] mx-auto" ref={searchRef}>
-        <SearchBarComponent query={query} setQuery={setQuery} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <div
+        className="block md:hidden pb-3 px-3 relative w-full max-w-[550px] mx-auto"
+        ref={searchRef}
+      >
+        <SearchBarComponent
+          query={query}
+          setQuery={setQuery}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
       </div>
     </nav>
   );

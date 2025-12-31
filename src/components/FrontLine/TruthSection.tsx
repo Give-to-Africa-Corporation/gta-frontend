@@ -53,7 +53,7 @@ const TruthSection = () => {
               <div className="relative z-10 h-full p-10 flex flex-col justify-between text-white">
                 <div>
                   <p className="text-lg leading-relaxed mb-6">
-                    Campaign to YENDAA is a transformative 501(c)(3) nonprofit
+                    Causes to YENDAA is a transformative 501(c)(3) nonprofit
                     bridging the gap between compassionate global donors and
                     visionary African-led organizations.
                   </p>

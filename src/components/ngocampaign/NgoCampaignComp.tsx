@@ -27,7 +27,7 @@ export const NgoCampaignComp: FC<NgoProps> = ({ ngo }) => {
     { id: 1, name: "Mohamed Ahmed", message: "I am donating this Zakat to support those who are struggling to afford medical care. I pray that my small contribution helps ease someone’s pain and brings relief to their family. May Allah accept it from all of us and multiply the reward.", img: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png" },
     { id: 2, name: "Nesma Elmedany", message: "This donation is in memory of my beloved father. He always believed in helping others and taught me the value of kindness.", img: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png" },
     { id: 3, name: "Ahmed Elsoudy", message: "I believe that every human being deserves proper healthcare, no matter their financial situation.", img: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png" },
-    { id: 4, name: "Ahmed Wasfy", message: "Mersal’s mission inspired me to contribute today. I am donating with the intention of supporting life-saving operations, medicine, and awareness campaigns. May this help reach those who are most in need and bring hope into their lives.", img: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png" },
+    { id: 4, name: "Ahmed Wasfy", message: "Mersal’s mission inspired me to contribute today. I am donating with the intention of supporting life-saving operations, medicine, and awareness Causes. May this help reach those who are most in need and bring hope into their lives.", img: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png" },
     { id: 5, name: "Lekaa Elhady", message: "Children hold a special place in my heart. Through this donation, I want to support child healthcare programs and make sure that no child suffers due to lack of proper medical care. I am honored to be part of this cause.", img: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png" },
     { id: 6, name: "Hamza Azzam", message: "Healthcare is a basic right and should never be a privilege. I am making this donation to ensure that quality medical services are available to everyone. I pray that my contribution, along with others, makes a meaningful difference.", img: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png" },
   ];
@@ -48,7 +48,7 @@ export const NgoCampaignComp: FC<NgoProps> = ({ ngo }) => {
       }
     } else {
       navigator.clipboard.writeText(shareData.url);
-      alert("Campaign link copied to clipboard!");
+      alert("Causes link copied to clipboard!");
     }
   };
 
@@ -132,7 +132,7 @@ export const NgoCampaignComp: FC<NgoProps> = ({ ngo }) => {
         <div className="md:col-span-2 bg-white rounded-lg shadow p-5">
           <img
             src="https://res.cloudinary.com/everydotorg/image/upload/f_auto,c_limit,w_1920,q_auto/profile_pics/ebj62r4rxyrwdjk9u1az"
-            alt="Campaign"
+            alt="Causes"
             className="rounded-lg mb-4"
           />
 

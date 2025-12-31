@@ -8,7 +8,7 @@ export const CTAGridSection = () => {
       title: "Grassroot Champion",
       subtitle: "NGOs / Causes / Charities",
       description:
-        "Get verified, receive online donations, and become a recognized Grassroots Champion on Campaign to YENDAA. Register now to connect with global donors who believe in local, community-led impact.",
+        "Get verified, receive online donations, and become a recognized Grassroots Champion on Causes to YENDAA. Register now to connect with global donors who believe in local, community-led impact.",
       icon: <Building className="w-8 h-8 text-white" />,
       bgColor: "bg-brand-purple",
       link: "/signup",
@@ -43,7 +43,7 @@ export const CTAGridSection = () => {
       title: "Become a Philanthropist",
       subtitle: "DAFs/ Corporate Giving/ Foundations",
       description:
-        "Set up a family foundation or donor-advised fund (DAF) through Campaign to YENDAA and support causes close to your heart. Whether you're giving as a family or individual, we make it easy to create impact across Africa. Start your journey in meaningful giving today.",
+        "Set up a family foundation or donor-advised fund (DAF) through Causes to YENDAA and support causes close to your heart. Whether you're giving as a family or individual, we make it easy to create impact across Africa. Start your journey in meaningful giving today.",
       icon: <Compass className="w-8 h-8 text-white" />,
       bgColor: "bg-[#6b46c1]",
       link: "https://2africa.org/advisory-services/",

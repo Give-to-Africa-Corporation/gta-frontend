@@ -62,7 +62,7 @@ export const FeaturedCausesSection = () => {
     return (
       <section className="py-20 bg-white">
         <div className="container-custom">
-          <div className="text-center">Loading campaigns...</div>
+          <div className="text-center">Loading Causes...</div>
         </div>
       </section>
     );

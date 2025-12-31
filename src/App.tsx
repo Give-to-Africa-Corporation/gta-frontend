@@ -1,7 +1,7 @@
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AppProvider } from "./context/AppContext"; 
+import { AppProvider } from "./context/AppContext";
 import AfricaYouthCouncil from "./components/ayc/AfricaYouthCouncil";
 import { Navbar } from "./components/shared/Navbar";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
@@ -13,11 +13,11 @@ import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminLogin from "./pages/admin/AdminLogin";
 import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/Signup"; 
-import Faq from "./pages/auth/Faq"; 
-import PrivacyPolicy from "./pages/auth/PrivacyPolicy"; 
-import TermsUse from "./pages/auth/TermsUse"; 
-import AboutUs from "./pages/auth/AboutUs"; 
+import Signup from "./pages/auth/Signup";
+import Faq from "./pages/auth/Faq";
+import PrivacyPolicy from "./pages/auth/PrivacyPolicy";
+import TermsUse from "./pages/auth/TermsUse";
+import AboutUs from "./pages/auth/AboutUs";
 import CampaignDetail from "./pages/campaigns/CampaignDetail";
 import CampaignEmbed from "./pages/campaigns/CampaignEmbed";
 import CampaignsPage from "./pages/campaigns/CampaignsPage";
@@ -32,6 +32,8 @@ import NgoCampaignPage from "./pages/ngocampaignpage/NgoCampaignPage";
 import NgoSearchPage from "./pages/ngocampaignpage/NgoSearchPage";
 import ProfileComplete from "./pages/registration/ProfileComplete";
 import PaypalComplete from "./pages/PaypalComplete";
+import StripeOnboardingReturn from "./pages/StripeOnboardingReturn";
+import PricingPage from "./pages/Pricing";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +58,11 @@ const App = () => (
             <Route path="/termsuse" element={<TermsUse />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/registration" element={<Registration />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route
+              path="/stripe/onboarding/return"
+              element={<StripeOnboardingReturn />}
+            />
             <Route
               path="/verification-pending"
               element={<VerificationPending />}
@@ -73,7 +80,10 @@ const App = () => (
             />
             <Route path="/campaigns/:id/embed" element={<CampaignEmbed />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/ngo/:ngoId/paypal-complete" element={<PaypalComplete />} />
+            <Route
+              path="/ngo/:ngoId/paypal-complete"
+              element={<PaypalComplete />}
+            />
 
             {/* Protected NGO Routes */}
             <Route
@@ -129,7 +139,6 @@ const App = () => (
       </TooltipProvider>
     </AppProvider>
   </QueryClientProvider>
-
 );
 
 export default App;

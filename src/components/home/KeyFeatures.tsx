@@ -3,7 +3,7 @@ import React from "react";
 export const feature = [
   {
     title: "ON-PAGE GIVING",
-    text: "Seamless and secure donations directly on campaign pages without redirects — making giving faster, easier, and trustworthy for supporters worldwide.",
+    text: "Seamless and secure donations directly on Causes pages without redirects — making giving faster, easier, and trustworthy for supporters worldwide.",
     img: "/images/kf2.png",
   },
   {
@@ -13,7 +13,7 @@ export const feature = [
   },
   {
     title: "SMART DASHBOARD",
-    text: "Track donations, manage volunteers, and monitor campaigns in one simple dashboard — helping causes stay organized and efficient.",
+    text: "Track donations, manage volunteers, and monitor Causes in one simple dashboard — helping causes stay organized and efficient.",
     img: "/images/kf3.png",
   },
   {

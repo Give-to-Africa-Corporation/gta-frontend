@@ -71,7 +71,7 @@ export const Footer = () => {
             {/* Column 1 - About */}
             <div>
               <h3 className="text-2xl font-bold mb-4">
-                Campaign to YENDAA
+                Causes to YENDAA
               </h3>
               <p className="text-gray-300 mb-4">
                 YENDAA is a Public Benefit Corporation created by Give to Africa to drive innovation, sustainability, and impact.
@@ -192,7 +192,7 @@ export const Footer = () => {
 
           <div className=" border-gray-800 mt-10 pt-6 text-center text-gray-400 text-sm">
             <p>
-              &copy; {new Date().getFullYear()} Campaign to YENDAA. All rights
+              &copy; {new Date().getFullYear()} Causes to YENDAA. All rights
               reserved.
             </p>
           </div>

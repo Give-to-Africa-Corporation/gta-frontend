@@ -1859,7 +1859,6 @@ const PaymentForm = ({
                     <CardNumberElement className="text-2xl bg-gray-50 p-3 border focus-visible:ring-0 focus-visible:ring-offset-0 rounded-md w-full" />
                     <div className="flex gap-3 mt-3">
                       <CardExpiryElement className="text-2xl bg-gray-50 p-3 border focus-visible:ring-0 focus-visible:ring-offset-0 rounded-md w-full" />
-
                       <CardCvcElement className="text-2xl bg-gray-50 p-3 border focus-visible:ring-0 focus-visible:ring-offset-0 rounded-md w-full" />
                     </div>
                   </div>

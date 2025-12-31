@@ -164,7 +164,7 @@ const CampaignDetail = () => {
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center">
             <Loader2 className="h-12 w-12 animate-spin text-brand-purple mx-auto" />
-            <p className="mt-4 text-lg">Loading campaign details...</p>
+            <p className="mt-4 text-lg">Loading Causes details...</p>
           </div>
         </div>
         <Footer />
@@ -177,9 +177,9 @@ const CampaignDetail = () => {
       <div className="min-h-screen flex flex-col">
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center">
-            <h2 className="text-2xl font-bold">Campaign not found</h2>
+            <h2 className="text-2xl font-bold">Causes not found</h2>
             <p className="mt-2 text-gray-600">
-              The campaign you're looking for doesn't exist
+              The Causes you're looking for doesn't exist
             </p>
             <Button className="mt-6" onClick={() => window.history.back()}>
               Go Back
@@ -236,13 +236,13 @@ const CampaignDetail = () => {
               <div className="flex items-center space-x-2">
                 <span className="bg-brand-purple text-white text-xs px-2 py-1 rounded-full">
                   {campaign.status === "ongoing"
-                    ? "Ongoing Campaign"
+                    ? "Ongoing Causes"
                     : campaign.status}
                 </span>
                 {isPerpetual ? (
                   <span className="text-sm flex items-center">
                     <Infinity className="inline-block h-4 w-4 mr-1" /> Ongoing
-                    Campaign
+                    Causes
                   </span>
                 ) : (
                   <span className="text-sm">
@@ -251,7 +251,7 @@ const CampaignDetail = () => {
                       ? daysLeft > 0
                         ? `${daysLeft} days left`
                         : "Ending today"
-                      : "Campaign ended"}
+                      : "Causes ended"}
                   </span>
                 )}
               </div>
@@ -322,7 +322,7 @@ const CampaignDetail = () => {
                 {campaign.media?.additionalImages?.length ? (
                   <div>
                     <h3 className="text-lg font-medium mb-3">
-                      Campaign Gallery
+                      Causes Gallery
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
                       {campaign.media.additionalImages.map((img, idx) => (
@@ -344,7 +344,7 @@ const CampaignDetail = () => {
 
                 <div className="mt-8">
                   <h3 className="text-lg font-semibold mb-4">
-                    Share this campaign
+                    Share this Causes
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                     <Button
@@ -365,7 +365,7 @@ const CampaignDetail = () => {
                       size="lg"
                       className="w-full flex items-center justify-center gap-2 hover:bg-[#1DA1F2]/10"
                       onClick={() => {
-                        const text = `Check out this campaign: ${campaign.title}`;
+                        const text = `Check out this Causes: ${campaign.title}`;
                         const url = `https://x.com/intent/tweet?text=${encodeURIComponent(
                           text
                         )}&url=${encodeURIComponent(window.location.href)}`;
@@ -408,7 +408,7 @@ const CampaignDetail = () => {
                       size="lg"
                       className="w-full flex items-center justify-center gap-2 hover:bg-[#229ED9]/10"
                       onClick={() => {
-                        const text = `Check out this campaign: ${campaign.title}`;
+                        const text = `Check out this Causes: ${campaign.title}`;
                         const url = `https://t.me/share/url?url=${encodeURIComponent(
                           window.location.href
                         )}&text=${encodeURIComponent(text)}`;
@@ -430,7 +430,7 @@ const CampaignDetail = () => {
                       size="lg"
                       className="w-full flex items-center justify-center gap-2 hover:bg-[#25D366]/10"
                       onClick={() => {
-                        const text = `Check out this campaign: ${campaign.title} ${window.location.href}`;
+                        const text = `Check out this Causes: ${campaign.title} ${window.location.href}`;
                         const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(
                           text
                         )}`;
@@ -538,15 +538,15 @@ const CampaignDetail = () => {
                     {isPerpetual ? (
                       <div className="flex items-center justify-center gap-2 bg-brand-purple/10 text-brand-purple rounded-full py-2">
                         <Infinity className="h-5 w-5" />
-                        <span className="font-medium">Ongoing Campaign</span>
+                        <span className="font-medium">Ongoing Causes</span>
                       </div>
                     ) : campaign.status === "ongoing" ? (
                       <div className="flex items-center justify-center gap-2 bg-green-50 text-green-600 rounded-full py-2">
-                        <span className="font-medium">Active Campaign</span>
+                        <span className="font-medium">Active Causes</span>
                       </div>
                     ) : (
                       <div className="flex items-center justify-center gap-2 bg-gray-50 text-gray-600 rounded-full py-2">
-                        <span className="font-medium">Campaign Ended</span>
+                        <span className="font-medium">Causes Ended</span>
                       </div>
                     )}
 

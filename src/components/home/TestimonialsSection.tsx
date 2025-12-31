@@ -5,7 +5,7 @@ export const TestimonialsSection = () => {
   const testimonials = [
     {
       quote:
-        "Campaign to YENDAA made it easy for us to get verified and start fundraising for our clean water projects. The platform's credibility helped us gain donor trust.",
+        "Causes to YENDAA made it easy for us to get verified and start fundraising for our clean water projects. The platform's credibility helped us gain donor trust.",
       name: "Sarah Johnson",
       organization: "WaterAid Foundation",
       image:

@@ -10,7 +10,7 @@ const faqItems = [
     id: "item-1",
     question: "Is my donation tax-deductible?",
     answer:
-      "Yes. Campaign to YENDAA is a registered 501(c)(3) nonprofit organization. Your donation is tax-deductible to the extent allowed by law. You will receive an email receipt for your records.",
+      "Yes. Causes to YENDAA is a registered 501(c)(3) nonprofit organization. Your donation is tax-deductible to the extent allowed by law. You will receive an email receipt for your records.",
   },
   {
     id: "item-2",

@@ -23,7 +23,7 @@ export const SolutionSection: React.FC = () => {
           <ul className="space-y-3 text-lg">
             <li className="flex items-start gap-2">
               <span className="text-brand-orange">●</span>
-              Raise funds directly on their campaign page
+              Raise funds directly on their Causes page
             </li>
             <li className="flex items-start gap-2">
               <span className="text-brand-orange">●</span>

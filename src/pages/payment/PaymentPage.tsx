@@ -187,7 +187,7 @@
 
 // export default PaymentPage;
 
-
+// @ts-nocheck
 import PaymentForm from "@/components/payments/PaymentForm";
 import { Button } from "@/components/ui/button";
 import { useAppContext } from "@/context/AppContext";
@@ -277,7 +277,7 @@ const PaymentPage = () => {
         }
         className="mb-6 flex items-center"
       >
-        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Campaign
+        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Causes
       </Button>
 
       <div className="mb-8">

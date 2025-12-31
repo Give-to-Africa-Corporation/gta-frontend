@@ -56,8 +56,6 @@ const AdminDashboard = () => {
     updateCauseType,
     deleteCauseType,
   } = useAppContext();
-  console.log(causeTypes, "causeTypes..");
-  console.log(organizationTypes, "organizationTypes..");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedNGO, setSelectedNGO] = useState<string | null>(null);
 
@@ -87,6 +85,16 @@ const AdminDashboard = () => {
   const pendingCount = ngos.filter((ngo) => ngo.status === "pending").length;
   const approvedCount = ngos.filter((ngo) => ngo.status === "approved").length;
   const rejectedCount = ngos.filter((ngo) => ngo.status === "rejected").length;
+  const totalTips = campaigns.reduce(
+  (total, c) =>
+    total +
+    (c.pendingPayments?.reduce(
+      (s, p) => s + (p.tipAmount || 0),
+      0
+    ) || 0),
+  0
+);
+
 
   // organizationTypes
 
@@ -209,7 +217,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardHeader className="pb-2">
               <CardDescription>Pending Verifications</CardDescription>
@@ -245,6 +253,19 @@ const AdminDashboard = () => {
               <p className="text-sm text-red-600 flex items-center">
                 <FileX className="h-4 w-4 mr-1" />
                 Did not meet criteria
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Total Tips</CardDescription>
+              <CardTitle className="text-2xl">{totalTips}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-yellow-600 flex items-center">
+                <File className="h-4 w-4 mr-1" />
+                Received from donors
               </p>
             </CardContent>
           </Card>
@@ -384,12 +405,12 @@ const AdminDashboard = () => {
                                           <p className="text-gray-500">
                                             Organization Name:
                                           </p>
-                                          <p>{ngo.organizationName}</p>
+                                          <p>{ngo.name}</p>
 
                                           <p className="text-gray-500">
                                             Email:
                                           </p>
-                                          <p>{ngo.organizationEmail}</p>
+                                          <p>{ngo.email}</p>
 
                                           <p className="text-gray-500">
                                             Website:
@@ -675,6 +696,9 @@ const AdminDashboard = () => {
                           Raised
                         </th>
                         <th className="text-left py-3 px-4 font-medium">
+                          Platform Tips
+                        </th>
+                        <th className="text-left py-3 px-4 font-medium">
                           Actions
                         </th>
                       </tr>
@@ -684,13 +708,22 @@ const AdminDashboard = () => {
                         .filter((ngo) => ngo.status === "approved")
                         .map((ngo) => {
                           const ngoCampaigns = campaigns.filter(
-                            (c) => c.ngoId === ngo.id
+                            (c) => c.ngoId?._id === ngo._id || c.ngoId === ngo.id
                           );
                           const totalRaised = ngoCampaigns.reduce(
-                            (sum, c) => sum + c.raised,
+                            (sum, c) => sum + c.pendingPayments?.reduce(
+                              (subSum, p) => subSum + (p.amount || 0),
+                              0
+                            ) || 0,
                             0
                           );
-
+                          const totalTips = ngoCampaigns.reduce(
+                            (sum, c) => sum + c.pendingPayments?.reduce(
+                              (subSum, p) => subSum + (p.tipAmount || 0),
+                              0
+                            ) || 0,
+                            0
+                          );
                           return (
                             <tr
                               key={ngo.id}
@@ -719,10 +752,302 @@ const AdminDashboard = () => {
                                 ${totalRaised.toLocaleString()}
                               </td>
                               <td className="py-3 px-4">
-                                <Button variant="outline" size="sm">
-                                  <Eye className="h-4 w-4 mr-1" /> View Details
-                                </Button>
+                                ${totalTips.toLocaleString()}
                               </td>
+                              <td className="py-3 px-4">
+                            <div className="flex space-x-2">
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() =>
+                                      setSelectedNGO(ngo._id || ngo.id)
+                                    }
+                                  >
+                                    <Eye className="h-4 w-4 mr-1" /> View
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="max-h-[90vh] overflow-y-auto">
+                                  <DialogHeader>
+                                    <DialogTitle>
+                                      NGO Verification Details
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                      Review complete NGO information before
+                                      approval.
+                                    </DialogDescription>
+                                  </DialogHeader>
+
+                                  {(selectedNGO === ngo._id ||
+                                    selectedNGO === ngo.id) && (
+                                    <div className="py-4 space-y-6 text-sm">
+                                      {/* ================= BASIC INFO ================= */}
+                                      <div>
+                                        <h3 className="font-semibold mb-2">
+                                          Basic Information
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-2">
+                                          <p className="text-gray-500">
+                                            Organization Name:
+                                          </p>
+                                          <p>{ngo.name}</p>
+
+                                          <p className="text-gray-500">
+                                            Email:
+                                          </p>
+                                          {/* <p>{ngo.email}</p> */}
+
+                                          <p className="text-gray-500">
+                                            Website:
+                                          </p>
+                                          <p>{ngo.website || "—"}</p>
+
+                                          <p className="text-gray-500">
+                                            Status:
+                                          </p>
+                                          <p className="capitalize">
+                                            {ngo.status}
+                                          </p>
+
+                                          <p className="text-gray-500">
+                                            Registered On:
+                                          </p>
+                                          <p>
+                                            {new Date(
+                                              ngo.createdAt
+                                            ).toLocaleDateString()}
+                                          </p>
+                                        </div>
+                                      </div>
+
+                                      <Separator />
+
+                                      {/* ================= ORGANIZATION IDENTITY ================= */}
+                                      <div>
+                                        <h3 className="font-semibold mb-2">
+                                          Organization Identity
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-2">
+                                          <p className="text-gray-500">
+                                            Organization Type:
+                                          </p>
+                                          <p>
+                                            {ngo.organizationType}
+                                            {ngo.organizationType === "Other" &&
+                                              ` (${ngo.organizationTypeOther})`}
+                                          </p>
+
+                                          <p className="text-gray-500">
+                                            Cause Type:
+                                          </p>
+                                          <p>
+                                            {ngo.causeType}
+                                            {ngo.causeType === "Other" &&
+                                              ` (${ngo.causeTypeOther})`}
+                                          </p>
+
+                                          <p className="text-gray-500">
+                                            Country:
+                                          </p>
+                                          <p>{ngo.country}</p>
+
+                                          <p className="text-gray-500">City:</p>
+                                          <p>{ngo.city}</p>
+                                        </div>
+                                      </div>
+
+                                      <Separator />
+
+                                      {/* ================= CONTACT & LEADERSHIP ================= */}
+                                      <div>
+                                        <h3 className="font-semibold mb-2">
+                                          Leadership & Contact
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-2">
+                                          <p className="text-gray-500">
+                                            Primary Contact:
+                                          </p>
+                                          <p>{ngo.primaryContactName}</p>
+
+                                          <p className="text-gray-500">
+                                            Title:
+                                          </p>
+                                          <p>{ngo.primaryContactTitle}</p>
+
+                                          <p className="text-gray-500">
+                                            Contact Email:
+                                          </p>
+                                          <p>{ngo.contactEmail}</p>
+
+                                          <p className="text-gray-500">
+                                            Phone:
+                                          </p>
+                                          <p>{ngo.contactPhone}</p>
+                                        </div>
+                                      </div>
+
+                                      <Separator />
+
+                                      {/* ================= PROGRAMS & WORK ================= */}
+                                      <div>
+                                        <h3 className="font-semibold mb-2">
+                                          Programs & Work
+                                        </h3>
+
+                                        <p className="text-gray-500 mb-1">
+                                          Mission Statement:
+                                        </p>
+                                        <p className="mb-3">
+                                          {ngo.missionStatement}
+                                        </p>
+
+                                        <p className="text-gray-500 mb-1">
+                                          Programs:
+                                        </p>
+                                        <ul className="list-disc ml-5">
+                                          {ngo.programs?.map((p, i) => (
+                                            <li key={i}>{p}</li>
+                                          ))}
+                                        </ul>
+
+                                        <p className="text-gray-500 mt-3 mb-1">
+                                          Work Samples:
+                                        </p>
+                                        <p>{ngo.workSamples || "—"}</p>
+
+                                        <p className="text-gray-500 mt-3 mb-1">
+                                          Social Links:
+                                        </p>
+                                        <p>{ngo.socialLinks || "—"}</p>
+                                      </div>
+
+                                      <Separator />
+
+                                      {/* ================= BANK DETAILS ================= */}
+                                      <div>
+                                        <h3 className="font-semibold mb-2">
+                                          Banking Details
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-2">
+                                          <p className="text-gray-500">
+                                            Bank Name:
+                                          </p>
+                                          <p>{ngo.bankName}</p>
+
+                                          <p className="text-gray-500">
+                                            Account Name:
+                                          </p>
+                                          <p>{ngo.accountName}</p>
+
+                                          <p className="text-gray-500">
+                                            Account Number:
+                                          </p>
+                                          <p>{ngo.accountNumber}</p>
+
+                                          <p className="text-gray-500">
+                                            Bank Country:
+                                          </p>
+                                          <p>{ngo.bankCountry}</p>
+                                        </div>
+                                      </div>
+
+                                      <Separator />
+
+                                      {/* ================= STRIPE STATUS ================= */}
+                                      <div>
+                                        <h3 className="font-semibold mb-2">
+                                          Stripe / Payments
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-2">
+                                          <p className="text-gray-500">
+                                            Stripe Account:
+                                          </p>
+                                          <p>
+                                            {ngo.stripeAccountId
+                                              ? "Created"
+                                              : "Not Created"}
+                                          </p>
+
+                                          <p className="text-gray-500">
+                                            Stripe Status:
+                                          </p>
+                                          <p className="capitalize">
+                                            {ngo.stripeAccountStatus}
+                                          </p>
+
+                                          <p className="text-gray-500">
+                                            Onboarding Complete:
+                                          </p>
+                                          <p>
+                                            {ngo.stripeOnboardingComplete
+                                              ? "Yes"
+                                              : "No"}
+                                          </p>
+                                        </div>
+                                      </div>
+
+                                      <Separator />
+
+                                      {/* ================= ACTIONS ================= */}
+                                      <div className="flex justify-between pt-4">
+                                        <Button
+                                          variant="destructive"
+                                          disabled={
+                                            ngo.status !== "pending" ||
+                                            isLoading
+                                          }
+                                          onClick={() => {
+                                            rejectNGO(ngo._id || ngo.id);
+                                            setSelectedNGO(null);
+                                          }}
+                                        >
+                                          Reject Application
+                                        </Button>
+
+                                        <Button
+                                          disabled={
+                                            ngo.status !== "pending" ||
+                                            isLoading
+                                          }
+                                          onClick={() => {
+                                            approveNGO(ngo._id || ngo.id);
+                                            setSelectedNGO(null);
+                                          }}
+                                        >
+                                          Approve NGO
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  )}
+                                </DialogContent>
+                              </Dialog>
+
+                              {ngo.status === "pending" && (
+                                <>
+                                  <Button
+                                    variant="default"
+                                    size="sm"
+                                    onClick={() =>
+                                      approveNGO(ngo._id || ngo.id)
+                                    }
+                                    disabled={isLoading}
+                                  >
+                                    <CheckCircle className="h-4 w-4 mr-1" />{" "}
+                                    Approve
+                                  </Button>
+                                  <Button
+                                    variant="destructive"
+                                    size="sm"
+                                    onClick={() => rejectNGO(ngo._id || ngo.id)}
+                                    disabled={isLoading}
+                                  >
+                                    <XCircle className="h-4 w-4 mr-1" /> Reject
+                                  </Button>
+                                </>
+                              )}
+                            </div>
+                          </td>
                             </tr>
                           );
                         })}
@@ -796,7 +1121,7 @@ const AdminDashboard = () => {
                               ></div>
                             </div>
                             <div className="flex justify-between text-xs text-gray-500">
-                              <span>{campaign.donors || 0} donors</span>
+                              <span>{campaign?.pendingPayments?.length || 0} donors</span>
                               <span>
                                 {campaign.status === "ongoing"
                                   ? "Ongoing"

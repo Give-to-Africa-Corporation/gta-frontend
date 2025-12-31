@@ -11,7 +11,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Heart className="text-primary" size={24} />
-              <span className="text-xl font-bold text-foreground">Campaign to YENDAA</span>
+              <span className="text-xl font-bold text-foreground">Causes to YENDAA</span>
             </div>
             <p className="text-muted-foreground mb-4 leading-relaxed">
               Connecting everyday donors with extraordinary African-led organizations to create lasting change across the continent.
@@ -106,10 +106,10 @@ const Footer = () => {
         {/* Bottom Footer */}
         <div className="border-t border-border/50 pt-8 text-center">
           <p className="text-muted-foreground text-sm mb-2">
-            © 2024 Campaign to YENDAA. All rights reserved.
+            © 2024 Causes to YENDAA. All rights reserved.
           </p>
           <p className="text-muted-foreground text-sm">
-            Campaign to YENDAA is a 501(c)(3) nonprofit organization. Tax ID: 12-3456789
+            Causes to YENDAA is a 501(c)(3) nonprofit organization. Tax ID: 12-3456789
           </p>
         </div>
       </div>

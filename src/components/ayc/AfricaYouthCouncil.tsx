@@ -6,7 +6,7 @@ const AfricaYouthCouncil = () => {
       <header className={styles.header}>
         <h1>Africa Youth Council</h1>
         <p>
-          <strong>Powered by Campaign to YENDAA</strong>
+          <strong>Powered by Causes to YENDAA</strong>
         </p>
       </header>
 
@@ -19,7 +19,7 @@ const AfricaYouthCouncil = () => {
         <section className={styles.section}>
           <h2>Overview</h2>
           <p>
-            The Africa Youth Council is a bold initiative by Campaign to YENDAA to
+            The Africa Youth Council is a bold initiative by Causes to YENDAA to
             unite, equip, and elevate young African leaders from across all six
             African regions. This six-month leadership and innovation program
             brings together three youth representatives per country to
@@ -33,7 +33,7 @@ const AfricaYouthCouncil = () => {
             gender justice, digital inequality, and climate resilience. At the
             conclusion of the program, each country team will present its
             solution to a panel of global donors and philanthropists affiliated
-            with Campaign to YENDAA.
+            with Causes to YENDAA.
           </p>{" "}
           <br />
           <p>
@@ -132,10 +132,10 @@ const AfricaYouthCouncil = () => {
           <h2>What You'll Gain</h2>
           <ul>
             <li>
-              <strong>Certificate of Completion</strong> from Campaign to YENDAA
+              <strong>Certificate of Completion</strong> from Causes to YENDAA
             </li>
             <li>
-              <strong>Access to Campaign to YENDAA's</strong> Pan-African Leadership
+              <strong>Access to Causes to YENDAA's</strong> Pan-African Leadership
               network
             </li>
             <li>
@@ -147,7 +147,7 @@ const AfricaYouthCouncil = () => {
               storytelling, and social change
             </li>
             <li>
-              <strong>Priority access</strong> to future Campaign to YENDAA grants,
+              <strong>Priority access</strong> to future Causes to YENDAA grants,
               fellowships, and scholarships
             </li>
           </ul>
@@ -273,7 +273,7 @@ const AfricaYouthCouncil = () => {
       </main>
 
       <footer className={styles.footer}>
-        &copy; 2025 Campaign to YENDAA | Africa Youth Council
+        &copy; 2025 Causes to YENDAA | Africa Youth Council
       </footer>
     </div>
   );

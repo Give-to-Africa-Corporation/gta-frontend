@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export const RecentDonations = () => {
     const { campaigns } = useAppContext();
+    console.log(campaigns, "campaigns...")
     const navigate = useNavigate();
 
     // Take the 8 most recent campaigns

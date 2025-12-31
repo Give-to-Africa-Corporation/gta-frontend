@@ -149,10 +149,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setCampaigns(response.data);
         updateFetchTimestamp("campaigns");
       } else {
-        console.error("Failed to load campaigns:", response.error);
+        console.error("Failed to load Causes:", response.error);
       }
     } catch (error) {
-      console.error("Error loading campaigns:", error);
+      console.error("Error loading Causes:", error);
     } finally {
       setIsLoading(false);
     }

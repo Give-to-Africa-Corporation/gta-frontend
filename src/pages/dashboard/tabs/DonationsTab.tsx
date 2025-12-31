@@ -142,7 +142,7 @@ const DonationsTab = () => {
       "Donation ID",
       "Donor",
       "Amount",
-      "Campaign",
+      "Cause",
       "Date",
       "Status",
     ];
@@ -190,7 +190,7 @@ const DonationsTab = () => {
         <CardHeader>
           <CardTitle>Donations</CardTitle>
           <CardDescription>
-            Track and manage donations to your campaigns
+            Track and manage donations to your causes
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -198,7 +198,7 @@ const DonationsTab = () => {
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <Select value={filter} onValueChange={setFilter}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Filter by campaign" />
+                  <SelectValue placeholder="Filter by causes" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Causes</SelectItem>
@@ -281,7 +281,7 @@ const DonationsTab = () => {
                   <TableHead>Donation ID</TableHead>
                   <TableHead>Donor</TableHead>
                   <TableHead>Amount</TableHead>
-                  <TableHead>Campaign</TableHead>
+                  <TableHead>Cause</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Status</TableHead>
                 </TableRow>

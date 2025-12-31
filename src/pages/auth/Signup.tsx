@@ -228,7 +228,6 @@
 
 // export default Signup;
 
-
 // @ts-nocheck
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -247,6 +246,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { africanCountries } from "@/lib/countries";
+import { Footer } from "@/components/shared/Footer";
 
 const TOTAL_STEPS = 7;
 
@@ -646,7 +646,10 @@ function Signup() {
                       <SelectValue placeholder="Select organization type" />
                     </SelectTrigger>
                     <SelectContent>
-                    <SelectItem disabled>Select the option that best describes your organization’s structure.</SelectItem>
+                      <SelectItem disabled>
+                        Select the option that best describes your
+                        organization’s structure.
+                      </SelectItem>
                       {organizationTypesall?.map((type) => (
                         <SelectItem key={type} value={type}>
                           {type}
@@ -689,7 +692,9 @@ function Signup() {
                       <SelectValue placeholder="Select primary cause" />
                     </SelectTrigger>
                     <SelectContent>
-                    <SelectItem disabled>Select the primary cause your organization addresses.</SelectItem>
+                      <SelectItem disabled>
+                        Select the primary cause your organization addresses.
+                      </SelectItem>
                       {causeTypesall?.map((type) => (
                         <SelectItem key={type} value={type}>
                           {type}
@@ -1132,89 +1137,92 @@ function Signup() {
   // ---------- render ----------
 
   return (
-    <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <Card className="shadow-lg p-6 max-w-3xl w-full">
-        {/* Header */}
-        <div className="mb-4">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">
-            Create an Account on Yendaa
-          </h1>
-          <p className="text-sm text-gray-600 mt-2">Welcome to Yendaa.</p>
-          <p className="text-sm text-gray-600 mt-1">
-            Please complete the form below to create your organization account.
-            This information helps us verify your cause and build a trusted
-            public profile for donors.
-          </p>
-        </div>
-
-        {/* Progress */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between text-xs font-medium text-gray-600 mb-2">
-            <span>
-              Step {step} of {TOTAL_STEPS}
-            </span>
-            <span className="text-primary font-semibold">
-              {stepLabels[step - 1]}
-            </span>
+    <>
+      <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <Card className="shadow-lg p-6 max-w-3xl w-full">
+          {/* Header */}
+          <div className="mb-4">
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">
+              Create an Account on Yendaa
+            </h1>
+            <p className="text-sm text-gray-600 mt-2">Welcome to Yendaa.</p>
+            <p className="text-sm text-gray-600 mt-1">
+              Please complete the form below to create your organization
+              account. This information helps us verify your cause and build a
+              trusted public profile for donors.
+            </p>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-            <div
-              className="h-2.5 bg-gradient-to-r from-primary via-indigo-500 to-emerald-400 transition-all duration-300"
-              style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
-            />
-          </div>
-        </div>
 
-        {/* Alerts */}
-        {error && (
-          <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700 border border-red-200">
-            {error}
+          {/* Progress */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between text-xs font-medium text-gray-600 mb-2">
+              <span>
+                Step {step} of {TOTAL_STEPS}
+              </span>
+              <span className="text-primary font-semibold">
+                {stepLabels[step - 1]}
+              </span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+              <div
+                className="h-2.5 bg-gradient-to-r from-primary via-indigo-500 to-emerald-400 transition-all duration-300"
+                style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+              />
+            </div>
           </div>
-        )}
-        {success && (
-          <div className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-700 border border-green-200">
-            {success}
-          </div>
-        )}
 
-        <form onSubmit={handleSubmit}>
-          {renderStep()}
+          {/* Alerts */}
+          {error && (
+            <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700 border border-red-200">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-700 border border-green-200">
+              {success}
+            </div>
+          )}
 
-          {/* Navigation buttons */}
-          <div className="mt-8 flex items-center justify-between">
-            {step > 1 ? (
-              <button
-                type="button"
-                onClick={prevStep}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-              >
-                Back
-              </button>
-            ) : (
-              <span />
-            )}
+          <form onSubmit={handleSubmit}>
+            {renderStep()}
 
-            {step < TOTAL_STEPS ? (
-              <button
-                type="button"
-                onClick={nextStep}
-                className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark"
-              >
-                Next
-              </button>
-            ) : (
-              <button
-                type="submit"
-                disabled={loading}
-                className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark disabled:opacity-60"
-              >
-                {loading ? "Submitting…" : "Submit Application"}
-              </button>
-            )}
-          </div>
-        </form>
-      </Card>
-    </div>
+            {/* Navigation buttons */}
+            <div className="mt-8 flex items-center justify-between">
+              {step > 1 ? (
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  Back
+                </button>
+              ) : (
+                <span />
+              )}
+
+              {step < TOTAL_STEPS ? (
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark"
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark disabled:opacity-60"
+                >
+                  {loading ? "Submitting…" : "Submit Application"}
+                </button>
+              )}
+            </div>
+          </form>
+        </Card>
+      </div>
+      <Footer />
+    </>
   );
 }
 

@@ -32,7 +32,7 @@ export const ProcessSection = () => {
       icon: <PenLine className="text-brand-purple" size={32} />,
       title: "Create Causes",
       description:
-        "Set up compelling fundraising campaigns with goals, stories, and media.",
+        "Set up compelling fundraising Causes with goals, stories, and media.",
     },
     {
       icon: <DollarSign className="text-brand-purple" size={32} />,
@@ -54,7 +54,7 @@ export const ProcessSection = () => {
         <h2 className="section-title">How It Works</h2>
         <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16">
           Our streamlined process makes it easy for verified NGOs to create
-          fundraising campaigns and connect with donors who care about their
+          fundraising Causes and connect with donors who care about their
           cause.
         </p>
 

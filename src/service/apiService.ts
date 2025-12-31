@@ -298,6 +298,7 @@ export const campaignApi = {
   ): Promise<ApiResponse<Campaign[]>> => {
     try {
       const response = await api.get("/campaigns", { params });
+      // console.log(response, "campaigns")
       return handleResponse<Campaign[]>(response);
     } catch (error) {
       return handleError(error);

@@ -34,10 +34,7 @@ const ProfileTab = () => {
     website: "",
     mission: "",
     profileImage: "",
-    facebook: "",
-    twitter: "",
-    instagram: "",
-    linkedin: "",
+    socialLinks: "",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -58,10 +55,7 @@ const ProfileTab = () => {
           website: response.data.ngo.website || "",
           mission: response.data.ngo.missionStatement || "",
           profileImage: response.data.ngo.profileImage || "",
-          facebook: response.data.ngo.facebook || "",
-          twitter: response.data.ngo.twitter || "",
-          instagram: response.data.ngo.instagram || "",
-          linkedin: response.data.ngo.linkedin || "",
+          socialLinks: response.data.ngo.socialLinks || "",
         });
       } else {
         toast.error("Failed to load profile data");
@@ -121,13 +115,10 @@ const ProfileTab = () => {
       // Map form fields to API request
       const updateData: UpdateProfileRequest = {
         name: ngoData.name,
-        phoneNumber: ngoData.contactPhone,
+        phoneNumber: ngoData.phone,
         website: ngoData.website,
-        description: ngoData.missionStatement,
-        facebook: ngoData.facebook,
-        twitter: ngoData.twitter,
-        instagram: ngoData.instagram,
-        linkedin: ngoData.linkedin,
+        description: ngoData.mission,
+        socialLinks: ngoData.socialLinks,
       };
 
       // Add bank details if present in the profileData
@@ -175,10 +166,7 @@ const ProfileTab = () => {
         website: profileData.ngo.website || "",
         mission: profileData.ngo.missionStatement || "",
         profileImage: profileData.ngo.profileImage || "",
-        facebook: profileData.ngo.facebook || "",
-        twitter: profileData.ngo.twitter || "",
-        instagram: profileData.ngo.instagram || "",
-        linkedin: profileData.ngo.linkedin || "",
+        socialLinks: profileData.ngo.socialLinks || "",
       });
     }
     setIsEditing(false);
@@ -194,6 +182,21 @@ const ProfileTab = () => {
     if (profileImageInputRef.current) {
       profileImageInputRef.current.click();
     }
+  };
+
+  const ngoCampaigns = profileData?.campaigns || [];
+
+  const donorSet = new Set<string>();
+
+  ngoCampaigns.forEach((c) => {
+    c.pendingPayments?.forEach((p) => {
+      if (p.donorEmail) donorSet.add(p.donorEmail);
+    });
+  });
+
+  const stats: NgoStats = {
+    ...profileData?.stats,
+    uniqueDonors: donorSet.size, // ✅ override always with correct calculation
   };
 
   return (
@@ -336,55 +339,20 @@ const ProfileTab = () => {
             {/* Social Media Links */}
             <div>
               <h3 className="text-lg font-medium mb-4">Social Media</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                  <Label htmlFor="facebook">Facebook</Label>
-                  <Input
-                    id="facebook"
-                    name="facebook"
-                    value={ngoData.facebook}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="flex-1"
-                    placeholder="username or full URL"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="twitter">Twitter</Label>
-                  <Input
-                    id="twitter"
-                    name="twitter"
-                    value={ngoData.twitter}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="flex-1"
-                    placeholder="username or full URL"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="instagram">Instagram</Label>
-                  <Input
-                    id="instagram"
-                    name="instagram"
-                    value={ngoData.instagram}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="flex-1"
-                    placeholder="username or full URL"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="linkedin">LinkedIn</Label>
-                  <Input
-                    id="linkedin"
-                    name="linkedin"
-                    value={ngoData.linkedin}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="flex-1"
-                    placeholder="username or full URL"
-                  />
-                </div>
+              <div className="grid gap-2">
+                <Label htmlFor="socialLinks">Social Media Links</Label>
+                <Textarea
+                  id="socialLinks"
+                  name="socialLinks"
+                  rows={4}
+                  value={ngoData.socialLinks}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                  //     placeholder={`Paste one link per line
+                  // https://facebook.com/ngo
+                  // https://instagram.com/ngo
+                  // https://youtube.com/@ngo`}
+                />
               </div>
             </div>
 
@@ -437,9 +405,7 @@ const ProfileTab = () => {
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-500">Unique Donors</p>
-                <p className="text-2xl font-bold">
-                  {profileData.stats.uniqueDonors}
-                </p>
+                <p className="text-2xl font-bold">{stats.uniqueDonors}</p>
               </div>
             </div>
           </CardContent>

@@ -22,7 +22,13 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAppContext } from "@/context/AppContext";
 import { NgoStats } from "@/lib/types";
-import { Banknote, FileText, LayoutDashboard, LogOut, PieChart } from "lucide-react";
+import {
+  Banknote,
+  FileText,
+  LayoutDashboard,
+  LogOut,
+  PieChart,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import CampaignsTab from "./tabs/CampaignsTab";
@@ -36,10 +42,13 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { user, logout, profileData } = useAppContext();
-  console.log(profileData?.ngo?._id, "ngo id")
+  // console.log(profileData?.ngo?._id, "ngo id");
   const ngoId = profileData?.ngo?._id;
   const [activeTab, setActiveTab] = useState("profile");
   const [mounted, setMounted] = useState(false);
+
+  const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5001/api/v1";
 
   // Get tab from URL or use default
   useEffect(() => {
@@ -57,15 +66,28 @@ const Dashboard = () => {
   // Transform API campaigns to dashboard format if available
   const ngoCampaigns = profileData?.campaigns || [];
 
+  const donorSet = new Set<string>();
+
+  ngoCampaigns.forEach((c) => {
+    c.pendingPayments?.forEach((p) => {
+      if (p.donorEmail) donorSet.add(p.donorEmail);
+    });
+  });
+
   // Calculate stats if not available from profileData
-  const stats: NgoStats = profileData?.stats || {
-    totalCampaigns: ngoCampaigns.length,
-    activeCampaigns: ngoCampaigns.filter((c) => c.status === "ongoing").length,
-    totalRaised: ngoCampaigns.reduce((sum, c) => sum + (c.totalRaised || 0), 0),
-    totalDonations: 0,
-    completedCampaigns: 0,
-    completionRate: 0,
-    uniqueDonors: 0,
+  const stats: NgoStats = {
+    ...profileData?.stats, // existing stats fields
+    totalCampaigns: profileData?.stats?.totalCampaigns ?? ngoCampaigns.length,
+    activeCampaigns:
+      profileData?.stats?.activeCampaigns ??
+      ngoCampaigns.filter((c) => c.status === "ongoing").length,
+    totalRaised:
+      profileData?.stats?.totalRaised ??
+      ngoCampaigns.reduce((sum, c) => sum + (c.totalRaised || 0), 0),
+    totalDonations: profileData?.stats?.totalDonations ?? 0,
+    completedCampaigns: profileData?.stats?.completedCampaigns ?? 0,
+    completionRate: profileData?.stats?.completionRate ?? 0,
+    uniqueDonors: donorSet.size, // ✅ override always with correct calculation
   };
 
   const [loading, setLoading] = useState(false);
@@ -112,16 +134,56 @@ const Dashboard = () => {
       }
     } catch (error: any) {
       console.error(error.response?.data || error.message);
-      toast.error(error.response?.data || "Error connecting to PayPal. Please try again.");
+      toast.error(
+        error.response?.data || "Error connecting to PayPal. Please try again."
+      );
     } finally {
+      setLoading(false);
+    }
+  };
+
+  // connect stripe start onboading
+  const [error, setError] = useState<string | null>(null);
+
+  const handleConnectBankStripe = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const res = await axios.post(
+        `${API_URL}/ngos/stripe/onboarding/start`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(res.data, "stripe onboarding response");
+      const { success, url } = res.data;
+
+      if (!success || !url) {
+        setError("Unable to start Stripe onboarding.");
+        setLoading(false);
+        return;
+      }
+
+      window.location.href = url;
+    } catch (err: any) {
+      console.error(err);
+      setError(
+        err?.response?.data?.message ||
+          "Failed to start Stripe onboarding. Please try again."
+      );
       setLoading(false);
     }
   };
 
   return (
     <SidebarProvider
-      className={`${mounted ? "opacity-100" : "opacity-0"
-        } transition-opacity duration-500`}
+      className={`${
+        mounted ? "opacity-100" : "opacity-0"
+      } transition-opacity duration-500`}
     >
       <div className="flex min-h-screen w-full">
         <Sidebar>
@@ -133,8 +195,9 @@ const Dashboard = () => {
                     src={
                       profileData.ngo.profileImage.startsWith("http")
                         ? profileData.ngo.profileImage
-                        : `${import.meta.env.VITE_BE_URL}${profileData.ngo.profileImage
-                        }`
+                        : `${import.meta.env.VITE_BE_URL}${
+                            profileData.ngo.profileImage
+                          }`
                     }
                     alt="Profile"
                   />
@@ -142,7 +205,9 @@ const Dashboard = () => {
                 <AvatarFallback>{getInitials()}</AvatarFallback>
               </Avatar>
               <div>
-                <h2 className="font-semibold text-sm ">{user?.name || "NGO User"}</h2>
+                <h2 className="font-semibold text-sm ">
+                  {user?.name || "NGO User"}
+                </h2>
                 <p className="text-sm text-gray-500">
                   <Badge variant="outline" className="mr-1">
                     NGO
@@ -164,7 +229,7 @@ const Dashboard = () => {
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
-              <SidebarMenuItem>
+              {/* <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
                   tooltip="Complete Bank Details"
@@ -174,10 +239,12 @@ const Dashboard = () => {
                     <span>Complete Bank Details</span>
                   </Link>
                 </SidebarMenuButton>
-              </SidebarMenuItem>
+              </SidebarMenuItem> */}
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Create Campaign"
+                <SidebarMenuButton
+                  asChild
+                  tooltip="Create Causes"
                   disabled={!profileData?.ngo?.NGOAccountReady}
                   className={
                     !profileData?.ngo?.NGOAccountReady
@@ -185,14 +252,16 @@ const Dashboard = () => {
                       : ""
                   }
                 >
-                  <Link to="/dashboard/campaigns/new"
+                  <Link
+                    to="/dashboard/campaigns/new"
                     className={
                       !profileData?.ngo?.NGOAccountReady
                         ? "pointer-events-none"
                         : ""
-                    }>
+                    }
+                  >
                     <FileText className="mr-3 h-5 w-5" />
-                    <span>Create Campaign</span>
+                    <span>Create Causes</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -229,25 +298,35 @@ const Dashboard = () => {
             {!profileData?.ngo?.NGOAccountReady && (
               <div className="text-sm bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded-md flex flex-col md:flex-row items-center justify-between">
                 <p>
-                  Please complete your remaining bank details first. Once your details are verified, your Stripe account will be created.
+                  Complete your onboarding and bank details to activate your Stripe account for payouts.
                 </p>
                 <div className="mt-2 sm:mt-0">
-                  <Link
-                    to="/dashboard/profile/complete"
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm"
+                  <button
+                    onClick={handleConnectBankStripe}
+                    disabled={loading}
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm disabled:opacity-60"
                   >
-                    Complete Account Details
-                  </Link>
+                    {loading ? "Redirecting..." : "Connect bank"}
+                  </button>
+
+                  {error && (
+                    <p className="mt-2 text-xs text-red-600">{error}</p>
+                  )}
                 </div>
               </div>
             )}
             {profileData?.ngo?.paypalStatus === "pending" && (
               <div className="text-sm bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded-md flex flex-col md:flex-row items-center justify-between">
-                <p>⚠️ PayPal account not connected! To receive donations, please connect your PayPal account.</p>
+                <p>
+                  ⚠️ PayPal account not connected! To receive donations, please
+                  connect your PayPal account.
+                </p>
                 <div className="mt-2 sm:mt-0">
-                  <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm"
+                  <button
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm"
                     onClick={handleConnectPayPal}
-                    disabled={loading}>
+                    disabled={loading}
+                  >
                     {loading ? "Connecting..." : "Connect PayPal"}
                   </button>
                 </div>
@@ -259,7 +338,7 @@ const Dashboard = () => {
                   Welcome back, {user?.name || "NGO"}
                 </h1>
                 <p className="text-gray-600">
-                  Manage your NGO profile, campaigns, and donor relationships.
+                  Manage your NGO profile, causes, and donor relationships.
                 </p>
               </div>
               <SidebarTrigger className="md:hidden" />
@@ -291,8 +370,8 @@ const Dashboard = () => {
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
                     {stats.activeCampaigns > 0
-                      ? `Out of ${stats.totalCampaigns} total campaigns`
-                      : "No ongoing campaigns"}
+                      ? `Out of ${stats.totalCampaigns} total causes`
+                      : "No ongoing causes"}
                   </p>
                 </CardContent>
               </Card>
@@ -308,7 +387,7 @@ const Dashboard = () => {
                   <p className="text-sm text-brand-purple">
                     {stats.uniqueDonors > 0
                       ? `Supporting your cause`
-                      : "Start campaigns to attract donors"}
+                      : "Start causes to attract donors"}
                   </p>
                 </CardContent>
               </Card>
@@ -322,7 +401,7 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    {stats.completedCampaigns} completed campaigns
+                    {stats.completedCampaigns} completed causes
                   </p>
                 </CardContent>
               </Card>
@@ -356,7 +435,7 @@ const Dashboard = () => {
           </div>
         </SidebarInset>
       </div>
-    </SidebarProvider >
+    </SidebarProvider>
   );
 };
 
