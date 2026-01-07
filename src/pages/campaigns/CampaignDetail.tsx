@@ -25,6 +25,7 @@ type ExtendedCampaign = ApiCampaign & {
 const CampaignDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { campaigns, ngos, user, isLoading: contextLoading } = useAppContext();
+  console.log(campaigns, "campaigns????")
   const navigate = useNavigate();
 
   const [campaign, setCampaign] = useState<ExtendedCampaign | null>(null);

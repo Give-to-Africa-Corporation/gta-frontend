@@ -324,75 +324,71 @@ export const campaignApi = {
   },
 
   createCampaign: async (
-    data: CampaignCreate,
-    files: {
-      mainImage: File;
-      additionalImages?: File[];
+  data: any, // ya CampaignCreate type
+  files: {
+    banner: File;
+    logo?: File;
+  }
+) => {
+  try {
+    const formData = new FormData();
+
+    // Saara JSON ek hi "data" field me
+    formData.append("data", JSON.stringify(data));
+
+    // Files
+    formData.append("banner", files.banner);
+    if (files.logo) {
+      formData.append("logo", files.logo);
     }
-  ): Promise<ApiResponse<Campaign>> => {
-    try {
-      const formData = new FormData();
 
-      // Append campaign data
-      Object.entries(data).forEach(([key, value]) => {
-        if (value !== undefined) {
-          formData.append(key, value.toString());
-        }
-      });
+    const response = await api.post("/campaigns", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
-      // Append files
-      formData.append("mainImage", files.mainImage);
-      files.additionalImages?.forEach((file) => {
-        formData.append("additionalImages", file);
-      });
-
-      const response = await api.post("/campaigns", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      return handleResponse<Campaign>(response);
-    } catch (error) {
-      return handleError(error);
-    }
+    return handleResponse<Campaign>(response);
+  } catch (error) {
+    return handleError(error);
+  }
   },
 
   updateCampaign: async (
-    campaignId: string,
-    data: CampaignUpdate,
-    files?: {
-      mainImage?: File;
-      additionalImages?: File[];
+  campaignId: string,
+  data: any, // ya CampaignUpdate type
+  files?: {
+    banner?: File;
+    logo?: File;
+  }
+): Promise<ApiResponse<Campaign>> => {
+  try {
+    const formData = new FormData();
+
+    // 🔹 Same as createCampaign
+    formData.append("data", JSON.stringify(data));
+
+    // 🔹 Files (optional in update)
+    if (files?.banner) {
+      formData.append("banner", files.banner);
     }
-  ): Promise<ApiResponse<Campaign>> => {
-    try {
-      const formData = new FormData();
 
-      // Append campaign data
-      Object.entries(data).forEach(([key, value]) => {
-        if (value !== undefined) {
-          formData.append(key, value.toString());
-        }
-      });
+    if (files?.logo) {
+      formData.append("logo", files.logo);
+    }
 
-      // Append files if they exist
-      if (files?.mainImage) {
-        formData.append("mainImage", files.mainImage);
-      }
-
-      files?.additionalImages?.forEach((file) => {
-        formData.append("additionalImages", file);
-      });
-
-      const response = await api.put(`/campaigns/${campaignId}`, formData, {
+    const response = await api.put(
+      `/campaigns/${campaignId}`,
+      formData,
+      {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      });
-      return handleResponse<Campaign>(response);
-    } catch (error) {
-      return handleError(error);
-    }
+      }
+    );
+
+    return handleResponse<Campaign>(response);
+  } catch (error) {
+    return handleError(error);
+  }
   },
 
   deleteCampaign: async (campaignId: string): Promise<ApiResponse<void>> => {

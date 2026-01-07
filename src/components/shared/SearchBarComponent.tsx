@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const SearchBarComponent = () => {
   const { campaigns } = useAppContext();
+  console.log(campaigns, "campigns");
   const navigate = useNavigate();
 
   const [query, setQuery] = useState("");
@@ -48,10 +49,28 @@ const SearchBarComponent = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const causeColors = [
+    { bg: "bg-emerald-100", text: "text-emerald-700" },
+    { bg: "bg-blue-100", text: "text-blue-700" },
+    { bg: "bg-purple-100", text: "text-purple-700" },
+    { bg: "bg-orange-100", text: "text-orange-700" },
+    { bg: "bg-pink-100", text: "text-pink-700" },
+    { bg: "bg-indigo-100", text: "text-indigo-700" },
+  ];
+
+  const limitWords = (text, limit = 10) => {
+    const words = text?.split(" ");
+    return words.length > limit ? words.slice(0, limit).join(" ") + "…" : text;
+  };
+
   return (
     <div ref={wrapperRef} className="relative w-full max-w-md">
       {/* Search Bar */}
-      <div className="flex items-center bg-white border rounded-xl px-4 py-3 shadow-sm">
+      <div
+        className={`flex items-center bg-white border px-4 py-3 shadow-sm ${
+          isOpen ? "rounded-t-xl" : "rounded-xl"
+        }`}
+      >
         <button
           onClick={() => setIsOpen((p) => !p)}
           className="mr-2 text-gray-500"
@@ -82,47 +101,61 @@ const SearchBarComponent = () => {
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute mt-2 w-full bg-white border rounded-xl shadow-xl z-50">
+        <div className="absolute border-primary w-full bg-white border rounded-b-xl shadow-xl z-50">
           <div className="p-4">
             <p className="text-xs text-gray-500 font-semibold mb-3">
-              {query ? "Search Results" : "Latest Causes"}
+              {query ? "Search Results" : "Top Causes"}
             </p>
 
             {results.length === 0 && (
               <p className="text-sm text-gray-400">No causes found</p>
             )}
 
-            <div className="grid grid-cols-2 gap-3 mb-5">
-              {results.map((c) => (
-                <div
-                  key={c._id}
-                  onClick={() => {
-                    navigate(`/campaigns/${c.campaignSlug || c._id}`);
-                    setIsOpen(false);
-                    setQuery("");
-                  }}
-                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer"
-                >
-                  <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center overflow-hidden">
-                    {c?.mainImage ? (
-                      <img
-                        src={c.mainImage}
-                        alt={c.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <span className="text-emerald-700 text-sm font-semibold">
-                        {c.title?.[0]}
-                      </span>
-                    )}
+            <div className="flex flex-wrap gap-2">
+              {results.map((c, index) => {
+                const color = causeColors[index % causeColors.length];
+
+                return (
+                  <div
+                    key={c._id}
+                    onClick={() => {
+                      navigate(`/campaigns/${c.campaignSlug || c._id}`);
+                      setIsOpen(false);
+                      setQuery("");
+                    }}
+                    className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer max-w-full"
+                  >
+                    {/* Image / Icon */}
+                    <div
+                      className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center overflow-hidden ${color.bg}`}
+                    >
+                      {c?.media?.mainImage ? (
+                        <img
+                          src={c.media.mainImage}
+                          alt={c.cause}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className={`text-sm font-semibold ${color.text}`}>
+                          {c.title?.[0]}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Text */}
+                    <span
+                      className={`text-sm ${color.text} mt-[7px] leading-snug break-words`}
+                    >
+                      {c.cause ? c.cause.split(" ")[0] : ""}
+                    </span>
                   </div>
-                  <span className="text-sm text-gray-700">{c.title}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
+
             <Link to="/campaigns" onClick={() => setIsOpen(false)}>
-              <button className="w-full text-emerald-700 text-sm font-semibold mt-4 hover:underline">
-                View all results
+              <button className="w-full text-primary text-left text-sm font-semibold mt-4 hover:underline">
+                Explore all Causes
               </button>
             </Link>
           </div>

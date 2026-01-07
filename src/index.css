@@ -90,7 +90,12 @@
     @apply bg-background text-foreground font-body;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading font-semibold;
   }
 }
@@ -99,15 +104,15 @@
   .btn-primary {
     @apply bg-brand-purple text-white hover:bg-brand-purple-dark transition-colors px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200;
   }
-  
+
   .btn-secondary {
     @apply bg-white text-brand-purple border-2 border-brand-purple hover:bg-brand-purple-light transition-colors px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200;
   }
-  
+
   .section-title {
     @apply text-3xl md:text-4xl font-bold mb-6 text-center font-heading;
   }
-  
+
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-2;
   }
@@ -119,10 +124,78 @@
 
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-3px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-in-out;
+}
+
+.bg-1 {
+  z-index: 0;
+  opacity: .33;
+  position: absolute;
+  inset: -24px -104px auto auto;
+  vertical-align: middle;
+  max-width: 100%;
+  display: inline-block;
+}
+
+.bg-2 {
+  z-index: 0;
+  opacity: .33;
+  position: absolute;
+  inset: auto auto -64px -80px;
+  vertical-align: middle;
+  max-width: 100%;
+  display: inline-block;
+}
+
+.bg-3 {
+  z-index: 0;
+  opacity: .33;
+  position: absolute;
+  top: -88px;
+  right: -48px;
+  vertical-align: middle;
+  max-width: 100%;
+  display: inline-block;
+}
+
+.bg-4 {
+  z-index: 0;
+  opacity: .33;
+  position: absolute;
+  /* left: 0px;
+    top: 0px; */
+  inset: -32px auto auto -108px;
+  vertical-align: middle;
+  max-width: 100%;
+  display: inline-block;
+}
+
+.bg-5 {
+  z-index: 0;
+  opacity: .33;
+  position: absolute;
+  inset: auto -104px -48px auto;
+  vertical-align: middle;
+  max-width: 100%;
+  display: inline-block;
+}
+
+.css-qy1iac {
+    position: absolute;
+    bottom: 0px;
+    right: -25px;
+    width: 166px;
+    height: 226px;
 }

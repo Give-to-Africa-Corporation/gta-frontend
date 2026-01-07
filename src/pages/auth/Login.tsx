@@ -85,34 +85,35 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="w-full max-w-md">
-          <Card className="shadow-lg">
-            <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl text-center">
-                Log in to your account
-              </CardTitle>
-            </CardHeader>
-            <form onSubmit={handleSubmit}>
-              <CardContent className="grid gap-4">
-                {error && (
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="ngo@example.org"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  {/* <div className="flex items-center justify-between">
+        <div className="w-full max-w-lg py-12">
+          <div className="relative flex">
+            <Card className="shadow-lg z-10 w-full">
+              <CardHeader className="space-y-1">
+                <CardTitle className="text-2xl text-center">
+                  Log in to your account
+                </CardTitle>
+              </CardHeader>
+              <form onSubmit={handleSubmit}>
+                <CardContent className="grid gap-4">
+                  {error && (
+                    <Alert variant="destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{error}</AlertDescription>
+                    </Alert>
+                  )}
+                  <div className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="ngo@example.org"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    {/* <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
                     <Link
                       to="/forgot-password"
@@ -121,50 +122,67 @@ const Login = () => {
                       Forgot password?
                     </Link>
                   </div> */}
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4 text-gray-500" />
-                      ) : (
-                        <Eye className="h-4 w-4 text-gray-500" />
-                      )}
-                    </button>
+                    <Label htmlFor="password">Password</Label>
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4 text-gray-500" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-gray-500" />
+                        )}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-              <CardFooter className="flex flex-col space-y-4">
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Logging in..." : "Log in"}
-                </Button>
-                <div className="text-center text-sm">
-                  Don't have an account?{" "}
-                  <Link
-                    to="/signup"
-                    className="text-brand-purple hover:underline"
+                </CardContent>
+                <CardFooter className="flex flex-col space-y-4">
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isSubmitting}
                   >
-                    Sign up
-                  </Link>
-                </div>
-              </CardFooter>
-            </form>
-          </Card>
+                    {isSubmitting ? "Logging in..." : "Log in"}
+                  </Button>
+                  <div className="text-center text-sm">
+                    Don't have an account?{" "}
+                    <Link
+                      to="/signup"
+                      className="text-brand-purple hover:underline"
+                    >
+                      Sign up
+                    </Link>
+                  </div>
+                </CardFooter>
+              </form>
+            </Card>
+            <img
+              src="https://cdn.prod.website-files.com/5f6b00b40c0b1e4bf53c7d60/6670372063dc58df744db688_bg-5.png"
+              loading="lazy"
+              width="258"
+              height="228"
+              alt=""
+              className="bg-5"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/5f6b00b40c0b1e4bf53c7d60/66703674a5a268dcdbfaccbb_bg-4.png"
+              loading="lazy"
+              width="206"
+              height="304"
+              alt=""
+              className="bg-4"
+            />
+          </div>
         </div>
       </div>
       <Footer />

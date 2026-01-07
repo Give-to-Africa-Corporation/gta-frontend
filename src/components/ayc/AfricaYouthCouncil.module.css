@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Ruda:wght@400;700&display=swap");
 
 .container {
-  font-family: "Ruda", sans-serif;
+  font-family: "Basis Grotesque", sans-serif;
   margin: 0;
   padding: 0;
   line-height: 1.6;
@@ -121,7 +121,7 @@
   margin: 1rem 0;
   cursor: pointer;
   transition: background 0.3s ease;
-  font-family: "Ruda", sans-serif;
+  font-family: "Basis Grotesque", sans-serif;
   display: flex;
   width: max-content;
 }

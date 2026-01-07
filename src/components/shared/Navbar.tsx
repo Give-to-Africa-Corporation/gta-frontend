@@ -7,6 +7,7 @@ import { ChevronDown, Menu, X, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import SearchBarComponent from "./SearchBarComponent";
+import logoMain from "../../../public/logo.jfif";
 
 const navigationItems = [
   {
@@ -67,12 +68,13 @@ export const Navbar = () => {
 
   return (
     <nav className="bg-[#2E3333] backdrop-blur-md shadow-sm sticky top-0 z-50">
-      <div className="container-custom py-6">
+      <div className="container-custom py-1">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center flex-shrink-0">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-3xl font-bold text-white">YENDAA</span>
+              {/* <span className="text-3xl font-bold text-white">YENDAA</span> */}
+              <img src={logoMain} width={90} height={50} alt="" />
               {/* <img src="/give.png" alt="Campaign to Raising Africa" className="w-16 h-16" /> */}
             </Link>
           </div>

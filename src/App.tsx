@@ -23,6 +23,7 @@ import CampaignEmbed from "./pages/campaigns/CampaignEmbed";
 import CampaignsPage from "./pages/campaigns/CampaignsPage";
 import CreateCampaign from "./pages/campaigns/CreateCampaign";
 import Dashboard from "./pages/dashboard/Dashboard";
+import Setting from "./pages/dashboard/Setting";
 import PaymentPage from "./pages/payment/PaymentPage";
 import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import Registration from "./pages/registration/Registration";
@@ -34,6 +35,7 @@ import ProfileComplete from "./pages/registration/ProfileComplete";
 import PaypalComplete from "./pages/PaypalComplete";
 import StripeOnboardingReturn from "./pages/StripeOnboardingReturn";
 import PricingPage from "./pages/Pricing";
+import { ModalProvider } from "./context/ModalContext";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +43,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <AppProvider>
       <TooltipProvider>
+        <ModalProvider>
         <BrowserRouter>
           <Navbar />
           <ScrollToTop />
@@ -111,6 +114,14 @@ const App = () => (
               }
             />
             <Route
+              path="/dashboard/setting"
+              element={
+                <ProtectedRoute role="ngo">
+                  <Setting />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/dashboard/campaigns/edit/:campaignId"
               element={
                 <ProtectedRoute role="ngo">
@@ -136,6 +147,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        </ModalProvider>
       </TooltipProvider>
     </AppProvider>
   </QueryClientProvider>

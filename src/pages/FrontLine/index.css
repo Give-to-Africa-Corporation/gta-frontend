@@ -96,11 +96,11 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: 'Ruda', sans-serif !important;
+  font-family: 'Basis Grotesque', sans-serif !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Ruda', sans-serif !important;
+  font-family: 'Basis Grotesque', sans-serif !important;
   font-weight: bold;
 }
 

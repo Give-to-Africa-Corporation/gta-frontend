@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { create } from "domain";
 import { ApiResponse, AuthResponse, Campaign, CauseType, NgoProfile, OrganizationType } from "../lib/types";
 import { api, handleError, handleResponse } from "./apiService";

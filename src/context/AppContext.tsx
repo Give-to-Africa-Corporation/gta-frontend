@@ -166,6 +166,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     try {
       const response = await ngoApi.getProfile();
+      console.log(response, "reposndee campaign")
 
       if (response.success && response.data) {
         setProfileData(response.data);

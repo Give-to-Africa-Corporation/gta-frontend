@@ -331,6 +331,7 @@ function Signup() {
   const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [loading, setLoading] = useState(false); // submit loading
   const [error, setError] = useState("");
@@ -430,7 +431,9 @@ function Signup() {
       }
 
       case 4: {
-        // Online presence all optional
+        if (!d.website.trim()) {
+          return "Please enter the website url.";
+        }
         return null;
       }
 
@@ -465,6 +468,9 @@ function Signup() {
       }
 
       case 7: {
+        if (!d.profileImage) {
+          return "Please enter the profileImage or logo.";
+        }
         if (!d.verificationConfirmed) {
           return "Please confirm that the provided information is accurate.";
         }
@@ -496,6 +502,7 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setHasSubmitted(true);
     setError("");
     setSuccess("");
 
@@ -558,7 +565,7 @@ function Signup() {
       case 1:
         return (
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
+            <h2 className="text-xl font-semibold text-primary mb-1">
               ACCOUNT SETUP
             </h2>
 
@@ -622,7 +629,7 @@ function Signup() {
       case 2:
         return (
           <section>
-            <h2 className="text-xl font-semibold text-gray-900">
+            <h2 className="text-xl font-semibold text-primary">
               ORGANIZATION IDENTITY
             </h2>
 
@@ -719,7 +726,7 @@ function Signup() {
               </div>
             </div>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-4">
+            <h2 className="text-xl font-semibold text-primary mt-4">
               LOCATION
             </h2>
             <div className="grid gap-4 md:grid-cols-2 mt-4">
@@ -780,7 +787,7 @@ function Signup() {
       case 3:
         return (
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
+            <h2 className="text-xl font-semibold text-primary mb-1">
               LEADERSHIP & CONTACT INFORMATION
             </h2>
 
@@ -846,7 +853,7 @@ function Signup() {
       case 4:
         return (
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
+            <h2 className="text-xl font-semibold text-primary mb-1">
               ONLINE PRESENCE
             </h2>
 
@@ -882,7 +889,7 @@ function Signup() {
       case 5:
         return (
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
+            <h2 className="text-xl font-semibold text-primary mb-1">
               ABOUT YOUR WORK
             </h2>
 
@@ -1006,7 +1013,7 @@ function Signup() {
       case 6:
         return (
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
+            <h2 className="text-xl font-semibold text-primary mb-1">
               BANKING DETAILS (FOR DONATIONS)
             </h2>
 
@@ -1070,7 +1077,7 @@ function Signup() {
       case 7:
         return (
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
+            <h2 className="text-xl font-semibold text-primary mb-1">
               LOGO / PROFILE IMAGE
             </h2>
 
@@ -1094,7 +1101,7 @@ function Signup() {
               </p> */}
             </div>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-4">
+            <h2 className="text-xl font-semibold text-primary mt-4">
               AGREEMENTS
             </h2>
 
@@ -1138,88 +1145,111 @@ function Signup() {
 
   return (
     <>
-      <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <Card className="shadow-lg p-6 max-w-3xl w-full">
-          {/* Header */}
-          <div className="mb-4">
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">
-              Create an Account on Yendaa
-            </h1>
-            <p className="text-sm text-gray-600 mt-2">Welcome to Yendaa.</p>
-            <p className="text-sm text-gray-600 mt-1">
-              Please complete the form below to create your organization
-              account. This information helps us verify your cause and build a
-              trusted public profile for donors.
-            </p>
-          </div>
-
-          {/* Progress */}
-          <div className="mb-6">
-            <div className="flex items-center justify-between text-xs font-medium text-gray-600 mb-2">
-              <span>
-                Step {step} of {TOTAL_STEPS}
-              </span>
-              <span className="text-primary font-semibold">
-                {stepLabels[step - 1]}
-              </span>
+      <div className="flex-grow flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="relative flex items-center justify-center">
+          <Card className="shadow-lg p-6 max-w-3xl w-full z-10">
+            {/* Header */}
+            <div className="mb-4">
+              <h1 className="text-2xl font-bold text-primary mb-1">
+                Create an Account on Yendaa
+              </h1>
+              <p className="text-sm text-gray-600 mt-2">Welcome to Yendaa.</p>
+              <p className="text-sm text-gray-600 mt-1">
+                Please complete the form below to create your organization
+                account. This information helps us verify your cause and build a
+                trusted public profile for donors.
+              </p>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-              <div
-                className="h-2.5 bg-gradient-to-r from-primary via-indigo-500 to-emerald-400 transition-all duration-300"
-                style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
-              />
-            </div>
-          </div>
 
-          {/* Alerts */}
-          {error && (
-            <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700 border border-red-200">
-              {error}
+            {/* Progress */}
+            <div className="mb-6">
+              <div className="flex items-center justify-between text-xs font-medium text-gray-600 mb-2">
+                <span>
+                  Step {step} of {TOTAL_STEPS}
+                </span>
+                <span className="text-primary font-semibold">
+                  {stepLabels[step - 1]}
+                </span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                <div
+                  className="h-2.5 bg-gradient-to-r from-primary via-indigo-500 to-emerald-400 transition-all duration-300"
+                  style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+                />
+              </div>
             </div>
-          )}
-          {success && (
-            <div className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-700 border border-green-200">
-              {success}
-            </div>
-          )}
 
-          <form onSubmit={handleSubmit}>
-            {renderStep()}
+            {/* Alerts */}
+            {error && (step !== 7 || hasSubmitted) && (
+              <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-700 border border-green-200">
+                {success}
+              </div>
+            )}
 
-            {/* Navigation buttons */}
-            <div className="mt-8 flex items-center justify-between">
-              {step > 1 ? (
-                <button
-                  type="button"
-                  onClick={prevStep}
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                >
-                  Back
-                </button>
-              ) : (
-                <span />
-              )}
+            <form onSubmit={handleSubmit}>
+              {renderStep()}
 
-              {step < TOTAL_STEPS ? (
-                <button
-                  type="button"
-                  onClick={nextStep}
-                  className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark"
-                >
-                  Next
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark disabled:opacity-60"
-                >
-                  {loading ? "Submitting…" : "Submit Application"}
-                </button>
-              )}
-            </div>
-          </form>
-        </Card>
+              {/* Navigation buttons */}
+              <div className="mt-8 flex items-center justify-between">
+                {step > 1 ? (
+                  <button
+                    type="button"
+                    onClick={prevStep}
+                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  >
+                    Back
+                  </button>
+                ) : (
+                  <span />
+                )}
+
+                {step < TOTAL_STEPS ? (
+                  <button
+                    type="button"
+                    onClick={nextStep}
+                    className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark"
+                  >
+                    Next
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={
+                      loading ||
+                      !formData.profileImage ||
+                      !formData.verificationConfirmed ||
+                      !formData.termsAccepted
+                    }
+                    className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark disabled:opacity-60"
+                  >
+                    {loading ? "Submitting…" : "Submit Application"}
+                  </button>
+                )}
+              </div>
+            </form>
+          </Card>
+          <img
+            src="https://cdn.prod.website-files.com/5f6b00b40c0b1e4bf53c7d60/6670372063dc58df744db688_bg-5.png"
+            loading="lazy"
+            width="258"
+            height="228"
+            alt=""
+            className="bg-5"
+          />
+          <img
+            src="https://cdn.prod.website-files.com/5f6b00b40c0b1e4bf53c7d60/66703674a5a268dcdbfaccbb_bg-4.png"
+            loading="lazy"
+            width="206"
+            height="304"
+            alt=""
+            className="bg-4"
+          />
+        </div>
       </div>
       <Footer />
     </>

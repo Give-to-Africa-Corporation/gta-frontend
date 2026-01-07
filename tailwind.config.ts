@@ -19,8 +19,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        'heading': ['Montserrat', 'sans-serif'],
-        'body': ['Inter', 'sans-serif'],
+        // 'heading': ['Montserrat', 'sans-serif'],
+        'heading': ['Basis Grotesque', 'sans-serif'],
+        'body': ['Basis Grotesque', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
