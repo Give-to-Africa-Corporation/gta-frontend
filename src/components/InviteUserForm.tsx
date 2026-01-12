@@ -158,7 +158,7 @@ const InviteUserForm: React.FC = () => {
             <option value="specific">Specific campaigns</option>
           </select>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             {[
               { name: "editForm", label: "Edit form" },
               { name: "managePayments", label: "Manage payments" },
@@ -173,35 +173,79 @@ const InviteUserForm: React.FC = () => {
                 label: "Access guest list from app",
                 app: true,
               },
-            ].map((perm) => (
-              <label key={perm.name} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name={perm.name}
-                  checked={form[perm.name as keyof FormState] as boolean}
-                  onChange={handleChange}
-                />
-                {perm.label}{" "}
-                {perm.app && (
-                  <span className="bg-gray-200 px-1 rounded text-xs">App</span>
-                )}
-              </label>
-            ))}
+            ].map((perm) => {
+              const checked = form[perm.name as keyof FormState] as boolean;
+
+              return (
+                <div
+                  key={perm.name}
+                  className="flex items-center justify-between my-3 px-2"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-700">{perm.label}</span>
+                    {perm.app && (
+                      <span className="bg-gray-200 px-2 py-0.5 rounded text-xs">
+                        App
+                      </span>
+                    )}
+                  </div>
+
+                  {/* SWITCH */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleChange({
+                        target: {
+                          name: perm.name,
+                          checked: !checked,
+                          type: "checkbox",
+                        },
+                      } as any)
+                    }
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition
+            ${checked ? "bg-primary" : "bg-gray-300"}
+          `}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition
+              ${checked ? "translate-x-6" : "translate-x-1"}
+            `}
+                    />
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        <div>
+        <div className="px-2">
           <label className="block text-gray-500 text-sm font-semibold mb-2">
             GENERAL PERMISSIONS
           </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="contacts"
-              checked={form.contacts}
-              onChange={handleChange}
-            />
-            Contacts
+          <label className="flex items-center justify-between gap-4">
+            <span className="text-sm text-gray-700">Contacts</span>
+
+            <button
+              type="button"
+              onClick={() =>
+                handleChange({
+                  target: {
+                    name: "contacts",
+                    checked: !form.contacts,
+                    type: "checkbox",
+                  },
+                } as any)
+              }
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition
+      ${form.contacts ? "bg-primary" : "bg-gray-300"}
+    `}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition
+        ${form.contacts ? "translate-x-6" : "translate-x-1"}
+      `}
+              />
+            </button>
           </label>
         </div>
 

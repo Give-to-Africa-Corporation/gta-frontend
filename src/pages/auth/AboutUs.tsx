@@ -32,7 +32,7 @@ const AboutUs = () => {
       {/* HERO SECTION */}
       <section
         className="text-white py-20 px-6 text-center"
-        style={{ backgroundColor: "#8D9347" }}
+        style={{ backgroundColor: "#074C2D" }}
       >
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
         Easier giving. Greater impact.

@@ -33,7 +33,7 @@ export const Footer = () => {
           <div className="container-custom grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
             {/* Card 1 */}
             <div className="p-6 text-center mb-2">
-              <div className="flex gap-3 items-center justify-center mb-4 text-3xl text-brand-purple">
+              <div className="flex gap-3 items-center justify-center mb-4 text-3xl text-brand-yellow">
                 <Smile className="w-8 h-8" />
                 <h3 className="text-3xl font-bold">Easy</h3>
               </div>
@@ -44,7 +44,7 @@ export const Footer = () => {
 
             {/* Card 2 */}
             <div className="p-6 text-center mb-2">
-              <div className="flex gap-3 items-center justify-center mb-4 text-3xl text-brand-purple">
+              <div className="flex gap-3 items-center justify-center mb-4 text-3xl text-brand-yellow">
                 <Gift className="w-8 h-8" />
                 <h3 className="text-3xl font-bold">Impactful</h3>
               </div>
@@ -55,7 +55,7 @@ export const Footer = () => {
 
             {/* Card 3 */}
             <div className="p-6 text-center mb-2">
-              <div className="flex gap-3 items-center justify-center mb-4 text-3xl text-brand-purple">
+              <div className="flex gap-3 items-center justify-center mb-4 text-3xl text-brand-yellow">
                 <CircleCheck className="w-8 h-8" />
                 <h3 className="text-3xl font-bold">Trusted</h3>
               </div>
@@ -173,17 +173,17 @@ export const Footer = () => {
               <h4 className="font-semibold text-lg mb-4">Contact Us</h4>
               <ul className="space-y-4">
                 <li className="flex items-start space-x-3">
-                  <MapPin size={40} className="text-brand-purple" />
+                  <MapPin size={40} className="text-brand-yellow" />
                   <span className="text-gray-300">
                     4240 Kearny Mesa Rd STE 120 San Diego, CA 92111 United States{" "}
                   </span>
                 </li>
                 <li className="flex items-center space-x-3">
-                  <Phone size={20} className="text-brand-purple" />
+                  <Phone size={20} className="text-brand-yellow" />
                   <span className="text-gray-300">Call: 619-566-2004</span>
                 </li>
                 <li className="flex items-center space-x-3">
-                  <Printer size={20} className="text-brand-purple" />
+                  <Printer size={20} className="text-brand-yellow" />
                   <span className="text-gray-300">FAX: 858-327-3381 </span>
                 </li>
               </ul>

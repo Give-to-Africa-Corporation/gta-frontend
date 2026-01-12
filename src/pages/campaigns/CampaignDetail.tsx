@@ -279,8 +279,11 @@ const CampaignDetail = () => {
                     style={{
                       whiteSpace: "pre-line",
                     }}
+                    dangerouslySetInnerHTML={{
+                                    __html: campaign.description,
+                                }}
                   >
-                    {campaign.description}
+                    {/* {campaign.description} */}
                   </p>
                 </div>
 

@@ -25,6 +25,7 @@ const ProfileTab = () => {
   const [profileData, setProfileData] = useState<NgoProfileResponse | null>(
     null
   );
+  console.log(profileData, "profileData");
   const profileImageInputRef = useRef<HTMLInputElement>(null);
 
   const [ngoData, setNgoData] = useState({
@@ -214,7 +215,9 @@ const ProfileTab = () => {
               Cancel
             </Button>
           ) : (
-            <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
+            profileData?.loggedInUser?.role !== "member" && (
+              <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
+            )
           )}
         </CardHeader>
         <CardContent>

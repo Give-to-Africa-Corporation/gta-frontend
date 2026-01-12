@@ -39,6 +39,7 @@ import {
   Share2,
   Trash2,
   UserPlus,
+  Users,
 } from "lucide-react";
 // import { circleQuestionMark } from 'lucide';
 import { useEffect, useRef, useState } from "react";
@@ -254,7 +255,7 @@ const Dashboard = () => {
       } transition-opacity duration-500`}
     >
       <div className="flex min-h-screen w-full">
-        <Sidebar className="w-64 pt-12 border-none h-screen flex flex-col justify-between">
+        <Sidebar className="w-64 border-none h-screen flex flex-col justify-between pt-12">
           {/* Sidebar Header */}
           <SidebarHeader className="">
             <div className="flex items-center space-x-3 py-2 px-4 mt-6">
@@ -286,13 +287,12 @@ const Dashboard = () => {
                   NGO
                 </p>
               </div> */}
-              <img src={logoMain} width={80} height={50} alt="" />
             </div>
           </SidebarHeader>
 
           {/* Sidebar Content */}
           <SidebarContent className="flex-1">
-            <SidebarMenu className="px-2 mt-4">
+            <SidebarMenu className="px-2 mt-4 gap-3">
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="Dashboard">
                   <Link
@@ -300,7 +300,7 @@ const Dashboard = () => {
                     className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
                   >
                     <LayoutDashboard className="mr-3 h-5 w-5 text-gray-700" />
-                    <span className="text-sm font-medium text-gray-800">
+                    <span className="text-[16px] font-medium text-gray-800">
                       Dashboard
                     </span>
                   </Link>
@@ -323,7 +323,7 @@ const Dashboard = () => {
                     className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
                   >
                     <FileText className="mr-3 h-5 w-5 text-gray-700" />
-                    <span className="text-sm font-medium text-gray-800">
+                    <span className="text-[16px] font-medium text-gray-800">
                       Create Causes
                     </span>
                   </Link>
@@ -333,12 +333,40 @@ const Dashboard = () => {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="View Causes">
                   <Link
-                    to="/campaigns"
+                    to="/dashboard/ngo-campaigns"
                     className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
                   >
                     <PieChart className="mr-3 h-5 w-5 text-gray-700" />
-                    <span className="text-sm font-medium text-gray-800">
+                    <span className="text-[16px] font-medium text-gray-800">
                       View Causes
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="View Causes">
+                  <Link
+                    to="/dashboard/donors"
+                    className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
+                  >
+                    <Users className="mr-3 h-5 w-5 text-gray-700" />
+                    <span className="text-[16px] font-medium text-gray-800">
+                      Donors
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="View Causes">
+                  <Link
+                    to="/dashboard/donations"
+                    className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
+                  >
+                    <Users className="mr-3 h-5 w-5 text-gray-700" />
+                    <span className="text-[16px] font-medium text-gray-800">
+                      Donations
                     </span>
                   </Link>
                 </SidebarMenuButton>
@@ -392,7 +420,7 @@ const Dashboard = () => {
                     <p className="text-sm text-start px-4">Give to Africa</p>
                     <hr className="my-3" />
                     <button
-                      onClick={() => navigate("/settings")}
+                      onClick={() => navigate("/dashboard/setting")}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       <Settings className="mr-2 h-4 w-4" />
@@ -405,21 +433,21 @@ const Dashboard = () => {
                       <UserPlus className="mr-2 h-4 w-4" />
                       Invite a user
                     </button>
-                    <button
+                    {/* <button
                       // onClick={() => handleSwitchProfile()}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       <ArrowRightLeft className="mr-2 h-4 w-4" />
                       Switch profile
-                    </button>
-                    <hr className="pt-3" />
-                    <button
+                    </button> */}
+                    {/* <hr className="pt-3" /> */}
+                    {/* <button
                       onClick={() => navigate("/invite")}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       <LucideMessageCircleQuestion className="mr-2 h-4 w-4" />
                       Help Center
-                    </button>
+                    </button> */}
                     <hr className="pt-3" />
                     <button
                       onClick={handleLogout}
@@ -435,9 +463,9 @@ const Dashboard = () => {
           </SidebarFooter>
         </Sidebar>
 
-        <SidebarInset>
+        <SidebarInset className="bg-[#074C2D11]">
           <div className="p-4 md:p-6 lg:p-8">
-            {!profileData?.ngo?.NGOAccountReady && (
+            {/* {!profileData?.ngo?.NGOAccountReady && (
               <div className="text-sm bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded-md flex flex-col md:flex-row items-center justify-between">
                 <p>
                   Complete your onboarding and bank details to activate your
@@ -474,7 +502,7 @@ const Dashboard = () => {
                   </button>
                 </div>
               </div>
-            )}
+            )} */}
             <div className="flex items-center justify-between mb-8">
               {/* <div>
                 <h1 className="text-3xl font-bold">
@@ -554,24 +582,24 @@ const Dashboard = () => {
               onValueChange={setActiveTab}
               className="space-y-4"
             >
-              <TabsList>
-                <TabsTrigger value="profile">Profile</TabsTrigger>
-                <TabsTrigger value="campaigns">Causes</TabsTrigger>
-                <TabsTrigger value="donors">Donors</TabsTrigger>
-                <TabsTrigger value="donations">Donations</TabsTrigger>
-              </TabsList>
+              {/* <TabsList> */}
+                {/* <TabsTrigger value="profile">Profile</TabsTrigger> */}
+                {/* <TabsTrigger value="campaigns">Causes</TabsTrigger> */}
+                {/* <TabsTrigger value="donors">Donors</TabsTrigger> */}
+                {/* <TabsTrigger value="donations">Donations</TabsTrigger> */}
+              {/* </TabsList> */}
               <TabsContent value="profile" className="space-y-4">
                 <ProfileTab />
               </TabsContent>
-              <TabsContent value="campaigns" className="space-y-4">
+              {/* <TabsContent value="campaigns" className="space-y-4">
                 <CampaignsTab ngoCampaigns={ngoCampaigns} />
-              </TabsContent>
-              <TabsContent value="donors" className="space-y-4">
+              </TabsContent> */}
+              {/* <TabsContent value="donors" className="space-y-4">
                 <DonorsTab />
-              </TabsContent>
-              <TabsContent value="donations" className="space-y-4">
+              </TabsContent> */}
+              {/* <TabsContent value="donations" className="space-y-4">
                 <DonationsTab />
-              </TabsContent>
+              </TabsContent> */}
             </Tabs>
           </div>
         </SidebarInset>

@@ -67,14 +67,14 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-[#2E3333] backdrop-blur-md shadow-sm sticky top-0 z-50">
-      <div className="container-custom py-1">
+    <nav className="bg-primary backdrop-blur-md shadow-sm sticky top-0 z-50">
+      <div className="container-custom">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center flex-shrink-0">
             <Link to="/" className="flex items-center space-x-2">
               {/* <span className="text-3xl font-bold text-white">YENDAA</span> */}
-              <img src={logoMain} width={90} height={50} alt="" />
+              <img src={logoMain} width={90} height="auto" alt="" />
               {/* <img src="/give.png" alt="Campaign to Raising Africa" className="w-16 h-16" /> */}
             </Link>
           </div>
@@ -119,7 +119,7 @@ export const Navbar = () => {
               <Link
                 to={user.role === "admin" ? "/admin/dashboard" : "/dashboard"}
               >
-                <Button size="sm">Dashboard</Button>
+                <Button className="py-3 px-4 bg-brand-yellow text-gray-900 hover:bg-brand-yellow/10 hover:text-white-900" size="sm">Dashboard</Button>
               </Link>
             ) : (
               <>
@@ -133,10 +133,10 @@ export const Navbar = () => {
                     Log In
                   </Button>
                 </Link>
-                <Link to="/signup">
+                <Link to="/choose-account">
                   <Button
                     size="sm"
-                    className="py-3 px-4"
+                    className="py-3 px-4 bg-brand-yellow text-gray-900 hover:bg-brand-yellow/10 hover:text-white-900"
                     style={{ borderRadius: "30px" }}
                   >
                     Sign Up
@@ -169,7 +169,7 @@ export const Navbar = () => {
                       FAQ & support
                     </li>
                   </Link>
-                  <Link to="/signup">
+                  <Link to="/choose-account">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                       Donate to YENDAA
                     </li>
@@ -183,7 +183,7 @@ export const Navbar = () => {
                   <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                     For causes
                   </li>
-                  <Link to="/signup">
+                  <Link to="/choose-account">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                       Signup
                     </li>
@@ -223,6 +223,11 @@ export const Navbar = () => {
                   <Link to="/privacypolicy">
                     <span className="cursor-pointer hover:text-gray-700">
                       Privacy
+                    </span>
+                  </Link>
+                  <Link to="https://forms.monday.com/forms/98d7e5c33bc97773bc07f7d1a1e86568?r=use1">
+                    <span className="cursor-pointer hover:text-gray-700">
+                      Feedback
                     </span>
                   </Link>
                 </div>

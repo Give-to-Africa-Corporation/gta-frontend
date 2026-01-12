@@ -159,14 +159,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   }, [lastFetchTimestamps]);
 
   // Load full profile data including campaigns and stats
-  const loadProfileData = useCallback(async () => {
-    if (!shouldRefetch("profileData", 120000)) {
+const loadProfileData = useCallback(
+  async (forceRefresh: boolean = false) => {
+    // 👇 normal login / auto calls (no force)
+    if (!forceRefresh && !shouldRefetch("profileData", 120000)) {
       return profileData;
     }
 
     try {
       const response = await ngoApi.getProfile();
-      console.log(response, "reposndee campaign")
 
       if (response.success && response.data) {
         setProfileData(response.data);
@@ -180,7 +181,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       console.error("Error loading profile data:", error);
       return null;
     }
-  }, [lastFetchTimestamps, profileData]);
+  },
+  [lastFetchTimestamps, profileData]
+);
+
 
   // Refresh user profile data
   const refreshUserData = useCallback(async () => {
@@ -528,6 +532,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         loadCampaigns,
         refreshUserData,
         profileData,
+        loadProfileData,
         lastFetchTimestamps,
         logout,
         approveNGO,

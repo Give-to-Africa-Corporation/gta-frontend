@@ -36,6 +36,11 @@ import PaypalComplete from "./pages/PaypalComplete";
 import StripeOnboardingReturn from "./pages/StripeOnboardingReturn";
 import PricingPage from "./pages/Pricing";
 import { ModalProvider } from "./context/ModalContext";
+import CampaignsTab from "./pages/dashboard/tabs/CampaignsTab";
+import DonorsTab from "./pages/dashboard/tabs/DonorsTab";
+import DonationsTab from "./pages/dashboard/tabs/DonationsTab";
+import ChooseAccount from "./pages/auth/ChooseAccount";
+import SignupDonor from "./pages/auth/SignupDonor";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +61,8 @@ const App = () => (
             />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/signup-donor" element={<SignupDonor />} />
+            <Route path="/choose-account" element={<ChooseAccount />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/termsuse" element={<TermsUse />} />
@@ -118,6 +125,30 @@ const App = () => (
               element={
                 <ProtectedRoute role="ngo">
                   <Setting />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/ngo-campaigns"
+              element={
+                <ProtectedRoute role="ngo">
+                  <CampaignsTab />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/donors"
+              element={
+                <ProtectedRoute role="ngo">
+                  <DonorsTab />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/donations"
+              element={
+                <ProtectedRoute role="ngo">
+                  <DonationsTab />
                 </ProtectedRoute>
               }
             />

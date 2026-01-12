@@ -6,8 +6,8 @@ export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen w-full bg-gray-50 text-gray-800">
 
-      {/* HERO - background color added (#8D9347) */}
-      <section className="w-full bg-[#8D9347] text-white py-24">
+      {/* HERO - background color added (#074C2D) */}
+      <section className="w-full bg-[#074C2D] text-white py-24">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}

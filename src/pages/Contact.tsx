@@ -179,14 +179,16 @@ const Contact = () => {
                 <div className="grid gap-6">
                   <div className="flex items-start space-x-4">
                     <div className="bg-brand-purple-light p-3 rounded-full">
-                      <MapPin className="text-brand-purple h-6 w-6" />
+                      <MapPin className="text-white h-6 w-6" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Our Address</h3>
                       <p className="text-gray-600">
-                        123 Nonprofit Street
+                        {/* 123 Nonprofit Street */}
+                        4240 Kearny Mesa Road, Suite 120
                         <br />
-                        Giving City, 10001
+                        {/* Giving City, 10001 */}
+                        San Diego, CA 92111
                         <br />
                         United States
                       </p>
@@ -195,7 +197,7 @@ const Contact = () => {
 
                   <div className="flex items-start space-x-4">
                     <div className="bg-brand-purple-light p-3 rounded-full">
-                      <Mail className="text-brand-purple h-6 w-6" />
+                      <Mail className="text-white h-6 w-6" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Email Us</h3>
@@ -207,12 +209,12 @@ const Contact = () => {
 
                   <div className="flex items-start space-x-4">
                     <div className="bg-brand-purple-light p-3 rounded-full">
-                      <PhoneCall className="text-brand-purple h-6 w-6" />
+                      <PhoneCall className="text-white h-6 w-6" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Call Us</h3>
                       <p className="text-gray-600">
-                        Phone: +1 (555) 123-4567
+                        Phone: +1 (619) 566-2004
                         <br />
                         Toll Free: 1-800-FUNDRAISE
                       </p>
@@ -221,7 +223,7 @@ const Contact = () => {
 
                   <div className="flex items-start space-x-4">
                     <div className="bg-brand-purple-light p-3 rounded-full">
-                      <Clock className="text-brand-purple h-6 w-6" />
+                      <Clock className="text-white h-6 w-6" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Business Hours</h3>

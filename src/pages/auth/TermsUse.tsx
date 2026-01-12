@@ -6,7 +6,7 @@ export default function TermsOfUse() {
   return (
     <div className="min-h-screen w-full bg-gray-50 text-gray-800">
       {/* HERO SECTION */}
-      <section className="w-full bg-[#8D9347] text-white py-28">
+      <section className="w-full bg-[#074C2D] text-white py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -112,7 +112,7 @@ export default function TermsOfUse() {
           },
           {
             title: "15. CONTACT US",
-            content: <p>Email: <a href="mailto:info@2africa.org" className="text-[#8D9347] font-semibold">info@2africa.org</a> | Partnerships: <a href="mailto:partners@2africa.org" className="text-[#8D9347] font-semibold">partners@2africa.org</a></p>,
+            content: <p>Email: <a href="mailto:info@2africa.org" className="text-[#074C2D] font-semibold">info@2africa.org</a> | Partnerships: <a href="mailto:partners@2africa.org" className="text-[#074C2D] font-semibold">partners@2africa.org</a></p>,
           },
         ].map((term, idx) => (
           <motion.div
@@ -123,7 +123,7 @@ export default function TermsOfUse() {
             transition={{ duration: 0.5, delay: idx * 0.1 }}
             className="bg-white p-6 rounded-xl shadow-md border border-gray-200"
           >
-            <h2 className="text-xl md:text-2xl font-bold text-[#8D9347] mb-3">{term.title}</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-[#074C2D] mb-3">{term.title}</h2>
             <div className="text-gray-700">{term.content}</div>
           </motion.div>
         ))}

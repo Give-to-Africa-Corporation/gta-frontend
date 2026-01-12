@@ -50,7 +50,7 @@ const Faq = () => {
         {/* HERO SECTION */}
         <section
           className="py-24 px-6 text-center text-white"
-          style={{ backgroundColor: "#8D9347" }}
+          style={{ backgroundColor: "#074C2D" }}
         >
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
             Frequently Asked Questions

@@ -30,12 +30,12 @@ export default {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          // DEFAULT: '#0b4d3c',
-          DEFAULT: '#8D9347',
-          // light: '#147a5e',
-          light: '#8D9347',
-          // dark: '#083d30',
-          dark: '#8D9347',
+          DEFAULT: '#074C2D',
+          // DEFAULT: '#8D9347',
+          light: '#074C2D',
+          // light: '#074C2D',
+          dark: '#074C2D',
+          // dark: '#074C2D',
           foreground: '#ffffff'
         },
         secondary: {
@@ -65,15 +65,15 @@ export default {
         // Updated brand colors
         brand: {
           purple: {
-            // DEFAULT: '#0b4d3c',
-            DEFAULT: '#8D9347',
-            dark: '#8D9347',    // Darker green
-            darker: '#979e47ff',  // Even darker green
-            light: '#b3b971ff',   // Light green
+            DEFAULT: '#074C2D',
+            // DEFAULT: '#074C2D',
+            dark: '#074C2D',    // Darker green
+            darker: '#034427ff',  // Even darker green
+            light: '#09683eff',   // Light green
           },
           orange: '#ff6600',    
-          yellow: '#EEC93C',    
-          green: '#0b4d3c',     // Match main green
+          yellow: '#FFEA00',    
+          green: '#074C2D',     // Match main green
           gray: {
             DEFAULT: '#666666',
             light: '#f5f5f5',
