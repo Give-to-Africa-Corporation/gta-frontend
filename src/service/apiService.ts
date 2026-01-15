@@ -15,6 +15,8 @@ import {
   NgoQueryParams,
   RegisterRequest,
   UpdateProfileRequest,
+  UserRegisterRequest,
+  UserAuthResponse,
 } from "../lib/types";
 
 // API Configuration
@@ -117,6 +119,23 @@ const createFormData = (data: Record<string, any>): FormData => {
 
   return formData;
 };
+
+// User API
+export const userApi = {
+  userRegister: async (
+    data: UserRegisterRequest
+  ): Promise<ApiResponse<UserAuthResponse>> => {
+    try {
+      const response = await api.post("/users/register", data);
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+      }
+      return handleResponse<UserAuthResponse>(response);
+    } catch (error) {
+      return handleError(error);
+    }
+  },
+}
 
 // Auth API
 export const authApi = {
@@ -400,17 +419,31 @@ export const campaignApi = {
     }
   },
 
-  // Donation API
-  addDonation: async (
+  // Like campaign API
+  likeCampaign: async (
     campaignId: string,
-    donation: DonationRequest
-  ): Promise<ApiResponse<Donation>> => {
+    userIP: string
+  ): Promise<ApiResponse<{ likes: number }>> => {
     try {
-      const response = await api.post(
-        `/campaigns/${campaignId}/donate`,
-        donation
-      );
-      return handleResponse<Donation>(response);
+      const response = await api.post(`/campaigns/${campaignId}/like`, {
+        userIP,
+      });
+      return handleResponse<{ likes: number }>(response);
+    } catch (error) {
+      return handleError(error);
+    }
+  },
+
+  // Unlike campaign API
+  unlikeCampaign: async (
+    campaignId: string,
+    userIP: string
+  ): Promise<ApiResponse<{ likes: number }>> => {
+    try {
+      const response = await api.post(`/campaigns/${campaignId}/unlike`, {
+        userIP,
+      });
+      return handleResponse<{ likes: number }>(response);
     } catch (error) {
       return handleError(error);
     }
@@ -436,5 +469,6 @@ export default {
   authApi,
   ngoApi,
   campaignApi,
+  userApi,
   isAuthenticated,
 };

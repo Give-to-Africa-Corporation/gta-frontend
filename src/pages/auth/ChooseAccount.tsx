@@ -259,7 +259,7 @@ function ChooseAccount() {
                   </div>
                   <div className="text-left">
                     <h3 className="text-brand-purple font-semibold text-lg">
-                      Sign up as Donor
+                      Sign up as User / Volunteer
                     </h3>
                   </div>
                 </div>

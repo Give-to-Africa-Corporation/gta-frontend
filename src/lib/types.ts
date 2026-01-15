@@ -18,9 +18,27 @@ export interface RegisterRequest {
   password: string;
 }
 
+export interface UserRegisterRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 export interface AuthResponse {
   token: string;
   ngo: NgoBasic;
+}
+
+export interface UserAuthResponse {
+  message: string;
+  token: string;
+  user: {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  };
 }
 
 // NGO types

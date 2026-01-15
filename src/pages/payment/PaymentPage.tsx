@@ -206,6 +206,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 const PaymentPage = () => {
   const { id } = useParams<{ id: string }>();
   const { campaigns } = useAppContext();
+  console.log("Campaigns from context:", campaigns);
   const navigate = useNavigate();
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [isLoading, setIsLoading] = useState(true);

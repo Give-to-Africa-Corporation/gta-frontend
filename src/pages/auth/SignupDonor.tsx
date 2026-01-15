@@ -3,25 +3,26 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAppContext } from "@/context/AppContext";
-import { authApi } from "@/service/apiService";
+import { userApi } from "@/service/apiService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Footer } from "@/components/shared/Footer";
 
 const initialFormData = {
-  username: "",
-  useremail: "",
+  firstName: "",
+  lastName: "",
+  email: "",
   password: "",
   confirmPassword: "",
-  isAuthorized: false,
+  userType: ""
 };
 
 function SignupDonor() {
   const navigate = useNavigate();
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [loading, setLoading] = useState(false); // submit loading
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -33,36 +34,75 @@ function SignupDonor() {
     }));
   };
 
+  const validateForm = () => {
+    if (!formData.firstName.trim()) {
+      setError("First Name is required");
+      return false;
+    }
+    if (!formData.lastName.trim()) {
+      setError("Last Name is required");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setError("Email is required");
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("Please enter a valid email address");
+      return false;
+    }
+    if (!formData.password) {
+      setError("Password is required");
+      return false;
+    }
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return false;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
     setError("");
     setSuccess("");
 
+    if (!validateForm()) {
+      return;
+    }
+
     setLoading(true);
 
     try {
-      // ✅ FormData (MANDATORY for file upload)
-      const fd = new FormData();
-
-      const response = await authApi.register({
-        username: formData.username,
-        useremail: formData.useremail,
+      const response = await userApi.userRegister({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
         password: formData.password,
-        confirmPassword: formData.confirmPassword,
-        isAuthorized: formData.isAuthorized,
       });
 
       if (!response.success) {
-        throw new Error(response.message || "Something went wrong.");
+        throw new Error(response.error || "Something went wrong.");
       }
 
-      // setSuccess("Your application has been submitted successfully.");
-      toast.success("User Register Successfully!");
+      setSuccess("Registration successful! Redirecting...");
+      toast.success("User Registered Successfully!");
       setFormData(initialFormData);
-      navigate("/");
+      
+      // Redirect to home or dashboard after 1.5 seconds
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     } catch (err) {
-      setError(err.message || "Something went wrong.");
+      const errorMsg = err.message || "Something went wrong.";
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -76,7 +116,7 @@ function SignupDonor() {
             {/* Header */}
             <div className="mb-4">
               <h1 className="text-2xl font-bold text-primary mb-1">
-                Sign up as donor
+                Sign up as {formData.userType ? (formData.userType.charAt(0).toUpperCase() + formData.userType.slice(1)) : "User / Volunteer"}
               </h1>
               <p className="text-sm text-gray-600 mt-2">Welcome to Yendaa.</p>
             </div>
@@ -94,29 +134,44 @@ function SignupDonor() {
             )}
 
             <form onSubmit={handleSubmit}>
-                <div className="grid gap-3 mt-4">
-                  <Label htmlFor="username">User Name</Label>
-                  <Input
-                    id="username"
-                    name="username"
-                    type="text"
-                    placeholder="Your User Name"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                  />
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input
+                      id="firstName"
+                      name="firstName"
+                      type="text"
+                      placeholder="First Name"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input
+                      id="lastName"
+                      name="lastName"
+                      type="text"
+                      placeholder="Last Name"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div className="grid gap-3 mt-4">
-                  <Label htmlFor="useremail">
+                  <Label htmlFor="email">
                     Email Address
                   </Label>
                   <Input
-                    id="useremail"
-                    name="useremail"
+                    id="email"
+                    name="email"
                     type="email"
                     placeholder="Email Address"
-                    value={formData.useremail}
+                    value={formData.email}
                     onChange={handleChange}
                     required
                   />
@@ -132,6 +187,7 @@ function SignupDonor() {
                       placeholder="******"
                       value={formData.password}
                       onChange={handleChange}
+                      required
                     />
                   </div>
 
@@ -144,15 +200,46 @@ function SignupDonor() {
                       placeholder="******"
                       value={formData.confirmPassword}
                       onChange={handleChange}
+                      required
                     />
                   </div>
                 </div>
+
+                
+                  {/* aik select aai jis say user volunteer ya donor choose karay ga */}
+                  <div className="grid gap-3 mt-4">
+                    <Label htmlFor="userType">User Type</Label>
+                    <select
+                      id="userType"
+                      name="userType"
+                      value={formData.userType}
+                      onChange={handleChange}
+                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-purple focus:border-transparent"
+                    >
+                      <option value="">Select User Type</option>
+                      <option value="volunteer">Volunteer</option>
+                      <option value="donor">Donor</option>
+                    </select>
+                  </div>
+
                 <button
                   type="submit"
-                  className="mt-6 w-full bg-brand-purple text-white py-3 px-4 rounded-lg hover:bg-brand-yellow hover:text-gray-800 transition-colors duration-300"
+                  disabled={loading}
+                  className="mt-6 w-full bg-brand-purple text-white py-3 px-4 rounded-lg hover:bg-brand-yellow hover:text-gray-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Create Account
+                  {loading ? "Creating Account..." : "Create Account"}
                 </button>
+
+                <div className="mt-4 text-center text-sm text-gray-600">
+                  Already have an account?{" "}
+                  <button
+                    type="button"
+                    onClick={() => navigate("/auth/login")}
+                    className="text-brand-purple hover:underline font-medium"
+                  >
+                    Sign In
+                  </button>
+                </div>
             </form>
           </Card>
           <img

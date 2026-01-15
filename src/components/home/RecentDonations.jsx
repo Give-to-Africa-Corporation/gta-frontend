@@ -8,8 +8,126 @@ import { createPortal } from "react-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { MdEmail, MdFacebook, MdWhatsapp } from "react-icons/md";
 import { FaLinkedinIn, FaReddit, FaXTwitter } from "react-icons/fa6";
-import { FaRegHeart } from "react-icons/fa6";
+import { FaRegHeart, FaHeart } from "react-icons/fa6";
+import apiService from "@/service/apiService";
 
+const campaignApi = apiService.campaignApi;
+
+const LikeButton = ({ item, campaignId }) => {
+    const [isLiked, setIsLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(item?.likes || 0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [userIP, setUserIP] = useState(null);
+
+    // Get user IP on component mount
+    React.useEffect(() => {
+        const fetchUserIP = async () => {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                setUserIP(data.ip);
+                // console.log("User IP fetched:", data.ip);
+                
+                // Check if this IP has already liked this campaign (from localStorage)
+                const likedCampaigns = JSON.parse(localStorage.getItem(`likedCampaigns_${data.ip}`) || '[]');
+                const hasLiked = likedCampaigns.includes(campaignId);
+                setIsLiked(hasLiked);
+                // console.log("Has liked this campaign:", hasLiked);
+            } catch (error) {
+                console.error("Failed to fetch user IP:", error);
+                setUserIP("unknown");
+            }
+        };
+        
+        fetchUserIP();
+    }, [campaignId]);
+
+    const handleLike = async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        // console.log("❤️ Like/Unlike button clicked!");
+        // console.log("campaignId:", campaignId);
+        // console.log("userIP:", userIP);
+        // console.log("isLiked:", isLiked);
+        
+        if (isLoading) {
+            console.log("Already loading, skipping...");
+            return;
+        }
+        
+        try {
+            setIsLoading(true);
+            
+            if (isLiked) {
+                // Unlike
+                // console.log("Making API call to unlikeCampaign...");
+                const response = await campaignApi.unlikeCampaign(campaignId, userIP || "unknown");
+                
+                // console.log("✅ Unlike response:", response);
+                
+                if (response.success && response.data) {
+                    setIsLiked(false);
+                    setLikeCount(response.data.likes);
+                    
+                    // Remove from localStorage
+                    const likedCampaigns = JSON.parse(localStorage.getItem(`likedCampaigns_${userIP}`) || '[]');
+                    const updated = likedCampaigns.filter(id => id !== campaignId);
+                    localStorage.setItem(`likedCampaigns_${userIP}`, JSON.stringify(updated));
+                    
+                    toast.success("You unliked this campaign!");
+                } else {
+                    console.log("❌ API error:", response.error);
+                    toast.error(response.error || "Failed to unlike campaign");
+                }
+            } else {
+                // Like
+                console.log("Making API call to likeCampaign...");
+                const response = await campaignApi.likeCampaign(campaignId, userIP || "unknown");
+                
+                // console.log("✅ Like response:", response);
+                
+                if (response.success && response.data) {
+                    setIsLiked(true);
+                    setLikeCount(response.data.likes);
+                    
+                    // Add to localStorage
+                    const likedCampaigns = JSON.parse(localStorage.getItem(`likedCampaigns_${userIP}`) || '[]');
+                    if (!likedCampaigns.includes(campaignId)) {
+                        likedCampaigns.push(campaignId);
+                    }
+                    localStorage.setItem(`likedCampaigns_${userIP}`, JSON.stringify(likedCampaigns));
+                    
+                    toast.success("You liked this campaign!");
+                } else {
+                    console.log("❌ API error:", response.error);
+                    toast.error(response.error || "Failed to like campaign");
+                }
+            }
+        } catch (error) {
+            console.error("❌ Error:", error);
+            toast.error("Failed to process your request");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <button
+            onClick={handleLike}
+            disabled={isLoading}
+            className="cursor-pointer transition-all duration-200 hover:scale-110 flex items-center gap-1"
+            title="Like this campaign"
+        >
+            {isLiked ? (
+                <FaHeart className="w-6 h-6 text-primary" />
+            ) : (
+                <FaRegHeart className="w-6 h-6 text-primary hover:text-primary" />
+            )}
+            {likeCount > 0 && <span className="text-xs text-gray-600">{likeCount}</span>}
+        </button>
+    );
+};
 
 const ShareButton = ({ item }) => {
     const [open, setOpen] = useState(false);
@@ -110,7 +228,7 @@ const ShareButton = ({ item }) => {
 
 export const RecentDonations = () => {
     const { campaigns } = useAppContext();
-    console.log(campaigns, "campaigns...")
+    // console.log(campaigns, "campaigns...")
     const navigate = useNavigate();
 
     const copyLink = () => {
@@ -144,7 +262,9 @@ export const RecentDonations = () => {
         <div className="bg-[#2E3333] py-12" style={{ backgroundColor: "#2E3333" }}>
             <div className="container-custom min-h-screen p-4 sm:py-10" id="recent-donations">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
-                    {recent.map((item, index) => (
+                    {recent.map((item, index) => {
+                        // console.log("Campaign item:", item);
+                        return (
                         <Card
                             key={item._id || item.id}
                             className={`group rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-all duration-300 flex flex-col
@@ -222,7 +342,7 @@ export const RecentDonations = () => {
                             <CardContent className="relative overflow-visible mt-auto border-t border-gray-100 p-4 flex items-center justify-between">
                                 <div className="flex gap-3">
                                     <ShareButton item={item} />
-                                    <FaRegHeart className="w-6 h-6 text-primary" />
+                                    <LikeButton item={item} campaignId={item._id || item.id} />
                                 </div>
                                 <Button
                                     className="bg-brand-purple hover:bg-brand-purple-light text-white rounded-full px-5 py-1 text-sm shadow"
@@ -235,7 +355,8 @@ export const RecentDonations = () => {
                                 </Button>
                             </CardContent>
                         </Card>
-                    ))}
+                        );
+                    })}
                 </div>
                 {/* Show More Button */}
                 {recent?.length > 16 ?

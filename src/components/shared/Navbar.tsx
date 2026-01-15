@@ -183,11 +183,11 @@ export const Navbar = () => {
                   <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                     For causes
                   </li>
-                  <Link to="/choose-account">
+                  {/* <Link to="/choose-account">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                       Signup
                     </li>
-                  </Link>
+                  </Link> */}
                 </ul>
                 <div className="border-t border-gray-200 px-4 py-3 text-sm text-gray-500 flex flex-wrap gap-x-3">
                   <Link to="/">
