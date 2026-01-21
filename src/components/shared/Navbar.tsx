@@ -133,7 +133,7 @@ export const Navbar = () => {
                     Log In
                   </Button>
                 </Link>
-                <Link to="/choose-account">
+                <Link to="/signup">
                   <Button
                     size="sm"
                     className="py-3 px-4 bg-brand-yellow text-gray-900 hover:bg-brand-yellow/10 hover:text-white-900"
@@ -169,7 +169,7 @@ export const Navbar = () => {
                       FAQ & support
                     </li>
                   </Link>
-                  <Link to="/choose-account">
+                  <Link to="/signup">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                       Donate to YENDAA
                     </li>

@@ -19,11 +19,11 @@ export const Footer = () => {
           "url('/images/africanbg2.jpeg')", backgroundAttachment: 'fixed'
       }} >
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/100 to-black/50 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2E3333]/95 via-[#2E3333]/100 to-[#2E3333]/100 z-0"></div>
 
         <section className="relative z-10 text-white py-20 flex justify-center flex-col items-center">
-          <div className="text-center sm:w-[60%]">
-            <h2 className="text-3xl font-bolder tracking-widest text-brand-yellow uppercase mb-4">
+          <div className="text-center sm:w-[50%]">
+            <h2 className="text-3xl font-bolder tracking-widest text-white uppercase mb-4">
               Easier giving. Greater good.
             </h2>
             <p className="text-2xl md:text-2xl font-light leading-snug text-white">
@@ -173,17 +173,17 @@ export const Footer = () => {
               <h4 className="font-semibold text-lg mb-4">Contact Us</h4>
               <ul className="space-y-4">
                 <li className="flex items-start space-x-3">
-                  <MapPin size={40} className="text-brand-yellow" />
+                  <MapPin size={40} className="text-white" />
                   <span className="text-gray-300">
                     4240 Kearny Mesa Rd STE 120 San Diego, CA 92111 United States{" "}
                   </span>
                 </li>
                 <li className="flex items-center space-x-3">
-                  <Phone size={20} className="text-brand-yellow" />
+                  <Phone size={20} className="text-white" />
                   <span className="text-gray-300">Call: 619-566-2004</span>
                 </li>
                 <li className="flex items-center space-x-3">
-                  <Printer size={20} className="text-brand-yellow" />
+                  <Printer size={20} className="text-white" />
                   <span className="text-gray-300">FAX: 858-327-3381 </span>
                 </li>
               </ul>

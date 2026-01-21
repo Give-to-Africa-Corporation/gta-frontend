@@ -25,7 +25,7 @@ const ProfileTab = () => {
   const [profileData, setProfileData] = useState<NgoProfileResponse | null>(
     null
   );
-  console.log(profileData, "profileData");
+  // console.log(profileData, "profileData");
   const profileImageInputRef = useRef<HTMLInputElement>(null);
 
   const [ngoData, setNgoData] = useState({

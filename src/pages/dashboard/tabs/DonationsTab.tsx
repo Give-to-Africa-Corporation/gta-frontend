@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -40,6 +41,8 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 // import { circleQuestionMark } from 'lucide';
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -338,6 +341,67 @@ const DonationsTab = () => {
     document.body.removeChild(link);
   };
 
+  // Export to PDF function
+  const exportToPDF = () => {
+  try {
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(16);
+    doc.text("Donations Report", 14, 15);
+
+    doc.setFontSize(10);
+    doc.text(
+      `Generated on: ${format(new Date(), "dd MMM yyyy")}`,
+      14,
+      22
+    );
+
+    // Table columns
+    const tableColumn = [
+      "Donation ID",
+      "Donor",
+      "Amount",
+      "Cause",
+      "Date",
+      "Status",
+    ];
+
+    // Table rows
+    const tableRows = filteredDonations.map((donation) => [
+      donation._id,
+      donation.donorName || "Anonymous",
+      `$${donation.amount.toLocaleString()}`,
+      donation.campaign,
+      formatDate(donation.timestamp),
+      donation.status || "Completed",
+    ]);
+
+    // AutoTable
+    autoTable(doc, {
+      startY: 30,
+      head: [tableColumn],
+      body: tableRows,
+      styles: {
+        fontSize: 9,
+      },
+      headStyles: {
+        fillColor: [7, 76, 45], // dark green
+        textColor: 255,
+      },
+      alternateRowStyles: {
+        fillColor: [240, 240, 240],
+      },
+    });
+
+    // Save PDF
+    doc.save(`donations-${format(new Date(), "yyyy-MM-dd")}.pdf`);
+  } catch (error) {
+    console.error("Error exporting PDF:", error);
+  }
+};
+
+
   // Get unique campaign names for filter
   const campaignNames = Array.from(new Set(donations.map((d) => d.campaign)));
 
@@ -460,7 +524,7 @@ const DonationsTab = () => {
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="View Causes">
+                <SidebarMenuButton asChild tooltip="View Donations">
                   <Link
                     to="/dashboard/donations"
                     className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
@@ -468,6 +532,19 @@ const DonationsTab = () => {
                     <Users className="mr-3 h-5 w-5 text-gray-700" />
                     <span className="text-[16px] font-medium text-gray-800">
                       Donations
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="View Payouts">
+                  <Link
+                    to="/dashboard/payouts"
+                    className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
+                  >
+                    <Banknote className="mr-3 h-5 w-5 text-gray-700" />
+                    <span className="text-[16px] font-medium text-gray-800">
+                      Payouts
                     </span>
                   </Link>
                 </SidebarMenuButton>
@@ -500,8 +577,8 @@ const DonationsTab = () => {
                       {getInitials()}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <span className="text-sm font-medium">
+                  <div className="text-start">
+                    <span className="text-sm font-smibold block">
                       {user?.name || "NGO User"}
                     </span>
                     <p className="text-sm text-start">Give to Africa</p>
@@ -527,13 +604,15 @@ const DonationsTab = () => {
                       <Settings className="mr-2 h-4 w-4" />
                       Settings
                     </button>
-                    <button
-                      onClick={openModal}
-                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      <UserPlus className="mr-2 h-4 w-4" />
-                      Invite a user
-                    </button>
+                    {profileData?.loggedInUser?.role !== "member" && (
+                      <button
+                        onClick={openModal}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        Invite a user
+                      </button>
+                    )}
                     {/* <button
                       // onClick={() => handleSwitchProfile()}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -649,7 +728,17 @@ const DonationsTab = () => {
                       onClick={exportToCSV}
                     >
                       <Download className="h-4 w-4" />
-                      <span>Export</span>
+                      Export CSV
+                    </Button>
+                    {/* export as pdf */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-1"
+                      onClick={exportToPDF}
+                    >
+                      <Download className="h-4 w-4" />
+                      Export PDF
                     </Button>
                   </div>
                 </div>

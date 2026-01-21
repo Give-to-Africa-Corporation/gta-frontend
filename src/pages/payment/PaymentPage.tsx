@@ -301,7 +301,7 @@ const PaymentPage = () => {
           <PayPalHostedFieldsProvider
             createOrder={() => Promise.resolve("fake-order-id")}
           > */}
-            <div className="bg-white p-6 md:p-8 rounded-lg shadow-md">
+            <div className="">
               <PaymentForm
                 isProcessing={isDonationProcessing}
                 setIsProcessing={setIsDonationProcessing}

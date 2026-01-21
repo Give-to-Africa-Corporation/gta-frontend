@@ -167,7 +167,7 @@ const Dashboard = () => {
       setLoading(true);
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/ngos/${ngoId}/paypal-onboarding`
+        `${import.meta.env.VITE_API_URL}/ngos/${ngoId}/paypal-onboarding`,
       );
 
       const { onboardingLink } = response.data;
@@ -180,7 +180,7 @@ const Dashboard = () => {
     } catch (error: any) {
       console.error(error.response?.data || error.message);
       toast.error(
-        error.response?.data || "Error connecting to PayPal. Please try again."
+        error.response?.data || "Error connecting to PayPal. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -202,7 +202,7 @@ const Dashboard = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }
+        },
       );
       console.log(res.data, "stripe onboarding response");
       const { success, url } = res.data;
@@ -218,7 +218,7 @@ const Dashboard = () => {
       console.error(err);
       setError(
         err?.response?.data?.message ||
-          "Failed to start Stripe onboarding. Please try again."
+          "Failed to start Stripe onboarding. Please try again.",
       );
       setLoading(false);
     }
@@ -244,7 +244,7 @@ const Dashboard = () => {
     activeTabCam === "ongoing" ? ongoingCampaigns : pastCampaigns;
 
   const filteredCampaigns = campaignsToShow.filter((campaign) =>
-    campaign.title?.toLowerCase().includes(search.toLowerCase())
+    campaign.title?.toLowerCase().includes(search.toLowerCase()),
   );
 
   const handleShare = (e, campaign) => {
@@ -290,7 +290,7 @@ const Dashboard = () => {
       setApiError(
         err?.response?.data?.message ||
           err?.message ||
-          "Failed to delete campaign"
+          "Failed to delete campaign",
       );
     } finally {
       setDeletingId(null);
@@ -408,7 +408,7 @@ const Dashboard = () => {
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="View Causes">
+                <SidebarMenuButton asChild tooltip="View Donations">
                   <Link
                     to="/dashboard/donations"
                     className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
@@ -416,6 +416,19 @@ const Dashboard = () => {
                     <Users className="mr-3 h-5 w-5 text-gray-700" />
                     <span className="text-[16px] font-medium text-gray-800">
                       Donations
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="View Payouts">
+                  <Link
+                    to="/dashboard/payouts"
+                    className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
+                  >
+                    <Banknote className="mr-3 h-5 w-5 text-gray-700" />
+                    <span className="text-[16px] font-medium text-gray-800">
+                      Payouts
                     </span>
                   </Link>
                 </SidebarMenuButton>
@@ -861,13 +874,13 @@ const Dashboard = () => {
                         <div className="flex flex-col justify-center gap-1">
                           <div className="flex items-center gap-2">
                             <Badge
-                              className="w-fit bg-emerald-100 text-emerald-700"
+                              className="w-fit bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
                               style={{ borderRadius: "5px" }}
                             >
                               {campaign?.campaignType || "Donation"}
                             </Badge>
                             <Badge
-                              className="w-fit bg-emerald-100 text-emerald-700"
+                              className="w-fit bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
                               style={{ borderRadius: "5px" }}
                             >
                               {campaign?.status || "Donation"}
@@ -942,7 +955,7 @@ const Dashboard = () => {
                                   className="bg-teal-400 hover:bg-teal-500 text-black"
                                   onClick={() => {
                                     navigator.clipboard.writeText(
-                                      `${window.location.origin}/campaigns/${campaign.campaignSlug}`
+                                      `${window.location.origin}/campaigns/${campaign.campaignSlug}`,
                                     );
                                   }}
                                 >
@@ -966,7 +979,7 @@ const Dashboard = () => {
                                   onClick={() =>
                                     window.open(
                                       `mailto:?body=${window.location.origin}/campaigns/${campaign.campaignSlug}`,
-                                      "_blank"
+                                      "_blank",
                                     )
                                   }
                                 >
@@ -989,7 +1002,7 @@ const Dashboard = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             navigate(
-                              `/dashboard/campaigns/edit/${campaign._id}`
+                              `/dashboard/campaigns/edit/${campaign._id}`,
                             );
                           }}
                         >

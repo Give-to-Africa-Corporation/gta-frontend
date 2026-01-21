@@ -280,7 +280,7 @@ const AdminDashboard = () => {
             <TabsTrigger value="organizations">
               Organization Identity
             </TabsTrigger>
-            <TabsTrigger value="causes">Causes Identity</TabsTrigger>
+            {/* <TabsTrigger value="causes">Causes Identity</TabsTrigger> */}
             {/* <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger> */}
           </TabsList>
@@ -452,14 +452,14 @@ const AdminDashboard = () => {
                                               ` (${ngo.organizationTypeOther})`}
                                           </p>
 
-                                          <p className="text-gray-500">
+                                          {/* <p className="text-gray-500">
                                             Cause Type:
                                           </p>
                                           <p>
                                             {ngo.causeType}
                                             {ngo.causeType === "Other" &&
                                               ` (${ngo.causeTypeOther})`}
-                                          </p>
+                                          </p> */}
 
                                           <p className="text-gray-500">
                                             Country:
@@ -528,7 +528,7 @@ const AdminDashboard = () => {
                                         <p className="text-gray-500 mt-3 mb-1">
                                           Work Samples:
                                         </p>
-                                        <p>{ngo.workSamples || "—"}</p>
+                                        <img src={`${import.meta.env.VITE_BE_URL}${ngo.workSamples}`} alt="work samples" />
 
                                         <p className="text-gray-500 mt-3 mb-1">
                                           Social Links:

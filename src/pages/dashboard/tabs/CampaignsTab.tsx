@@ -494,7 +494,7 @@ const CampaignsTab = () => {
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="View Causes">
+                <SidebarMenuButton asChild tooltip="View Donations">
                   <Link
                     to="/dashboard/donations"
                     className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
@@ -506,7 +506,19 @@ const CampaignsTab = () => {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="View Payouts">
+                  <Link
+                    to="/dashboard/payouts"
+                    className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
+                  >
+                    <Banknote className="mr-3 h-5 w-5 text-gray-700" />
+                    <span className="text-[16px] font-medium text-gray-800">
+                      Payouts
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
 
@@ -535,8 +547,8 @@ const CampaignsTab = () => {
                       {getInitials()}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <span className="text-sm font-medium">
+                  <div className="text-start">
+                    <span className="text-sm font-smibold block">
                       {user?.name || "NGO User"}
                     </span>
                     <p className="text-sm text-start">Give to Africa</p>
@@ -562,13 +574,15 @@ const CampaignsTab = () => {
                       <Settings className="mr-2 h-4 w-4" />
                       Settings
                     </button>
-                    <button
-                      onClick={openModal}
-                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      <UserPlus className="mr-2 h-4 w-4" />
-                      Invite a user
-                    </button>
+                    {profileData?.loggedInUser?.role !== "member" && (
+                      <button
+                        onClick={openModal}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        Invite a user
+                      </button>
+                    )}
                     {/* <button
                       // onClick={() => handleSwitchProfile()}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

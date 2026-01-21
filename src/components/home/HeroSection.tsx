@@ -428,7 +428,7 @@ export const HeroSection = () => {
                 <ArrowRight className="text-brand-purple ms-5 text-lg font-bold transform transition-transform duration-300 ease-in-out group-hover:translate-x-2" />
               </button>
             </Link>
-            <Link to="/choose-account">
+            <Link to="/signup">
               <button className="group flex items-center justify-between border-2 border-brand-purple rounded-3xl p-3 transition-all duration-300 ease-in-out">
                 <div className="flex items-center gap-2">
                   <div className="w-12 h-12 sm:w-20 sm:h-20 flex-shrink-0">

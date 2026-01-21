@@ -326,7 +326,7 @@ const CampaignDetail = () => {
                 {campaign.media?.additionalImages?.length ? (
                   <div>
                     <h3 className="text-lg font-medium mb-3">
-                      Causes Gallery
+                      Causes Logo
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
                       {campaign.media.additionalImages.map((img, idx) => (

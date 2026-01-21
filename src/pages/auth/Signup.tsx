@@ -242,11 +242,12 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useAppContext } from "@/context/AppContext";
 import { authApi } from "@/service/apiService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { africanCountries } from "@/lib/countries";
 import { Footer } from "@/components/shared/Footer";
+import { Eye, EyeOff } from "lucide-react";
 
 const TOTAL_STEPS = 7;
 
@@ -292,7 +293,7 @@ const initialFormData = {
   missionStatement: "",
   programs: [],
   programsOther: "",
-  workSamples: "",
+  workSamples: null,
 
   // SECTION 7
   bankName: "",
@@ -336,6 +337,16 @@ function Signup() {
   const [loading, setLoading] = useState(false); // submit loading
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   // ---------- helpers ----------
 
@@ -394,12 +405,12 @@ function Signup() {
         }
 
         // Cause Type
-        if (!d.causeType) {
-          return "Please select your primary cause.";
-        }
-        if (d.causeType === "Other" && !d.causeTypeOther.trim()) {
-          return "Please specify your primary cause.";
-        }
+        // if (!d.causeType) {
+        //   return "Please select your primary cause.";
+        // }
+        // if (d.causeType === "Other" && !d.causeTypeOther.trim()) {
+        //   return "Please specify your primary cause.";
+        // }
 
         // Location
         if (!d.country.trim()) {
@@ -447,6 +458,9 @@ function Signup() {
         }
         if (selectedPrograms.includes("Other") && !d.programsOther.trim()) {
           return "Please specify your other program(s).";
+        }
+        if (!d.workSamples) {
+          return "Please provide work samples.";
         }
         return null;
       }
@@ -529,6 +543,9 @@ function Signup() {
         if (key === "programs" && Array.isArray(value)) {
           fd.append("programs", value.filter(Boolean).join(", "));
         }
+        else if (key === "workSamples" && value instanceof File) {
+          fd.append("workSamples", value);
+        }
         // file
         else if (key === "profileImage" && value instanceof File) {
           fd.append("profileImage", value); // 👈 VERY IMPORTANT
@@ -542,7 +559,7 @@ function Signup() {
       const response = await authApi.register(fd);
 
       if (!response.success) {
-        throw new Error(response.message || "Something went wrong.");
+        throw new Error(response.error || "Something went wrong.");
       }
 
       // setSuccess("Your application has been submitted successfully.");
@@ -600,26 +617,52 @@ function Signup() {
             <div className="grid gap-4 md:grid-cols-2 mt-4">
               <div>
                 <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="******"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
+                <div className="relative">
+                  <Input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="******"
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-500" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div>
                 <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  placeholder="******"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                />
+                <div className="relative">
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="******"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={toggleConfirmPasswordVisibility}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-500" />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </section>
@@ -681,7 +724,7 @@ function Signup() {
               </div>
 
               {/* Cause Type */}
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <Label>Cause Type (What You Work On)</Label>
                 {metaLoading ? (
                   <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
@@ -723,7 +766,7 @@ function Signup() {
                     placeholder="Please specify your primary cause"
                   />
                 )}
-              </div>
+              </div> */}
             </div>
 
             <h2 className="text-xl font-semibold text-primary mt-4">
@@ -996,13 +1039,17 @@ function Signup() {
                 <Label htmlFor="workSamples">
                   Photos or Links Showing Your Work
                 </Label>
-                <Textarea
+                <Input
                   id="workSamples"
                   name="workSamples"
-                  rows={3}
-                  value={formData.workSamples}
-                  onChange={handleChange}
-                  placeholder="Paste 2–3 links to photos or pages showing your real programs or community impact."
+                  type="file"
+                  accept="image/*,video/*"
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      workSamples: e.target.files[0], // ✅ FILE OBJECT
+                    }))
+                  }
                 />
               </div>
             </div>
@@ -1128,10 +1175,13 @@ function Signup() {
                   onChange={handleChange}
                   className="mt-1 h-4 w-4 text-primary border-gray-300 rounded"
                 />
-                <span className="ml-2">
+                <span className="ml-2 mb-3">
                   I agree to Yendaa’s Terms of Use and fundraising guidelines.
                 </span>
               </label>
+              <Link to={"/termsuse"} target="_blank" className="pt-3 mt-3 text-sm text-primary underline">
+                Terms of Use
+              </Link>
             </div>
           </section>
         );

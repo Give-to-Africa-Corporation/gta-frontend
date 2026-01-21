@@ -3132,14 +3132,14 @@ const OtherIcon = () => (
 );
 
 const campaignTypes = [
-  { title: "Event", icon: <EventIcon /> },
+  // { title: "Event", icon: <EventIcon /> },
   { title: "Donation", icon: <DonationIcon /> },
   { title: "Peer-to-peer", icon: <PeerIcon /> },
-  { title: "Online shop", icon: <ShopIcon /> },
-  { title: "Raffle", icon: <RaffleIcon /> },
-  { title: "Membership", icon: <MembershipIcon /> },
-  { title: "Auction", icon: <AuctionIcon /> },
-  { title: "Other sales", icon: <OtherIcon /> },
+  // { title: "Online shop", icon: <ShopIcon /> },
+  // { title: "Raffle", icon: <RaffleIcon /> },
+  // { title: "Membership", icon: <MembershipIcon /> },
+  // { title: "Auction", icon: <AuctionIcon /> },
+  // { title: "Other sales", icon: <OtherIcon /> },
 ];
 
 function renderStep(
@@ -3303,7 +3303,7 @@ function renderStep(
           <h1 className="text-2xl font-semibold mb-2">
             What causes do you want to create?
           </h1>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 mt-4 gap-2 md:gap-4">
             {campaignTypes.map((item) => {
               const active = campaignData.causeType === item.title;
 

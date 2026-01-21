@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const SearchBarComponent = () => {
   const { campaigns } = useAppContext();
-  console.log(campaigns, "campigns");
+  // console.log(campaigns, "campigns");
   const navigate = useNavigate();
 
   const [query, setQuery] = useState("");
@@ -131,7 +131,7 @@ const SearchBarComponent = () => {
                     >
                       {c?.media?.mainImage ? (
                         <img
-                          src={c.media.mainImage}
+                          src={`${import.meta.env.VITE_BE_URL}${c.media.mainImage}`}
                           alt={c.cause}
                           className="w-full h-full object-cover"
                         />

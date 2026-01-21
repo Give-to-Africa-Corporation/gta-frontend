@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -322,38 +323,38 @@ const DonorsTab = () => {
       } transition-opacity duration-500`}
     >
       <div className="flex min-h-screen w-full">
-        <Sidebar className="w-64 border-none h-screen flex flex-col justify-between pt-12">
+       <Sidebar className="w-64 border-none h-screen flex flex-col justify-between pt-12">
           {/* Sidebar Header */}
           <SidebarHeader className="">
             <div className="flex items-center space-x-3 py-2 px-4 mt-6">
               {/* <Avatar className="w-12 h-12">
-                        {profileData?.ngo.profileImage ? (
-                          <AvatarImage
-                            src={
-                              profileData.ngo.profileImage.startsWith("http")
-                                ? profileData.ngo.profileImage
-                                : `${import.meta.env.VITE_BE_URL}${
-                                    profileData.ngo.profileImage
-                                  }`
-                            }
-                            alt="Profile"
-                          />
-                        ) : null}
-                        <AvatarFallback className="text-lg font-semibold">
-                          {getInitials()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col">
-                        <h2 className="font-semibold text-sm text-gray-900">
-                          {user?.name || "NGO User"}
-                        </h2>
-                        <p className="text-xs text-gray-500 flex items-center gap-1">
-                          <Badge variant="outline" className="h-4 px-1.5 text-xs">
-                            NGO
-                          </Badge>
-                          NGO
-                        </p>
-                      </div> */}
+                {profileData?.ngo.profileImage ? (
+                  <AvatarImage
+                    src={
+                      profileData.ngo.profileImage.startsWith("http")
+                        ? profileData.ngo.profileImage
+                        : `${import.meta.env.VITE_BE_URL}${
+                            profileData.ngo.profileImage
+                          }`
+                    }
+                    alt="Profile"
+                  />
+                ) : null}
+                <AvatarFallback className="text-lg font-semibold">
+                  {getInitials()}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col">
+                <h2 className="font-semibold text-sm text-gray-900">
+                  {user?.name || "NGO User"}
+                </h2>
+                <p className="text-xs text-gray-500 flex items-center gap-1">
+                  <Badge variant="outline" className="h-4 px-1.5 text-xs">
+                    NGO
+                  </Badge>
+                  NGO
+                </p>
+              </div> */}
             </div>
           </SidebarHeader>
 
@@ -426,7 +427,7 @@ const DonorsTab = () => {
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="View Causes">
+                <SidebarMenuButton asChild tooltip="View Donations">
                   <Link
                     to="/dashboard/donations"
                     className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
@@ -434,6 +435,19 @@ const DonorsTab = () => {
                     <Users className="mr-3 h-5 w-5 text-gray-700" />
                     <span className="text-[16px] font-medium text-gray-800">
                       Donations
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="View Payouts">
+                  <Link
+                    to="/dashboard/payouts"
+                    className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
+                  >
+                    <Banknote className="mr-3 h-5 w-5 text-gray-700" />
+                    <span className="text-[16px] font-medium text-gray-800">
+                      Payouts
                     </span>
                   </Link>
                 </SidebarMenuButton>
@@ -466,8 +480,8 @@ const DonorsTab = () => {
                       {getInitials()}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <span className="text-sm font-medium">
+                  <div className="text-start">
+                    <span className="text-sm font-smibold block">
                       {user?.name || "NGO User"}
                     </span>
                     <p className="text-sm text-start">Give to Africa</p>
@@ -493,28 +507,30 @@ const DonorsTab = () => {
                       <Settings className="mr-2 h-4 w-4" />
                       Settings
                     </button>
-                    <button
-                      onClick={openModal}
+                    {profileData?.loggedInUser?.role !== "member" && (
+                      <button
+                        onClick={openModal}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        Invite a user
+                      </button>
+                    )}
+                    {/* <button
+                      // onClick={() => handleSwitchProfile()}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      <UserPlus className="mr-2 h-4 w-4" />
-                      Invite a user
-                    </button>
-                    {/* <button
-                              // onClick={() => handleSwitchProfile()}
-                              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                              <ArrowRightLeft className="mr-2 h-4 w-4" />
-                              Switch profile
-                            </button> */}
+                      <ArrowRightLeft className="mr-2 h-4 w-4" />
+                      Switch profile
+                    </button> */}
                     {/* <hr className="pt-3" /> */}
                     {/* <button
-                              onClick={() => navigate("/invite")}
-                              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                              <LucideMessageCircleQuestion className="mr-2 h-4 w-4" />
-                              Help Center
-                            </button> */}
+                      onClick={() => navigate("/invite")}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <LucideMessageCircleQuestion className="mr-2 h-4 w-4" />
+                      Help Center
+                    </button> */}
                     <hr className="pt-3" />
                     <button
                       onClick={handleLogout}

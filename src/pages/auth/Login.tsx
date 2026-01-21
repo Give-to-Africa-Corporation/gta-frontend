@@ -157,7 +157,7 @@ const Login = () => {
                   <div className="text-center text-sm">
                     Don't have an account?{" "}
                     <Link
-                      to="/choose-account"
+                      to="/signup"
                       className="text-brand-purple hover:underline"
                     >
                       Sign up

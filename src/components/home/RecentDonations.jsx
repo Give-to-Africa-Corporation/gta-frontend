@@ -27,7 +27,7 @@ const LikeButton = ({ item, campaignId }) => {
                 const data = await response.json();
                 setUserIP(data.ip);
                 // console.log("User IP fetched:", data.ip);
-                
+
                 // Check if this IP has already liked this campaign (from localStorage)
                 const likedCampaigns = JSON.parse(localStorage.getItem(`likedCampaigns_${data.ip}`) || '[]');
                 const hasLiked = likedCampaigns.includes(campaignId);
@@ -38,43 +38,43 @@ const LikeButton = ({ item, campaignId }) => {
                 setUserIP("unknown");
             }
         };
-        
+
         fetchUserIP();
     }, [campaignId]);
 
     const handleLike = async (e) => {
         e.stopPropagation();
         e.preventDefault();
-        
+
         // console.log("❤️ Like/Unlike button clicked!");
         // console.log("campaignId:", campaignId);
         // console.log("userIP:", userIP);
         // console.log("isLiked:", isLiked);
-        
+
         if (isLoading) {
             console.log("Already loading, skipping...");
             return;
         }
-        
+
         try {
             setIsLoading(true);
-            
+
             if (isLiked) {
                 // Unlike
                 // console.log("Making API call to unlikeCampaign...");
                 const response = await campaignApi.unlikeCampaign(campaignId, userIP || "unknown");
-                
+
                 // console.log("✅ Unlike response:", response);
-                
+
                 if (response.success && response.data) {
                     setIsLiked(false);
                     setLikeCount(response.data.likes);
-                    
+
                     // Remove from localStorage
                     const likedCampaigns = JSON.parse(localStorage.getItem(`likedCampaigns_${userIP}`) || '[]');
                     const updated = likedCampaigns.filter(id => id !== campaignId);
                     localStorage.setItem(`likedCampaigns_${userIP}`, JSON.stringify(updated));
-                    
+
                     toast.success("You unliked this campaign!");
                 } else {
                     console.log("❌ API error:", response.error);
@@ -84,20 +84,20 @@ const LikeButton = ({ item, campaignId }) => {
                 // Like
                 console.log("Making API call to likeCampaign...");
                 const response = await campaignApi.likeCampaign(campaignId, userIP || "unknown");
-                
+
                 // console.log("✅ Like response:", response);
-                
+
                 if (response.success && response.data) {
                     setIsLiked(true);
                     setLikeCount(response.data.likes);
-                    
+
                     // Add to localStorage
                     const likedCampaigns = JSON.parse(localStorage.getItem(`likedCampaigns_${userIP}`) || '[]');
                     if (!likedCampaigns.includes(campaignId)) {
                         likedCampaigns.push(campaignId);
                     }
                     localStorage.setItem(`likedCampaigns_${userIP}`, JSON.stringify(likedCampaigns));
-                    
+
                     toast.success("You liked this campaign!");
                 } else {
                     console.log("❌ API error:", response.error);
@@ -132,6 +132,8 @@ const LikeButton = ({ item, campaignId }) => {
 const ShareButton = ({ item }) => {
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
+    const dropdownRef = useRef(null);
+    const timeoutRef = useRef(null);
     const [pos, setPos] = useState({ top: 0, left: 0 });
 
     const shareUrl = `${window.location.origin}/campaigns/${item.campaignSlug || item._id}`;
@@ -140,15 +142,15 @@ const ShareButton = ({ item }) => {
     const handleCopy = (shareUrl) => {
         navigator.clipboard.writeText(shareUrl)
             .then(() => {
-                toast.success("Copied to clipboard!"); // success toaster
+                toast.success("Copied to clipboard!");
             })
             .catch(() => {
                 toast.error("Failed to copy!");
             });
     };
 
-
     const onEnter = () => {
+        clearTimeout(timeoutRef.current);
         if (!ref.current) return;
         const rect = ref.current.getBoundingClientRect();
         setPos({
@@ -158,7 +160,11 @@ const ShareButton = ({ item }) => {
         setOpen(true);
     };
 
-    const onLeave = () => setOpen(false);
+    const onLeave = () => {
+        timeoutRef.current = setTimeout(() => {
+            setOpen(false);
+        }, 150);
+    };
 
     return (
         <>
@@ -167,7 +173,7 @@ const ShareButton = ({ item }) => {
                 onMouseEnter={onEnter}
                 onMouseLeave={onLeave}
                 onClick={(e) => e.stopPropagation()}
-                className="cursor-pointer"
+                className="cursor-pointer relative"
             >
                 {/* Share Icon */}
                 <svg
@@ -183,6 +189,7 @@ const ShareButton = ({ item }) => {
                 {open &&
                     createPortal(
                         <div
+                            ref={dropdownRef}
                             style={{
                                 position: "fixed",
                                 top: pos.top - 5,
@@ -200,7 +207,7 @@ const ShareButton = ({ item }) => {
                         shadow-xl 
                         p-4 
                         z-50"
-                            onMouseEnter={() => setOpen(true)}
+                            onMouseEnter={onEnter}
                             onMouseLeave={onLeave}
                         >
                             <div className="grid grid-cols-2 gap-4 text-sm">
@@ -265,96 +272,96 @@ export const RecentDonations = () => {
                     {recent.map((item, index) => {
                         // console.log("Campaign item:", item);
                         return (
-                        <Card
-                            key={item._id || item.id}
-                            className={`group rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-all duration-300 flex flex-col
+                            <Card
+                                key={item._id || item.id}
+                                className={`group rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-all duration-300 flex flex-col
               ${index % 2 === 0 ? "mt-0" : "mt-8"} cursor-pointer`}
-                            onClick={() =>
-                                navigate(`/campaigns/${item.campaignSlug || item._id}`)
-                            }
-                        >
-                            <div className="px-4 py-3">
-                                {/* Top Row */}
-                                <div className="flex items-center gap-3">
-                                    {/* Avatar */}
-                                    {item?.ngoId?.profileImage ? (
-                                        <img
-                                            src={getResolvedprofileImage(item)}
-                                            alt={item?.ngoId?.name}
-                                            className="w-8 h-8 rounded-full object-cover"
-                                        />
-                                    ) : (
-                                        <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                            <span className="text-gray-700 font-semibold text-md uppercase">
-                                                {item?.ngoId?.name?.charAt(0)}
-                                            </span>
-                                        </div>
-                                    )}
+                                onClick={() =>
+                                    navigate(`/campaigns/${item.campaignSlug || item._id}`)
+                                }
+                            >
+                                <div className="px-4 py-3">
+                                    {/* Top Row */}
+                                    <div className="flex items-center gap-3">
+                                        {/* Avatar */}
+                                        {item?.ngoId?.profileImage ? (
+                                            <img
+                                                src={getResolvedprofileImage(item)}
+                                                alt={item?.ngoId?.name}
+                                                className="w-8 h-8 rounded-full object-cover"
+                                            />
+                                        ) : (
+                                            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <span className="text-gray-700 font-semibold text-md uppercase">
+                                                    {item?.ngoId?.name?.charAt(0)}
+                                                </span>
+                                            </div>
+                                        )}
 
-                                    {/* Name + Donation */}
-                                    <div className="flex flex-col">
-                                        <p className="text-gray-800 font-medium text-sm">
-                                            {item?.ngoId?.name}
-                                        </p>
-                                        <span className="text-gray-500 text-xs">
+                                        {/* Name + Donation */}
+                                        <div className="flex flex-col">
+                                            <p className="text-gray-800 font-medium text-sm">
+                                                {item?.ngoId?.name}
+                                            </p>
+                                            {/* <span className="text-gray-500 text-xs">
                                             donated • {item?.pendingPayments?.length}
-                                        </span>
+                                        </span> */}
+                                        </div>
                                     </div>
+
+                                    {/* Description */}
+                                    <CardDescription className="text-gray-700 text-sm mt-2 line-clamp-2" dangerouslySetInnerHTML={{
+                                        __html: item.short_description || item.description,
+                                    }}>
+                                        {/* {item.short_description || item.description} */}
+                                    </CardDescription>
                                 </div>
 
-                                {/* Description */}
-                                <CardDescription className="text-gray-700 text-sm mt-2 line-clamp-2" dangerouslySetInnerHTML={{
-                                    __html: item.short_description || item.description,
-                                }}>
-                                    {/* {item.short_description || item.description} */}
-                                </CardDescription>
-                            </div>
-
-                            {/* Image Section with overlay */}
-                            <div className="relative h-48 overflow-hidden">
-                                <img
-                                    src={getResolvedImage(item)}
-                                    alt={item.title}
-                                    className="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                                />
-                                {/* Overlay badge */}
-                                {/* <div className="absolute bg-black text-white text-xs font-semibold px-3 py-1 rounded-full shadow top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                                {/* Image Section with overlay */}
+                                <div className="relative h-48 overflow-hidden">
+                                    <img
+                                        src={getResolvedImage(item)}
+                                        alt={item.title}
+                                        className="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    {/* Overlay badge */}
+                                    {/* <div className="absolute bg-black text-white text-xs font-semibold px-3 py-1 rounded-full shadow top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                                     {item.cause}
                                 </div> */}
-                            </div>
+                                </div>
 
-                            {/* Card Content */}
-                            <CardHeader className="p-4" style={{ backgroundColor: `${item?.color}` }}>
-                                <CardTitle className="text-gray-900 text-lg font-semibold line-clamp-1">{item.title}</CardTitle>
-                                <div className="flex items-center text-sm text-gray-500 mt-1">
-                                    {/* <MapPin className="h-4 w-4 mr-1" />
+                                {/* Card Content */}
+                                <CardHeader className="p-4" style={{ backgroundColor: `${item?.color}` }}>
+                                    <CardTitle className="text-gray-900 text-lg font-semibold line-clamp-1">{item.title}</CardTitle>
+                                    <div className="flex items-center text-sm text-gray-500 mt-1">
+                                        {/* <MapPin className="h-4 w-4 mr-1" />
                                     <span>{item.country || "Unknown"}</span> */}
-                                    {item.cause}
-                                </div>
-                                <CardDescription className="text-gray-700 text-sm mt-2 line-clamp-2" dangerouslySetInnerHTML={{
-                                    __html: item.short_description || item.description,
-                                }}>
-                                    {/* {item.short_description || item.description} */}
-                                </CardDescription>
-                            </CardHeader>
+                                        {item.cause}
+                                    </div>
+                                    <CardDescription className="text-gray-700 text-sm mt-2 line-clamp-2" dangerouslySetInnerHTML={{
+                                        __html: item.short_description || item.description,
+                                    }}>
+                                        {/* {item.short_description || item.description} */}
+                                    </CardDescription>
+                                </CardHeader>
 
-                            {/* Footer */}
-                            <CardContent className="relative overflow-visible mt-auto border-t border-gray-100 p-4 flex items-center justify-between">
-                                <div className="flex gap-3">
-                                    <ShareButton item={item} />
-                                    <LikeButton item={item} campaignId={item._id || item.id} />
-                                </div>
-                                <Button
-                                    className="bg-brand-purple hover:bg-brand-purple-light text-white rounded-full px-5 py-1 text-sm shadow"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        navigate(`/campaigns/${item.campaignSlug || item._id}/donate`);
-                                    }}
-                                >
-                                    Donate
-                                </Button>
-                            </CardContent>
-                        </Card>
+                                {/* Footer */}
+                                <CardContent className="relative overflow-visible mt-auto border-t border-gray-100 p-4 flex items-center justify-between">
+                                    <div className="flex gap-3">
+                                        <ShareButton item={item} />
+                                        <LikeButton item={item} campaignId={item._id || item.id} />
+                                    </div>
+                                    <Button
+                                        className="bg-brand-purple hover:bg-brand-purple-light text-white rounded-full px-5 py-1 text-sm shadow"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(`/campaigns/${item.campaignSlug || item._id}/donate`);
+                                        }}
+                                    >
+                                        Donate
+                                    </Button>
+                                </CardContent>
+                            </Card>
                         );
                     })}
                 </div>

@@ -41,6 +41,7 @@ import DonorsTab from "./pages/dashboard/tabs/DonorsTab";
 import DonationsTab from "./pages/dashboard/tabs/DonationsTab";
 import ChooseAccount from "./pages/auth/ChooseAccount";
 import SignupDonor from "./pages/auth/SignupDonor";
+import PayoutsTab from "./pages/dashboard/tabs/payout";
 
 const queryClient = new QueryClient();
 
@@ -149,6 +150,14 @@ const App = () => (
               element={
                 <ProtectedRoute role="ngo">
                   <DonationsTab />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/payouts"
+              element={
+                <ProtectedRoute role="ngo">
+                  <PayoutsTab />
                 </ProtectedRoute>
               }
             />
