@@ -128,7 +128,7 @@ const StripeOnboardingReturn: React.FC = () => {
   return (
     <>
       <div className="p-4 mx-auto max-w-md text-center my-20">
-        <h1 className="text-lg font-semibold mb-2">Stripe onboarding status</h1>
+        <h1 className="text-xl font-semibold mb-2">Stripe onboarding status</h1>
 
         <p className="text-sm text-gray-700 mb-2">
           Your Stripe account is not fully ready yet.

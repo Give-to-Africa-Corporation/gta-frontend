@@ -169,7 +169,7 @@ export const Navbar = () => {
                       FAQ & support
                     </li>
                   </Link>
-                  <Link to="/signup">
+                  <Link to="/campaigns">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                       Donate to YENDAA
                     </li>
@@ -180,9 +180,11 @@ export const Navbar = () => {
                       About YENDAA
                     </li>
                   </Link>
+                  <Link to="/campaigns">
                   <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                     For causes
                   </li>
+                  </Link>
                   {/* <Link to="/choose-account">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
                       Signup

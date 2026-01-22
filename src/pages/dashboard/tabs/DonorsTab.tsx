@@ -77,7 +77,7 @@ const DonorsTab = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [donors, setDonors] = useState<NgoProfileDonor[]>([]);
-  console.log(donors, "donors");
+  // console.log(donors, "donors");
 
   const API_URL =
     import.meta.env.VITE_API_URL || "http://localhost:5001/api/v1";

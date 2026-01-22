@@ -856,9 +856,7 @@ const Dashboard = () => {
                         {/* Phone Preview */}
                         <div className="relative w-[150px] h-[160px] rounded-2xl border bg-gray-100 overflow-hidden">
                           <img
-                            src={
-                              campaign?.media?.mainImage || "/placeholder.png"
-                            }
+                            src={`${import.meta.env.VITE_BE_URL}${campaign?.media?.mainImage || "/placeholder.png"}`}
                             alt=""
                             className="w-full h-full object-cover"
                           />
@@ -953,11 +951,13 @@ const Dashboard = () => {
 
                                 <Button
                                   className="bg-teal-400 hover:bg-teal-500 text-black"
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(
-                                      `${window.location.origin}/campaigns/${campaign.campaignSlug}`,
-                                    );
-                                  }}
+                                  onClick={() =>
+                                    navigator.clipboard
+                                      .writeText(
+                                        `${window.location.origin}/campaigns/${campaign.campaignSlug}`,
+                                      )
+                                      .then(() => toast.success("Copied!"))
+                                  }
                                 >
                                   <Copy className="w-4 h-4 mr-2" />
                                   Copy link

@@ -199,7 +199,10 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { PayPalHostedFieldsProvider, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import {
+  PayPalHostedFieldsProvider,
+  PayPalScriptProvider,
+} from "@paypal/react-paypal-js";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -228,7 +231,7 @@ const PaymentPage = () => {
           setCampaign(response.data);
         } else {
           const foundCampaign = campaigns.find(
-            (c) => c._id === id || c.campaignSlug === id
+            (c) => c._id === id || c.campaignSlug === id,
           );
 
           if (foundCampaign) {
@@ -262,35 +265,36 @@ const PaymentPage = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <p className="text-xl mb-4">Campaign not found</p>
-        <Button onClick={() => navigate("/campaigns")}>
-          Back to Causes
-        </Button>
+        <Button onClick={() => navigate("/campaigns")}>Back to Causes</Button>
       </div>
     );
   }
 
   return (
-    <div className="container-custom max-w-7xl py-8">
-      <Button
-        variant="outline"
-        onClick={() =>
-          navigate(`/campaigns/${campaign.campaignSlug || campaign._id}`)
-        }
-        className="mb-6 flex items-center"
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Causes
-      </Button>
+    <div className="bg-[#EEF3F1] min-h-screen">
+      <div className="container-custom max-w-7xl py-8">
+        <div className="mb-6 flex justify-end">
+          <Button
+            // variant="outline"
+            onClick={() =>
+              navigate(`/campaigns/${campaign.campaignSlug || campaign._id}`)
+            }
+            className="flex text-md items-center justify-end text-primary bg-transparent hover:bg-transparent hover:text-primary"
+          >
+            Cancel
+          </Button>
+        </div>
 
-      <div className="mb-8">
+        {/* <div className="mb-8">
         <h1 className="text-3xl font-bold">{campaign.title}</h1>
         <p className="text-gray-600 mt-2">
           Make a donation to support this cause
         </p>
-      </div>
+      </div> */}
 
-      {/* Stripe + paypal Elements wrapper */}
-      <Elements stripe={stripePromise}>
-        {/* <PayPalScriptProvider
+        {/* Stripe + paypal Elements wrapper */}
+        <Elements stripe={stripePromise}>
+          {/* <PayPalScriptProvider
           options={{
             clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
             components: "hosted-fields",
@@ -301,20 +305,20 @@ const PaymentPage = () => {
           <PayPalHostedFieldsProvider
             createOrder={() => Promise.resolve("fake-order-id")}
           > */}
-            <div className="">
-              <PaymentForm
-                isProcessing={isDonationProcessing}
-                setIsProcessing={setIsDonationProcessing}
-                campaignId={campaign._id || ""}
-                campaignTitle={campaign.title}
-              />
-            </div>
+          <div className="">
+            <PaymentForm
+              isProcessing={isDonationProcessing}
+              setIsProcessing={setIsDonationProcessing}
+              campaignId={campaign._id || ""}
+              campaignTitle={campaign.title}
+            />
+          </div>
           {/* </PayPalHostedFieldsProvider>
         </PayPalScriptProvider> */}
-      </Elements>
+        </Elements>
+      </div>
     </div>
   );
 };
 
 export default PaymentPage;
-

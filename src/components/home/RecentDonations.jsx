@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Link, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { MdEmail, MdFacebook, MdWhatsapp } from "react-icons/md";
 import { FaLinkedinIn, FaReddit, FaXTwitter } from "react-icons/fa6";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import apiService from "@/service/apiService";
+import { IoMdCopy } from "react-icons/io";
 
 const campaignApi = apiService.campaignApi;
 
@@ -133,7 +134,6 @@ const ShareButton = ({ item }) => {
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
     const dropdownRef = useRef(null);
-    const timeoutRef = useRef(null);
     const [pos, setPos] = useState({ top: 0, left: 0 });
 
     const shareUrl = `${window.location.origin}/campaigns/${item.campaignSlug || item._id}`;
@@ -141,46 +141,59 @@ const ShareButton = ({ item }) => {
 
     const handleCopy = (shareUrl) => {
         navigator.clipboard.writeText(shareUrl)
-            .then(() => {
-                toast.success("Copied to clipboard!");
-            })
-            .catch(() => {
-                toast.error("Failed to copy!");
-            });
+            .then(() => toast.success("Copied to clipboard!"))
+            .catch(() => toast.error("Failed to copy!"));
     };
 
-    const onEnter = () => {
-        clearTimeout(timeoutRef.current);
+    // 👉 CLICK TO OPEN / CLOSE
+    const handleToggle = (e) => {
+        e.stopPropagation();
         if (!ref.current) return;
+
         const rect = ref.current.getBoundingClientRect();
         setPos({
             top: rect.top,
             left: rect.left + rect.width / 0.2,
         });
-        setOpen(true);
+
+        setOpen(prev => !prev);
     };
 
-    const onLeave = () => {
-        timeoutRef.current = setTimeout(() => {
-            setOpen(false);
-        }, 150);
-    };
+    // 👉 CLICK OUTSIDE TO CLOSE
+    useEffect(() => {
+        const handleOutside = (e) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(e.target) &&
+                !ref.current.contains(e.target)
+            ) {
+                setOpen(false);
+            }
+        };
+
+        document.addEventListener("click", handleOutside);
+        return () => document.removeEventListener("click", handleOutside);
+    }, []);
 
     return (
         <>
+            <ToastContainer position="top-right" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
             <div
                 ref={ref}
-                onMouseEnter={onEnter}
-                onMouseLeave={onLeave}
-                onClick={(e) => e.stopPropagation()}
+                onClick={handleToggle}
                 className="cursor-pointer relative"
             >
                 {/* Share Icon */}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24" height="24" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" strokeWidth="2"
-                    strokeLinecap="round" strokeLinejoin="round"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className="text-primary"
                 >
                     <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"></path>
@@ -197,33 +210,46 @@ const ShareButton = ({ item }) => {
                                 transform: "translate(-50%, -100%)",
                             }}
                             className="absolute 
-                        left-1/2 
-                        -translate-x-1/2 
-                        -top-2 
-                        -translate-y-full 
-                        w-64 
-                        bg-white 
-                        rounded-2xl 
-                        shadow-xl 
-                        p-4 
-                        z-50"
-                            onMouseEnter={onEnter}
-                            onMouseLeave={onLeave}
+              left-1/2 
+              -translate-x-1/2 
+              -top-2 
+              -translate-y-full 
+              w-64 
+              bg-white 
+              rounded-2xl 
+              shadow-xl 
+              p-4 
+              z-50"
                         >
                             <div className="grid grid-cols-2 gap-4 text-sm">
-                                <button className="flex gap-2 items-center" onClick={() => window.open(`mailto:?body=${shareUrl}`)}><MdEmail className="w-8 h-8 bg-gray-200 p-2 rounded-full " /> Email</button>
-                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`)}><MdFacebook className="w-8 h-8 bg-gray-200 p-2 rounded-full " /> Facebook</button>
-                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`)}><FaXTwitter className="w-8 h-8 bg-gray-200 p-2 rounded-full " /> X</button>
-                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://wa.me/?text=${shareUrl}`)}><MdWhatsapp className="w-8 h-8 bg-gray-200 p-2 rounded-full " /> WhatsApp</button>
-                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`)}><FaLinkedinIn className="w-8 h-8 bg-gray-200 p-2 rounded-full " /> LinkedIn</button>
-                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://www.reddit.com/submit?url=${shareUrl}`)}><FaReddit className="w-8 h-8 bg-gray-200 p-2 rounded-full " /> Reddit</button>
+                                <button className="flex gap-2 items-center" onClick={() => window.open(`mailto:?body=${shareUrl}`)}>
+                                    <MdEmail className="w-6 h-6 bg-gray-300 text-white p-1 rounded-full" /> Email
+                                </button>
+                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`)}>
+                                    <MdFacebook className="w-7 h-7 text-blue-700 rounded-full" /> Facebook
+                                </button>
+                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`)}>
+                                    <FaXTwitter className="w-6 h-6 bg-black text-white p-1 rounded-full" /> X
+                                </button>
+                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://wa.me/?text=${shareUrl}`)}>
+                                    <MdWhatsapp className="w-6 h-6 bg-green-500 text-white p-1 rounded-full" /> WhatsApp
+                                </button>
+                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`)}>
+                                    <FaLinkedinIn className="w-6 h-6 bg-blue-500 text-white p-1 rounded-full" /> LinkedIn
+                                </button>
+                                <button className="flex gap-2 items-center" onClick={() => window.open(`https://www.reddit.com/submit?url=${shareUrl}`)}>
+                                    <FaReddit className="w-6 h-6 bg-red-500 text-white p-1 rounded-full" /> Reddit
+                                </button>
                             </div>
 
                             <button
-                                onClick={() => handleCopy(shareUrl)}
-                                className="mt-4 w-full border border-emerald-500 text-emerald-600 py-2 rounded-full"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleCopy(shareUrl);
+                                }}
+                                className="mt-4 flex items-center gap-3 justify-center w-full border border-emerald-500 text-primary py-2 rounded-full"
                             >
-                                🔗 Copy link
+                                <IoMdCopy className="w-5 h-5" /> Copy link
                             </button>
                         </div>,
                         document.body
@@ -331,9 +357,9 @@ export const RecentDonations = () => {
                                 </div>
 
                                 {/* Card Content */}
-                                <CardHeader className="p-4" style={{ backgroundColor: `${item?.color}` }}>
+                                <CardHeader className="p-4">
                                     <CardTitle className="text-gray-900 text-lg font-semibold line-clamp-1">{item.title}</CardTitle>
-                                    <div className="flex items-center text-sm text-gray-500 mt-1">
+                                    <div className="flex items-center text-sm text-gray-800 mt-1">
                                         {/* <MapPin className="h-4 w-4 mr-1" />
                                     <span>{item.country || "Unknown"}</span> */}
                                         {item.cause}

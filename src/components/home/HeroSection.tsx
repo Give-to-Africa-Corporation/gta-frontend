@@ -177,7 +177,7 @@ export const HeroSection = () => {
             </p>
           </div>
           <div className="flex-[1.1] w-full flex flex-col gap-3 mt-6 sm:mt-0">
-            <Link to="/signup">
+            <Link to="/campaigns">
               <button className="group flex items-center justify-between border-2 border-brand-purple rounded-3xl p-3 transition-all duration-300 ease-in-out">
                 <div className="flex items-center gap-2">
                   <div className="w-12 h-12 sm:w-20 sm:h-20 flex-shrink-0">
@@ -835,7 +835,7 @@ export const HeroSection = () => {
           section?.scrollIntoView({ behavior: "smooth" });
         }}
       >
-        See Causes <ChevronDown size={20} className="" />
+        Recent Causes <ChevronDown size={20} className="" />
       </div>
     </section>
   );
