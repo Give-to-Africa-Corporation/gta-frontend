@@ -27,14 +27,24 @@ export default function TermsOfUse() {
         </div>
       </section>
 
+                            <div
+  className="relative min-h-[80vh] bg-fixed bg-center bg-cover"
+  style={{
+    backgroundImage:
+      "url('https://cdn.pixabay.com/photo/2016/06/29/23/13/flag-1488013_1280.jpg')",
+  }}
+>
+  {/* Blur & Dark Overlay */}
+  <div className="absolute inset-0 bg-gray-900/60"></div>
+
       {/* CONTENT SECTION */}
-      <div className="max-w-4xl mx-auto px-6 py-12 space-y-12">
+      <div className="relative max-w-4xl mx-auto px-6 py-12 space-y-12">
         {/* Introduction */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-gray-700 text-base md:text-lg"
+          className="text-white text-base md:text-lg"
         >
           <p className="mb-6">
             Yendaa is a platform created and operated by Give to Africa, a U.S. 501(c)(3) public charity. By using Yendaa or submitting information as a cause, donor, or volunteer, you agree to our Terms of Use and Privacy Policy.
@@ -141,6 +151,7 @@ export default function TermsOfUse() {
           </p>
         </motion.div>
       
+      </div>
       </div>
         {/* FOOTER */}
         <Footer />

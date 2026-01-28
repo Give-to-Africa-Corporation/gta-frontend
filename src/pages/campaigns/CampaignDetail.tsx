@@ -11,6 +11,7 @@ import { CalendarDays, Infinity, Loader2, MapPin, Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import bgFlag5 from "../../../public/images/flag5.webp";
 
 // Extended campaign type to handle both frontend and backend models
 type ExtendedCampaign = ApiCampaign & {
@@ -260,8 +261,17 @@ const CampaignDetail = () => {
           </div>
         </div>
 
+              <div
+  className="relative min-h-[80vh] bg-fixed bg-center bg-cover"
+  style={{
+    backgroundImage:
+      `url(${bgFlag5})`,
+  }}
+>
+  {/* Blur & Dark Overlay */}
+  <div className="absolute inset-0 bg-gray-900/60"></div>
         {/* Campaign Content */}
-        <div className="container-custom py-8 md:py-12">
+        <div className="relative container-custom py-8 md:py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2">
@@ -275,7 +285,7 @@ const CampaignDetail = () => {
                 </div>
 
                 <div className="prose max-w-none">
-                  <p
+                  <p className="text-white"
                     style={{
                       whiteSpace: "pre-line",
                     }}
@@ -624,6 +634,7 @@ const CampaignDetail = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
       <Footer />

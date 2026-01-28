@@ -26,13 +26,23 @@ import {
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
 import { Link } from "react-router-dom";
+import bgFlag2 from "../../public/images/flag2.jpg";
 
 export default function PricingPage() {
   return (
     <>
-      <div className="w-full bg-background text-foreground">
+          <div
+  className="relative min-h-[80vh] bg-fixed bg-center bg-cover z-10"
+  style={{
+    backgroundImage:
+      `url(${bgFlag2})`,
+  }}
+>
+  {/* Blur & Dark Overlay */}
+  <div className="absolute inset-0 bg-gray-900/60 "></div>
+  <div className="relative z-10">
         {/* HERO */}
-        <section className="py-20 text-center mx-auto">
+        <section className="py-20 text-center text-white mx-auto z-100">
           {/* <h1 className="text-4xl md:text-5xl font-bold mb-4">
             YENDAA PRICING & FEATURES PAGE
           </h1>
@@ -44,7 +54,7 @@ export default function PricingPage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Maximize impact, minimize costs.
           </h1>
-          <p className="text-muted-foreground mb-8">
+          <p className=" mb-8">
             Experience a modern digital giving platform — created by a
             nonprofit, for nonprofits across Africa.
           </p>
@@ -55,6 +65,7 @@ export default function PricingPage() {
           </Link>
           {/* </div> */}
         </section>
+
 
         {/* TRANSACTION FEES */}
         <section className="max-w-6xl mx-auto px-4 py-8 grid md:grid-cols-2 gap-10 items-center relative">
@@ -105,7 +116,7 @@ export default function PricingPage() {
             className="bg-4"
           />
 
-          <div>
+          <div className="text-white">
             <h3 className="text-2xl font-semibold mb-4">
               Low Transaction Fees
             </h3>
@@ -115,7 +126,7 @@ export default function PricingPage() {
             </p>
             <p className="mb-3">
               Yendaa covers ACH fees so organizations can receive bank donations{" "}
-              <span className="text-primary">with no processing cost</span>.
+              <span className="text-yellow">with no processing cost</span>.
             </p>
             <p>
               We also secure reduced nonprofit fees for credit cards and digital
@@ -288,7 +299,7 @@ export default function PricingPage() {
 
         {/* DISBURSEMENT */}
         <section className="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-2 items-center gap-10">
-          <div>
+          <div className="text-white">
             <h3 className="text-2xl font-semibold mb-4">
               Disbursement Options
             </h3>
@@ -418,7 +429,7 @@ export default function PricingPage() {
 
         <section className="max-w-6xl mx-auto px-4 py-8 grid md:grid-cols-2 gap-10 items-start">
           <CardHeader>
-            <CardTitle>Frequently Asked Questions</CardTitle>
+            <CardTitle className="text-white">Frequently Asked Questions</CardTitle>
           </CardHeader>
           <Card className="border-none">
             <CardContent>
@@ -501,7 +512,7 @@ export default function PricingPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-20 text-center">
+        <section className="py-20 text-center text-white">
           <h2 className="text-3xl font-bold mb-4">
             Ready to Raise More Funds for Your Mission?
           </h2>
@@ -519,6 +530,7 @@ export default function PricingPage() {
             </Button>
           </div>
         </section>
+        </div>
       </div>
       <Footer />
     </>

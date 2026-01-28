@@ -1,6 +1,7 @@
 import React from "react";
 import { FaHandsHelping, FaDonate, FaGlobeAfrica, FaLightbulb } from "react-icons/fa";
 import { Footer } from "@/components/shared/Footer";
+import bgFlag3 from "../../../public/images/flag3.webp";
 
 const cards = [
   {
@@ -41,7 +42,16 @@ const AboutUs = () => {
            YENDAA is the digital fundraising platform created by Give to Africa, a U.S. 501(c)(3) public charity dedicated to expanding generosity and strengthening nonprofits across Africa.
         </p>
       </section>
-
+              <div
+  className="relative min-h-[80vh] bg-fixed bg-center bg-cover"
+  style={{
+    backgroundImage:
+      `url(${bgFlag3})`,
+  }}
+>
+  {/* Blur & Dark Overlay */}
+  <div className="absolute inset-0 bg-gray-900/60"></div>
+<div className="relative">
       {/* CARDS SECTION */}
       <section className="max-w-6xl mx-auto py-16 px-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map((card, index) => (
@@ -59,12 +69,13 @@ const AboutUs = () => {
       </section>
 
       {/* JOIN US SECTION */}
-      <section className="max-w-4xl mx-auto py-16 px-6 text-center">
+      <section className="max-w-4xl mx-auto text-white py-16 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">Join Us</h2>
-        <p className="text-gray-700 max-w-3xl mx-auto">
+        <p className="max-w-3xl mx-auto">
           Together, we can build a continent where generosity flows freely, communities flourish, and every act of giving creates lasting change.
         </p>
       </section>
+      </div></div>
         {/* FOOTER */}
         <Footer />
     </div>

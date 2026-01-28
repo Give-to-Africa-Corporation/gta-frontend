@@ -16,6 +16,7 @@ import { AlertCircle, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import bgFlag3 from "../../../public/images/flag3.webp";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -83,8 +84,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+              <div
+  className="relative min-h-[80vh] bg-fixed bg-center bg-cover"
+  style={{
+    backgroundImage:
+      `url(${bgFlag3})`,
+  }}
+>
+  {/* Blur & Dark Overlay */}
+  <div className="absolute inset-0 bg-gray-900/60"></div>
+      <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-lg py-12">
           <div className="relative flex">
             <Card className="shadow-lg z-10 w-full">

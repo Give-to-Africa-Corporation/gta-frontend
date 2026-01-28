@@ -2109,6 +2109,8 @@ import {
   CreditCard,
   DollarSign,
   Gift,
+  Landmark,
+  Plus,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -2300,12 +2302,12 @@ const PaymentForm = ({
       description: "Credit or debit card",
       icon: <CreditCard className="h-4 w-4" />,
     },
-    // {
-    //   id: "bank",
-    //   name: "Bank",
-    //   description: "Direct bank transfer",
-    //   icon: <Banknote className="h-4 w-4" />,
-    // },
+    {
+      id: "bank",
+      name: "Bank",
+      description: "Direct bank transfer",
+      icon: <Landmark className="h-4 w-4" />,
+    },
     // {
     //   id: "paypal",
     //   name: "PayPal",
@@ -2599,7 +2601,7 @@ const PaymentForm = ({
     new Set(campaign?.suggestedAmounts?.map((item) => item.type)),
   );
 
-  console.log(availableTypes, "availableTypes");
+  // console.log(availableTypes, "availableTypes");
 
   const labelMap = {
     oneTime: "Once",
@@ -2645,17 +2647,17 @@ const PaymentForm = ({
         </Card>
 
         {/* Start fundraiser */}
-        <Card className="rounded-2xl bg-white border border-slate-200 shadow-sm px-4 py-3">
+        {/* <Card className="rounded-2xl bg-white border border-slate-200 shadow-sm px-4 py-3">
           <p className="text-sm text-slate-800">
             <span className="font-semibold text-[#137D60] underline">
               Start a fundraiser
             </span>{" "}
             to rally your friends and family
           </p>
-        </Card>
+        </Card> */}
 
         {/* Gift card CTA */}
-        <Card className="rounded-2xl bg-white border border-slate-200 shadow-sm px-4 py-3 flex gap-3">
+        {/* <Card className="rounded-2xl bg-white border border-slate-200 shadow-sm px-4 py-3 flex gap-3">
           <div className="mt-1 h-9 w-9 rounded-full bg-[#E6F4EA] flex items-center justify-center">
             <Gift className="h-5 w-5 text-[#137D60]" />
           </div>
@@ -2666,7 +2668,7 @@ const PaymentForm = ({
             </span>
             .
           </p>
-        </Card>
+        </Card> */}
       </div>
 
       {/* MIDDLE COLUMN - Methods sidebar + main form */}
@@ -2755,7 +2757,7 @@ const PaymentForm = ({
                     ))}
 
                     {!availableTypes.length && (
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex w-full flex-wrap gap-2 w-full">
                         {["yearly", "monthly", "once"].map((freq) => (
                           <button
                             key={freq}
@@ -2824,16 +2826,16 @@ const PaymentForm = ({
 
                 {/* Note + public testimony checkboxes (like screenshot) */}
                 <div className="space-y-3">
-                  <label className="flex items-center gap-3 text-sm text-slate-800">
+                  {/* <label className="flex items-center gap-3 text-sm text-slate-800">
                     <Checkbox
                       id="add-note"
                       checked={showNote}
                       onCheckedChange={() => setShowNote((prev) => !prev)}
                     />
                     <span>Add a note for {campaignTitle}</span>
-                  </label>
+                  </label> */}
 
-                  <label className="flex items-center gap-3 text-sm text-slate-800">
+                  {/* <label className="flex items-center gap-3 text-sm text-slate-800">
                     <Checkbox
                       id="public-testimony"
                       checked={addPublicTestimony}
@@ -2842,7 +2844,7 @@ const PaymentForm = ({
                       }
                     />
                     <span>Add public testimony</span>
-                  </label>
+                  </label> */}
 
                   {showNote && (
                     <Textarea
@@ -2855,11 +2857,11 @@ const PaymentForm = ({
                 </div>
 
                 {/* Continue button */}
-                <div className="pt-2">
+                <div className="pt-2 text-center">
                   <Button
                     type="button"
                     onClick={handleNext}
-                    className="h-11 w-full rounded-full bg-[#137D60] text-sm font-semibold text-white hover:bg-[#0f5f4c]"
+                    className="h-11 rounded-full bg-[#137D60] text-sm font-semibold text-white hover:bg-[#0f5f4c]"
                   >
                     {paymentMethod === "card"
                       ? "Continue with credit or debit"
@@ -3052,13 +3054,22 @@ const PaymentForm = ({
                 </div>
               )}
 
+              {paymentMethod === "bank" && (
+                <div className="flex gap-3 items-center rounded-lg border border-slate-200 hover:bg-[#F8FAF9] p-3 cursor-pointer">
+                  <Plus className="text-primary w-5 h-5" />
+                  <p className="text-sm text-slate-600 font-medium">
+                    Add Bank
+                  </p>
+                </div>
+              )}
+
               {/* Submit / Donate button */}
-              <div className="pt-1">
+              <div className="pt-1 text-center">
                 <Button
                   type="button"
                   onClick={handlePrimaryAction}
                   disabled={isProcessing}
-                  className="h-11 w-full rounded-full bg-[#137D60] text-sm font-semibold text-white hover:bg-[#0f5f4c]"
+                  className="h-11 rounded-full bg-[#137D60] text-sm font-semibold text-white hover:bg-[#0f5f4c]"
                 >
                   {isProcessing
                     ? "Processing..."
@@ -3137,7 +3148,7 @@ const PaymentForm = ({
           </div>
         </div>
       </div>
-            {/* SUCCESS POPUP */}
+      {/* SUCCESS POPUP */}
       <Dialog open={successModalOpen} onOpenChange={setSuccessModalOpen}>
         <DialogContent className="sm:max-w-md rounded-3xl p-6">
           <DialogHeader className="items-center">
@@ -3173,12 +3184,10 @@ const PaymentForm = ({
           </DialogHeader>
 
           <div className="mt-4 space-y-1 text-center text-xs text-slate-500">
-            {donorEmail && (
-              <p>A receipt has been sent to {donorEmail}.</p>
-            )}
+            {donorEmail && <p>A receipt has been sent to {donorEmail}.</p>}
             <p>
-              Your support helps us empower more African causes through
-              Yendaa. We truly appreciate your generosity.
+              Your support helps us empower more African causes through Yendaa.
+              We truly appreciate your generosity.
             </p>
           </div>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Footer } from "@/components/shared/Footer";
+import bgFlag1 from "../../../public/images/flag1.webp";
 
 export default function PrivacyPolicy() {
   return (
@@ -29,8 +30,18 @@ export default function PrivacyPolicy() {
         </div>
       </section>
 
+                          <div
+  className="relative min-h-[80vh] bg-fixed bg-center bg-cover"
+  style={{
+    backgroundImage:
+      `url(${bgFlag1})`,
+  }}
+>
+  {/* Blur & Dark Overlay */}
+  <div className="absolute inset-0 bg-gray-900/60"></div>
+
       {/* MAIN CONTENT */}
-      <main className="max-w-4xl mx-auto px-6 py-16 space-y-8">
+      <main className="relative max-w-4xl mx-auto px-6 py-16 space-y-8">
         <section className="bg-white p-8 rounded-2xl shadow-md">
           <h2 className="text-2xl font-semibold mb-3">Introduction</h2>
           <p className="leading-relaxed text-gray-700">
@@ -221,6 +232,7 @@ export default function PrivacyPolicy() {
           </p>
         </div>
       </main>
+      </div>
         {/* FOOTER */}
         <Footer />
     </div>

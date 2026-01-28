@@ -248,6 +248,7 @@ import { Card } from "@/components/ui/card";
 import { africanCountries } from "@/lib/countries";
 import { Footer } from "@/components/shared/Footer";
 import { Eye, EyeOff } from "lucide-react";
+import bgFlag4 from "../../../public/images/flag4.webp";
 
 const TOTAL_STEPS = 7;
 
@@ -902,7 +903,7 @@ function Signup() {
 
             <div className="grid gap-4 mt-4">
               <div className="grid gap-2">
-                <Label htmlFor="website">Website (Optional)</Label>
+                <Label htmlFor="website">Website</Label>
                 <Input
                   id="website"
                   name="website"
@@ -1195,7 +1196,16 @@ function Signup() {
 
   return (
     <>
-      <div className="flex-grow flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+                  <div
+  className="relative min-h-[80vh] bg-fixed bg-center bg-cover"
+  style={{
+    backgroundImage:
+      `url(${bgFlag4})`,
+  }}
+>
+  {/* Blur & Dark Overlay */}
+  <div className="absolute inset-0 bg-gray-900/60"></div>
+      <div className="flex-grow flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-center">
           <Card className="shadow-lg p-6 max-w-3xl w-full z-10">
             {/* Header */}
@@ -1300,6 +1310,7 @@ function Signup() {
             className="bg-4"
           />
         </div>
+      </div>
       </div>
       <Footer />
     </>

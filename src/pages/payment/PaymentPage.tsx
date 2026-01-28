@@ -203,13 +203,14 @@ import {
   PayPalHostedFieldsProvider,
   PayPalScriptProvider,
 } from "@paypal/react-paypal-js";
+import bgFlag6 from "../../../public/images/flag6.webp";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const PaymentPage = () => {
   const { id } = useParams<{ id: string }>();
   const { campaigns } = useAppContext();
-  console.log("Campaigns from context:", campaigns);
+  // console.log("Campaigns from context:", campaigns);
   const navigate = useNavigate();
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -271,15 +272,23 @@ const PaymentPage = () => {
   }
 
   return (
-    <div className="bg-[#EEF3F1] min-h-screen">
-      <div className="container-custom max-w-7xl py-8">
+                  <div
+  className="relative min-h-[80vh] bg-fixed bg-center bg-cover"
+  style={{
+    backgroundImage:
+      `url(${bgFlag6})`,
+  }}
+>
+  {/* Blur & Dark Overlay */}
+  <div className="absolute inset-0 bg-gray-900/60"></div>
+      <div className="relative container-custom max-w-7xl py-8">
         <div className="mb-6 flex justify-end">
           <Button
             // variant="outline"
             onClick={() =>
               navigate(`/campaigns/${campaign.campaignSlug || campaign._id}`)
             }
-            className="flex text-md items-center justify-end text-primary bg-transparent hover:bg-transparent hover:text-primary"
+            className="flex text-md items-center justify-end text-white bg-transparent hover:bg-transparent hover:text-primary"
           >
             Cancel
           </Button>
