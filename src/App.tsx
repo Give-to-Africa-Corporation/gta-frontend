@@ -42,6 +42,7 @@ import DonationsTab from "./pages/dashboard/tabs/DonationsTab";
 import ChooseAccount from "./pages/auth/ChooseAccount";
 import SignupDonor from "./pages/auth/SignupDonor";
 import PayoutsTab from "./pages/dashboard/tabs/payout";
+import DeactivateAccountModal from "./components/DeactivateAccountModal";
 
 const queryClient = new QueryClient();
 
@@ -186,6 +187,7 @@ const App = () => (
             <Route path="ngo-campaigns/:id" element={<NgoCampaignPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <DeactivateAccountModal />
         </BrowserRouter>
         </ModalProvider>
       </TooltipProvider>

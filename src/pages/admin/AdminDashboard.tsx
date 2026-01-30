@@ -22,6 +22,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAppContext } from "@/context/AppContext";
 import { FALLBACK_IMAGE } from "@/lib/utils";
+import { updateNgoStatusByAdmin } from "@/service/apiService";
 import {
   CheckCircle,
   Eye,
@@ -34,6 +35,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -63,6 +65,8 @@ const AdminDashboard = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isCauseModalOpen, setIsCauseModalOpen] = useState(false);
   const [editingCauseId, setEditingCauseId] = useState<string | null>(null);
+  const [loadings, setLoadings] = useState();
+  const [ngoslist, setNgoslist] = useState<any[]>([]);
 
   // Load admin data when component mounts
   useEffect(() => {
@@ -188,6 +192,25 @@ const AdminDashboard = () => {
       await deleteCauseType(id);
     }
   };
+
+  const toggleStatus = async (ngoId: string, currentStatus: boolean) => {
+  try {
+    setLoadings(true);
+
+    await updateNgoStatusByAdmin(ngoId, !currentStatus);
+
+    loadAdminData();
+
+    toast.success(
+      `NGO ${currentStatus ? "deactivated" : "activated"} successfully`
+    );
+  } catch (error: any) {
+    toast.error(error?.response?.data?.message || "Action failed");
+  } finally {
+    setLoadings(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -757,6 +780,22 @@ const AdminDashboard = () => {
                               <td className="py-3 px-4">
                             <div className="flex space-x-2">
                               <Dialog>
+                                <button
+  disabled={loadings}
+  onClick={() => toggleStatus(ngo._id, ngo.isActive)}
+  className={`px-4 py-1 rounded-md text-sm font-medium text-white ${
+    ngo.isActive
+      ? "bg-red-600 hover:bg-red-700"
+      : "bg-green-600 hover:bg-green-700"
+  } disabled:opacity-60`}
+>
+  {loadings
+    ? "Processing..."
+    : ngo.isActive
+    ? "Deactivate"
+    : "Activate"}
+</button>
+
                                 <DialogTrigger asChild>
                                   <Button
                                     variant="outline"

@@ -465,6 +465,34 @@ export const isAuthError = (error: any): boolean => {
   );
 };
 
+export const deactivateNgoAccount = async () => {
+  const token = localStorage.getItem("token"); // ya jahan store ho
+  const response = await api.post(
+    "/ngos/deactivate",
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+  return response.data;
+};
+
+
+export const updateNgoStatusByAdmin = async (
+  ngoId: string,
+  isActive: boolean
+) => {
+  const response = await api.post("/admin/status-active", {
+    ngoId,
+    isActive,
+  });
+
+  return response.data;
+};
+
+
 export default {
   authApi,
   ngoApi,

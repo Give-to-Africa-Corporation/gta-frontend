@@ -2932,9 +2932,9 @@ function CreateCampaign() {
             </div>
           </div>
 
-          <div className="bg-gray-100 h-full flex items-center justify-center text-gray-400">
+          {/* <div className="bg-gray-100 h-full flex items-center justify-center text-gray-400">
             Causes preview
-          </div>
+          </div> */}
         </div>
       </main>
     </div>

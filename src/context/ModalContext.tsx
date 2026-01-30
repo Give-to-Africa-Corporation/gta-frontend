@@ -4,6 +4,10 @@ interface ModalContextType {
   isOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
+
+  deactivateOpen: boolean;
+  openDeactivateModal: () => void;
+  closeDeactivateModal: () => void;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -20,8 +24,14 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const [deactivateOpen, setDeactivateOpen] = useState(false);
+  const openDeactivateModal = () => setDeactivateOpen(true);
+  const closeDeactivateModal = () => setDeactivateOpen(false);
+
   return (
-    <ModalContext.Provider value={{ isOpen, openModal, closeModal }}>
+    <ModalContext.Provider value={{ isOpen, openModal, closeModal, deactivateOpen,
+        openDeactivateModal,
+        closeDeactivateModal, }}>
       {children}
     </ModalContext.Provider>
   );
