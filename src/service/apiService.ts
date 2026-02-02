@@ -171,6 +171,23 @@ export const authApi = {
   logout: (): void => {
     localStorage.removeItem("token");
   },
+
+  requestPasswordReset: async (payload: { email: string }) => {
+    const response = await api.post("/ngos/forgot-password", payload);
+    return response.data as { success: boolean; message?: string; error?: string };
+  },
+
+  // Future steps (verify + complete) – backend routes add karne ke baad use kar lena:
+  verifyResetOtp: async (payload: { email: string; otp: string }) => {
+    const response = await api.post("/ngos/forgot-password/verify", payload);
+    return response.data as { success: boolean; data?: { resetToken: string; expiresInMinutes: number }; error?: string };
+  },
+
+  resetPassword: async (payload: { email: string; token: string; password: string }) => {
+    const response = await api.post("/ngos/forgot-password/complete", payload);
+    return response.data as { success: boolean; message?: string; error?: string };
+  },
+
 };
 
 // NGO API

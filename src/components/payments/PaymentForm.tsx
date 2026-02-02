@@ -2091,6 +2091,8 @@
 
 // export default PaymentForm;
 
+
+
 // @ts-nocheck
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -2435,6 +2437,7 @@ const PaymentForm = ({
             donorEmail,
             paymentMethod: paymentMethod.id,
             frequency, // once | monthly
+            paymentSource: "card",
           }),
         },
       );
@@ -2549,6 +2552,7 @@ const PaymentForm = ({
           donorName,
           donorEmail,
           paymentMethod,
+          paymentSource: "bank",
           message: note,
           isRecurring: frequency === "monthly" || frequency === "yearly",
         },
@@ -2583,7 +2587,7 @@ const PaymentForm = ({
   const handlePrimaryAction = async () => {
     if (!validateDonationDetails()) return;
 
-    if (paymentMethod === "card") {
+    if (paymentMethod === "card" || paymentMethod === "bank") {
       await handleCardPayment();
       return;
     }
@@ -2988,7 +2992,7 @@ const PaymentForm = ({
               </div>
 
               {/* Payment method specific UI */}
-              {paymentMethod === "card" && (
+              {/* {paymentMethod === "card" && ( */}
                 <div className="space-y-3 rounded-2xl border border-slate-200 bg-[#F8FAF9] p-4">
                   <h3 className="text-sm font-semibold text-slate-900">
                     Card details
@@ -3007,7 +3011,7 @@ const PaymentForm = ({
                     </div>
                   </div>
                 </div>
-              )}
+              {/* )} */}
 
               {paymentMethod === "paypal" && (
                 <div className="space-y-3 rounded-2xl border border-slate-200 bg-[#F8FAF9] p-4">
@@ -3054,14 +3058,14 @@ const PaymentForm = ({
                 </div>
               )}
 
-              {paymentMethod === "bank" && (
+              {/* {paymentMethod === "bank" && (
                 <div className="flex gap-3 items-center rounded-lg border border-slate-200 hover:bg-[#F8FAF9] p-3 cursor-pointer">
                   <Plus className="text-primary w-5 h-5" />
                   <p className="text-sm text-slate-600 font-medium">
                     Add Bank
                   </p>
                 </div>
-              )}
+              )} */}
 
               {/* Submit / Donate button */}
               <div className="pt-1 text-center">

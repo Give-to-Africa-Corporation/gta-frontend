@@ -43,6 +43,9 @@ import ChooseAccount from "./pages/auth/ChooseAccount";
 import SignupDonor from "./pages/auth/SignupDonor";
 import PayoutsTab from "./pages/dashboard/tabs/payout";
 import DeactivateAccountModal from "./components/DeactivateAccountModal";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import VerifyResetOtp from "./pages/auth/VerifyResetOtp";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +66,9 @@ const App = () => (
             />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/forgot-password/verify" element={<VerifyResetOtp />} />
+            <Route path="/forgot-password/reset" element={<ResetPassword />} />
             <Route path="/signup-donor" element={<SignupDonor />} />
             <Route path="/choose-account" element={<ChooseAccount />} />
             <Route path="/faq" element={<Faq />} />
