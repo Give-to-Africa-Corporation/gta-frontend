@@ -185,9 +185,9 @@ export const Navbar = () => {
                       About YENDAA
                     </li>
                   </Link>
-                  <Link to="/pricing">
+                  <Link to="/campaigns">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
-                      Pricing
+                      for Causes
                     </li>
                   </Link>
                   {/* <Link to="/choose-account">
@@ -202,9 +202,9 @@ export const Navbar = () => {
                       Home
                     </span>
                   </Link>
-                  <Link to="/campaigns">
+                  <Link to="/pricing">
                     <span className="cursor-pointer hover:text-gray-700">
-                      Causes
+                      Pricing
                     </span>
                   </Link>
                   <Link to="/aboutus">
