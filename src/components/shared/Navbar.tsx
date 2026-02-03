@@ -105,21 +105,26 @@ export const Navbar = () => {
           </div>
 
           <div className="flex items-center space-x-1 ml-auto">
-            <Link to="/pricing">
+            <Link to="/campaigns">
               <Button
                 variant="outline"
                 size="sm"
                 className="mr-0 text-white hover:text-gray-400 text-md"
                 style={{ background: "none", border: "none" }}
               >
-                Pricing
+                Causes
               </Button>
             </Link>
             {user ? (
               <Link
                 to={user.role === "admin" ? "/admin/dashboard" : "/dashboard"}
               >
-                <Button className="py-3 px-4 bg-brand-yellow text-gray-900 hover:bg-brand-yellow/10 hover:text-white-900" size="sm">Dashboard</Button>
+                <Button
+                  className="py-3 px-4 bg-brand-yellow text-gray-900 hover:bg-brand-yellow/10 hover:text-white-900"
+                  size="sm"
+                >
+                  Dashboard
+                </Button>
               </Link>
             ) : (
               <>
@@ -180,10 +185,10 @@ export const Navbar = () => {
                       About YENDAA
                     </li>
                   </Link>
-                  <Link to="/campaigns">
-                  <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
-                    For causes
-                  </li>
+                  <Link to="/pricing">
+                    <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
+                      Pricing
+                    </li>
                   </Link>
                   {/* <Link to="/choose-account">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">

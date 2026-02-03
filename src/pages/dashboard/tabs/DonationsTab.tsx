@@ -108,7 +108,7 @@ const DonationsTab = () => {
 
   // Transform API campaigns to dashboard format if available
   const ngoCampaigns = profileData?.campaigns || [];
-  console.log(ngoCampaigns, "ngoCampaigns");
+  // console.log(ngoCampaigns, "ngoCampaigns");
 
   const donorSet = new Set<string>();
 

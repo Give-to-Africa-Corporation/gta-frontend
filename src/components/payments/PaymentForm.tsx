@@ -2091,8 +2091,6 @@
 
 // export default PaymentForm;
 
-
-
 // @ts-nocheck
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -2210,6 +2208,15 @@ const PaymentForm = ({
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [frequency, setFrequency] = useState<"yearly" | "monthly" | "once">(
     "once",
+  );
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<{
+    id: string;
+    name: string;
+    description: string;
+  } | null>(null);
+  console.log(
+    selectedPaymentMethod,
+    "selectedPaymentMethod selectedPaymentMethod",
   );
   const [amount, setAmount] = useState("10");
   const [tipAmount, setTipAmount] = useState("6");
@@ -2352,6 +2359,8 @@ const PaymentForm = ({
     ? allPaymentMethods.filter((m) => m.id === "card")
     : allPaymentMethods;
 
+  console.log(paymentMethods, "paymentMethods");
+
   // Default quick amounts (similar to screenshot)
   const defaultAmounts = [40, 100, 250];
 
@@ -2437,12 +2446,13 @@ const PaymentForm = ({
             donorEmail,
             paymentMethod: paymentMethod.id,
             frequency, // once | monthly
-            paymentSource: "card",
+            paymentSource: selectedPaymentMethod.id,
           }),
         },
       );
 
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to create payment");
 
       // ============================
       // 🔁 MONTHLY / YEARLY SUBSCRIPTION
@@ -2464,7 +2474,6 @@ const PaymentForm = ({
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               subscriptionId: data.subscriptionId,
-              // ❗ yahan "monthly" hard-code nahi, actual frequency bhejo
               type: frequency, // "monthly" | "yearly"
             }),
           },
@@ -2479,14 +2488,25 @@ const PaymentForm = ({
         setSuccessDetails({
           amount,
           frequency,
-          method: "Card",
+          method: selectedPaymentMethod.id,
         });
         setSuccessModalOpen(true);
+
+        // setAmount("");
+        setTipAmount(0);
+        setDonorName("");
+        setDonorEmail("");
+        setSelectedPaymentMethod(allPaymentMethods[0]);
+        setFrequency("once");
+        elements.getElement(CardNumberElement)?.clear();
+
+        // ✅ Reset step
+        setStep(1);
 
         onSubmit &&
           onSubmit(
             amount,
-            "card",
+            selectedPaymentMethod.id,
             frequency,
             campaignId,
             donorName,
@@ -2510,7 +2530,7 @@ const PaymentForm = ({
       if (error) throw new Error(error.message);
 
       if (paymentIntent?.status === "succeeded") {
-        toast.success("Payment successful");
+        // toast.success("Payment successful");
 
         const confirmRes = await fetch(
           `${import.meta.env.VITE_API_URL}/payment/confirm-payment`,
@@ -2529,8 +2549,34 @@ const PaymentForm = ({
           toast.success("Donation recorded successfully.");
         }
 
+        // ✅ Success popup open karo
+        setSuccessDetails({
+          amount,
+          frequency,
+          method: selectedPaymentMethod.id,
+        });
+        setSuccessModalOpen(true);
+
+        // setAmount("");
+        setTipAmount(0);
+        setDonorName("");
+        setDonorEmail("");
+        setSelectedPaymentMethod(allPaymentMethods[0]);
+        setFrequency("once");
+        elements.getElement(CardNumberElement)?.clear();
+
+        // ✅ Reset step
+        setStep(1);
+
         onSubmit &&
-          onSubmit(amount, "card", "once", campaignId, donorName, donorEmail);
+          onSubmit(
+            amount,
+            selectedPaymentMethod.id,
+            frequency,
+            campaignId,
+            donorName,
+            donorEmail,
+          );
       }
     } catch (err: any) {
       console.error(err);
@@ -2695,7 +2741,10 @@ const PaymentForm = ({
                       <button
                         key={method.id}
                         type="button"
-                        onClick={() => setPaymentMethod(method.id)}
+                        onClick={() => {
+                          setPaymentMethod(method.id); // agar id bhi chahiye
+                          setSelectedPaymentMethod(method); // 👈 full object
+                        }}
                         className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors ${
                           selected
                             ? "bg-white text-[#137D60] border-l-4 border-[#137D60] font-semibold"
@@ -2993,24 +3042,24 @@ const PaymentForm = ({
 
               {/* Payment method specific UI */}
               {/* {paymentMethod === "card" && ( */}
-                <div className="space-y-3 rounded-2xl border border-slate-200 bg-[#F8FAF9] p-4">
-                  <h3 className="text-sm font-semibold text-slate-900">
-                    Card details
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="rounded-md border bg-white px-3 py-2">
-                      <CardNumberElement className="text-sm" />
+              <div className="space-y-3 rounded-2xl border border-slate-200 bg-[#F8FAF9] p-4">
+                <h3 className="text-sm font-semibold text-slate-900">
+                  Card details
+                </h3>
+                <div className="space-y-3">
+                  <div className="rounded-md border bg-white px-3 py-2">
+                    <CardNumberElement className="text-sm" />
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="w-1/2 rounded-md border bg-white px-3 py-2">
+                      <CardExpiryElement className="text-sm" />
                     </div>
-                    <div className="flex gap-3">
-                      <div className="w-1/2 rounded-md border bg-white px-3 py-2">
-                        <CardExpiryElement className="text-sm" />
-                      </div>
-                      <div className="w-1/2 rounded-md border bg-white px-3 py-2">
-                        <CardCvcElement className="text-sm" />
-                      </div>
+                    <div className="w-1/2 rounded-md border bg-white px-3 py-2">
+                      <CardCvcElement className="text-sm" />
                     </div>
                   </div>
                 </div>
+              </div>
               {/* )} */}
 
               {paymentMethod === "paypal" && (

@@ -608,14 +608,14 @@ const DonorsTab = () => {
                                 <AvatarFallback>{getInitials()}</AvatarFallback>
                               </Avatar>
                               {donor.name}
-                              {donor.status === "pending" && (
+                              {/* {donor.status === "pending" && (
                                 <Badge
                                   variant="outline"
                                   className="ml-2 border-yellow-500 text-yellow-500"
                                 >
                                   Pending ({donor.paymentMethod})
                                 </Badge>
-                              )}
+                              )} */}
                             </div>
                           </TableCell>
                           <TableCell>{donor.email || "N/A"}</TableCell>
