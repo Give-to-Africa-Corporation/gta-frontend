@@ -115,6 +115,7 @@ type StripeTransaction = {
 
 const PayoutsTab = () => {
   const navigate = useNavigate();
+  const { openDeactivateModal } = useModal();
   const { user, logout, profileData } = useAppContext();
   const { isOpen, openModal, closeModal } = useModal();
   const [withdrawOpen, setWithdrawOpen] = useState(false);
@@ -647,6 +648,13 @@ const PayoutsTab = () => {
                     >
                       <UserPlus className="mr-2 h-4 w-4" />
                       Invite a user
+                    </button>
+                    <button
+                        onClick={openDeactivateModal}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        DeActivate Account
                     </button>
                     <hr className="pt-3" />
                     <button

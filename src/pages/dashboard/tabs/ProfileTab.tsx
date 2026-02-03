@@ -19,6 +19,7 @@ import { toast } from "sonner";
 
 const ProfileTab = () => {
   // State for profile data
+  const { openDeactivateModal } = useModal();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);

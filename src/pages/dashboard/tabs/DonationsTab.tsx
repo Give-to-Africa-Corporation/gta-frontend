@@ -82,13 +82,14 @@ import axios from "axios";
 
 const DonationsTab = () => {
   const navigate = useNavigate();
+
   const [searchParams] = useSearchParams();
   const { user, logout, profileData } = useAppContext();
   const ngoId = profileData?.ngo?._id;
   const [activeTab, setActiveTab] = useState("profile");
   const [activeTabCam, setActiveTabCam] = useState("ongoing");
   const [mounted, setMounted] = useState(false);
-  const { isOpen, openModal, closeModal } = useModal();
+  const { isOpen, openModal, closeModal, openDeactivateModal } = useModal();
 
   const API_URL =
     import.meta.env.VITE_API_URL || "http://localhost:5001/api/v1";
@@ -235,7 +236,7 @@ const DonationsTab = () => {
               amount: payment.amount,
               timestamp: payment.timestamp,
               campaign: campaign.title,
-              status: "pending",
+              status: "completed",
               paymentMethod: payment.paymentMethod,
             });
           });
@@ -613,6 +614,13 @@ const DonationsTab = () => {
                         Invite a user
                       </button>
                     )}
+                    <button
+                        onClick={openDeactivateModal}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        DeActivate Account
+                    </button>
                     {/* <button
                       // onClick={() => handleSwitchProfile()}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

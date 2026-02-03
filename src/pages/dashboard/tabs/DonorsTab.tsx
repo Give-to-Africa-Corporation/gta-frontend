@@ -66,6 +66,7 @@ import { useEffect, useState } from "react";
 
 const DonorsTab = () => {
   const navigate = useNavigate();
+  const { openDeactivateModal } = useModal();
   const [searchParams] = useSearchParams();
   const { user, logout, profileData } = useAppContext();
   const ngoId = profileData?.ngo?._id;
@@ -516,6 +517,13 @@ const DonorsTab = () => {
                         Invite a user
                       </button>
                     )}
+                    <button
+                        onClick={openDeactivateModal}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        DeActivate Account
+                    </button>
                     {/* <button
                       // onClick={() => handleSwitchProfile()}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
