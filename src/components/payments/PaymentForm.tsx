@@ -2204,20 +2204,30 @@ const PaymentForm = ({
   const elements = useElements();
   const { id } = useParams<{ id: string }>();
   const [step, setStep] = useState<number>(1);
-
-  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [campaign, setCampaign] = useState<CampaignResponse | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState(null);
   const [frequency, setFrequency] = useState<"yearly" | "monthly" | "once">(
     "once",
   );
+  useEffect(() => {
+  if (!campaign) return;
+
+  if (campaign.stripeComplete) {
+    setPaymentMethod("card");
+  } else {
+    setPaymentMethod("bank");
+  }
+}, [campaign?.stripeComplete]);
+
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<{
     id: string;
     name: string;
     description: string;
   } | null>(null);
-  console.log(
-    selectedPaymentMethod,
-    "selectedPaymentMethod selectedPaymentMethod",
-  );
+  // console.log(
+  //   selectedPaymentMethod,
+  //   "selectedPaymentMethod selectedPaymentMethod",
+  // );
   const [amount, setAmount] = useState("10");
   const [tipAmount, setTipAmount] = useState("6");
   const [isEditingTip, setIsEditingTip] = useState(false);
@@ -2229,7 +2239,6 @@ const PaymentForm = ({
   const [addPublicTestimony, setAddPublicTestimony] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [campaign, setCampaign] = useState<CampaignResponse | null>(null);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [successDetails, setSuccessDetails] = useState<{
     amount: string;
@@ -2305,12 +2314,22 @@ const PaymentForm = ({
 
   // Payment methods (for left sidebar)
   const allPaymentMethods = [
-    {
-      id: "card",
-      name: "Card",
-      description: "Credit or debit card",
-      icon: <CreditCard className="h-4 w-4" />,
-    },
+    ...(campaign?.stripeComplete
+    ? [
+        {
+          id: "card",
+          name: "Card",
+          description: "Credit or debit card",
+          icon: <CreditCard className="h-4 w-4" />,
+        },
+      ]
+    : []),
+    // {
+    //   id: "card",
+    //   name: "Card",
+    //   description: "Credit or debit card",
+    //   icon: <CreditCard className="h-4 w-4" />,
+    // },
     {
       id: "bank",
       name: "Bank",
@@ -2359,7 +2378,7 @@ const PaymentForm = ({
     ? allPaymentMethods.filter((m) => m.id === "card")
     : allPaymentMethods;
 
-  console.log(paymentMethods, "paymentMethods");
+  // console.log(paymentMethods, "paymentMethods");
 
   // Default quick amounts (similar to screenshot)
   const defaultAmounts = [40, 100, 250];

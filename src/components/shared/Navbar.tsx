@@ -187,7 +187,7 @@ export const Navbar = () => {
                   </Link>
                   <Link to="/campaigns">
                     <li className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-brand-purple">
-                      for Causes
+                      For causes
                     </li>
                   </Link>
                   {/* <Link to="/choose-account">
