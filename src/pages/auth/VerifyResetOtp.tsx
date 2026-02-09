@@ -83,8 +83,8 @@ export default function VerifyResetOtp() {
   const resendOtp = async () => {
     setResending(true);
     try {
-    //   const res = await authApi.requestPasswordReset({ email });
-    //   if (!res?.success) throw new Error(res?.error || "Failed to resend OTP");
+      const res = await authApi.requestPasswordReset({ email });
+      if (!res?.success) throw new Error(res?.error || "Failed to resend OTP");
       toast.success("OTP resent");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not resend OTP");

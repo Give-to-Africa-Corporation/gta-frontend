@@ -1,7 +1,8 @@
 // @ts-nocheck
 import React, { useState } from "react";
 import { useModal } from "../context/ModalContext";
-import { toast, ToastContainer } from "react-toastify";
+// import { toast } from "react-toastify";
+import { toast } from "sonner";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppContext } from "@/context/AppContext";
 
@@ -99,7 +100,7 @@ const InviteUserForm: React.FC = () => {
 
   return (
     <div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <h2 className="text-xl font-semibold mb-4">Invite new user</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex gap-4">

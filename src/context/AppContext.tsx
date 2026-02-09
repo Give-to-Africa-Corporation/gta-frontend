@@ -483,13 +483,58 @@ const loadProfileData = useCallback(
   useEffect(() => {
     fetchCauseTypes();
   }, [causeTypes.length]);  
+
+  
+  const [loading, setLoading] = useState(true);
+  const [requests, setRequests] = useState();
+    // payout requests
+  const fetchRequests = async () => {
+    const data = await adminApi.getRequests();
+    // console.log("Fetched Cause Types:", data);
+    setRequests(data);
+  };
+
+  const approvePayout = async (id: string) => {
+    try {
+      setLoading(true);
+      const data = await adminApi.acceptRequests(id);
+      console.log(data , "data...a.a.. app")
+      if (data?.success) {
+      toast.success("Payout approved successfully");
+      fetchRequests();
+    } else {
+      toast.error(data?.error || "Approve failed");
+    }
+      // console.log("✅ payout approved");
+    } catch (err) {
+      console.error("approve error", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const rejectPayout = async (id: string) => {
+    try {
+      setLoading(true);
+      const data = await adminApi.rejectRequests(id);
+       if (data?.success) {
+      toast.success("Payout rejected");
+      fetchRequests();
+    } else {
+      toast.error(data?.error || "Reject failed");
+    }
+    } catch (err) {
+      console.error("reject error", err);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api/v1";
 
   // all types
    const [organizationTypesall, setOrganizationTypesall] = useState([]);
   const [causeTypesall, setCauseTypesall] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -546,6 +591,10 @@ const loadProfileData = useCallback(
         deleteOrganizationType,
         causeTypes,
         fetchCauseTypes,
+        requests,
+        fetchRequests,
+        approvePayout,
+        rejectPayout,
         addCauseType,
         updateCauseType,
         deleteCauseType,

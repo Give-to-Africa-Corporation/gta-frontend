@@ -289,16 +289,16 @@ const PayoutsTab = () => {
       toast.error("Please enter a valid amount");
       return;
     }
-    if (amountNumber > totalAvailable) {
-      toast.error("Amount cannot be greater than available balance");
-      return;
-    }
+    // if (amountNumber > totalAvailable) {
+    //   toast.error("Amount cannot be greater than available balance");
+    //   return;
+    // }
 
     try {
       setCreatingPayout(true);
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `${API_URL}/ngos/stripe/payout`,
+        `${API_URL}/ngos/stripe/payout-request`,
         {
           amount: amountNumber,
           currency: primaryCurrency,
@@ -310,7 +310,7 @@ const PayoutsTab = () => {
         },
       );
 
-      toast.success("Payout created successfully");
+      toast.success(res.data.message || "Payout created successfully");
 
       setWithdrawOpen(false);
       setWithdrawAmount("");
@@ -629,7 +629,7 @@ const PayoutsTab = () => {
                   }`}
                 />
                 {dropdownOpen && (
-                  <div className="absolute text-left right-[-160px] bottom-[10px] mt-2 py-3 w-[190px] bg-white shadow-lg rounded-xl border border-gray-100 z-50">
+                  <div className="absolute text-left right-[-180px] bottom-[10px] mt-2 py-3 w-[190px] bg-white shadow-lg rounded-xl border border-gray-100 z-50">
                     <span className="text-sm font-bold px-4 py-2 text-start">
                       {user?.name || "NGO User"}
                     </span>
@@ -685,7 +685,7 @@ const PayoutsTab = () => {
                 <Button
                   className="mt-2 w-fit"
                   size="sm"
-                  disabled={totalAvailable <= 0}
+                  // disabled={totalAvailable <= 0}
                   onClick={() => setWithdrawOpen(true)}
                 >
                   Payout Funds

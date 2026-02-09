@@ -561,7 +561,7 @@ const CampaignsTab = () => {
                 />
                 {/* Dropdown Menu */}
                 {dropdownOpen && (
-                  <div className="absolute text-left right-[-160px] bottom-[10px] mt-2 py-3 w-[190px] w-auto bg-white shadow-lg rounded-xl border border-gray-100 z-50">
+                  <div className="absolute text-left right-[-180px] bottom-[10px] mt-2 py-3 w-[190px] w-auto bg-white shadow-lg rounded-xl border border-gray-100 z-50">
                     <span className="text-sm font-bold px-4 py-2 text-start">
                       {user?.name || "NGO User"}
                     </span>
@@ -732,18 +732,18 @@ const CampaignsTab = () => {
                               <span className="font-medium">
                                 ${campaign.totalRaised.toLocaleString()} raised
                               </span>
-                              {!isPerpetual && (
+                              {/* {!isPerpetual && ( */}
                                 <span className="text-gray-500">
                                   of ${campaign.fundingGoal.toLocaleString()}
                                 </span>
-                              )}
+                              {/* )} */}
                             </div>
-                            {!isPerpetual && (
+                            {/* {!isPerpetual && ( */}
                               <Progress
                                 value={progressPercent}
                                 className="h-2"
                               />
-                            )}
+                            {/* )} */}
                           </div>
                           <div className="flex justify-between text-sm">
                             <span>

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { create } from "domain";
-import { ApiResponse, AuthResponse, Campaign, CauseType, NgoProfile, OrganizationType } from "../lib/types";
+import { ApiResponse, AuthResponse, Campaign, Requests, CauseType, NgoProfile, OrganizationType } from "../lib/types";
 import { api, handleError, handleResponse } from "./apiService";
 import { add } from "date-fns";
 
@@ -131,6 +131,34 @@ export const adminApi = {
     try {
       const response = await api.put(`/admin/cause-types/${id}`, updates);
       return handleResponse<CauseType>(response);
+    } catch (error) {
+      return handleError(error);
+    }
+  },
+
+  // requests
+    getRequests: async (): Promise<string[]> => {
+    try {
+      const response = await api.get("/admin/all-payoutrequests");
+      return handleResponse<string[]>(response);
+    } catch (error) {
+      return handleError(error);
+    }
+  },
+
+    acceptRequests: async ( id: string ): Promise<Requests> => {
+    try {
+      const response = await api.post(`/admin/payout-approved/${id}`);
+      return handleResponse<Requests>(response);
+    } catch (error) {
+      return handleError(error);
+    }
+  },
+
+    rejectRequests: async ( id: string ): Promise<Requests> => {
+    try {
+      const response = await api.post(`/admin/payout-reject/${id}`);
+      return handleResponse<Requests>(response);
     } catch (error) {
       return handleError(error);
     }

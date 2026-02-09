@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useModal } from "@/context/ModalContext";
 import { NgoProfileResponse, UpdateProfileRequest } from "@/lib/types";
 import { ngoApi } from "@/service/apiService";
 import { Check, Loader2, Upload } from "lucide-react";

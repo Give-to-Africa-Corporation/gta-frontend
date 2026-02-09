@@ -60,8 +60,9 @@ import { useModal } from "@/context/ModalContext";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { openDeactivateModal } = useModal();
   const { user, logout, profileData } = useAppContext();
-  console.log(profileData, "profileData");
+  // console.log(profileData, "profileData");
   const ngoId = profileData?.ngo?._id;
   const [activeTab, setActiveTab] = useState("profile");
   const [activeTabCam, setActiveTabCam] = useState("ongoing");
@@ -371,6 +372,19 @@ const Dashboard = () => {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="View Payouts">
+                  <Link
+                    to="/dashboard/payouts"
+                    className="flex items-center py-2 px-3 rounded hover:bg-gray-100 transition"
+                  >
+                    <Banknote className="mr-3 h-5 w-5 text-gray-700" />
+                    <span className="text-[16px] font-medium text-gray-800">
+                      Payouts
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
 
@@ -413,7 +427,7 @@ const Dashboard = () => {
                 />
                 {/* Dropdown Menu */}
                 {dropdownOpen && (
-                  <div className="absolute text-left right-[-160px] bottom-[10px] mt-2 py-3 w-[190px] w-auto bg-white shadow-lg rounded-xl border border-gray-100 z-50">
+                  <div className="absolute text-left right-[-180px] bottom-[10px] mt-2 py-3 w-[190px] w-auto bg-white shadow-lg rounded-xl border border-gray-100 z-50">
                     <span className="text-sm font-bold px-4 py-2 text-start">
                       {user?.name || "NGO User"}
                     </span>
@@ -432,6 +446,13 @@ const Dashboard = () => {
                     >
                       <UserPlus className="mr-2 h-4 w-4" />
                       Invite a user
+                    </button>
+                    <button
+                        onClick={openDeactivateModal}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        DeActivate Account
                     </button>
                     {/* <button
                       // onClick={() => handleSwitchProfile()}

@@ -259,6 +259,10 @@ export interface Comment {
   avatar: string;
 }
 
+export interface Requests {
+  id: string;
+}
+
 // User type for frontend usage
 export interface User {
   id: string;

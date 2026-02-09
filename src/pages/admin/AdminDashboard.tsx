@@ -54,10 +54,14 @@ const AdminDashboard = () => {
     deleteOrganizationType,
     causeTypes,
     fetchCauseTypes,
+    fetchRequests,
+    requests,
+    approvePayout, rejectPayout,
     addCauseType,
     updateCauseType,
     deleteCauseType,
   } = useAppContext();
+  // console.log(requests, "requests")
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedNGO, setSelectedNGO] = useState<string | null>(null);
 
@@ -146,6 +150,10 @@ const AdminDashboard = () => {
       await deleteOrganizationType(id);
     }
   };
+
+    useEffect(() => {
+    fetchRequests();
+  }, []);
 
   // causes
   useEffect(() => {
@@ -302,6 +310,9 @@ const AdminDashboard = () => {
             <TabsTrigger value="campaigns">Causes</TabsTrigger>
             <TabsTrigger value="organizations">
               Organization Identity
+            </TabsTrigger>
+            <TabsTrigger value="requests">
+              Payout Requests
             </TabsTrigger>
             {/* <TabsTrigger value="causes">Causes Identity</TabsTrigger> */}
             {/* <TabsTrigger value="analytics">Analytics</TabsTrigger>
@@ -1310,6 +1321,80 @@ const AdminDashboard = () => {
                               onClick={() => handleDeleteCause(type._id)}
                             >
                               Delete
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* payout requests */}
+          <TabsContent value="requests">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Payout Requests</CardTitle>
+                  <CardDescription className="mt-2">
+                    All Payout Requests
+                  </CardDescription>
+                </div>
+
+                {/* <Button onClick={openAddCause}>
+                  <Plus className="h-4 w-4 mr-1" /> Add Cause Type
+                </Button> */}
+              </CardHeader>
+
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-3 px-4">Ngo Name</th>
+                        <th className="text-left py-3 px-4">Ngo Email</th>
+                        <th className="text-left py-3 px-4">Payout Amount</th>
+                        <th className="text-left py-3 px-4">Payout Currency</th>
+                        <th className="text-left py-3 px-4">Status</th>
+                        <th className="text-left py-3 px-4">Actions</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {requests?.data?.map((type) => (
+                        <tr
+                          key={type._id}
+                          className="border-b hover:bg-gray-50"
+                        >
+                          <td className="py-3 px-4">{type.ngoId?.name}</td>
+                          <td className="py-3 px-4">
+                            {type.ngoId?.email || "N/A"}
+                          </td>
+                          <td className="py-3 px-4">
+                            {type.amount || "N/A"}
+                          </td>
+                          <td className="py-3 px-4">
+                            {type.currency || "N/A"}
+                          </td>
+                          <td className="py-3 px-4">
+                            {type.status || "N/A"}
+                          </td>
+                          <td className="py-3 px-4 flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => approvePayout(type._id)}
+                            >
+                              Accept
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => rejectPayout(type._id)}
+                            >
+                              Reject
                             </Button>
                           </td>
                         </tr>

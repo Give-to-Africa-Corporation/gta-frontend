@@ -2210,20 +2210,20 @@ const PaymentForm = ({
     "once",
   );
   useEffect(() => {
-  if (!campaign) return;
+    if (!campaign) return;
 
-  if (campaign.stripeComplete) {
-    setPaymentMethod("card");
-  } else {
-    setPaymentMethod("bank");
-  }
-}, [campaign?.stripeComplete]);
+    if (campaign.stripeComplete) {
+      setPaymentMethod("card");
+    } else {
+      setPaymentMethod("bank");
+    }
+  }, [campaign?.stripeComplete]);
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<{
     id: string;
     name: string;
     description: string;
-  } | null>(null);
+  } | null>("card");
   // console.log(
   //   selectedPaymentMethod,
   //   "selectedPaymentMethod selectedPaymentMethod",
@@ -2315,15 +2315,15 @@ const PaymentForm = ({
   // Payment methods (for left sidebar)
   const allPaymentMethods = [
     ...(campaign?.stripeComplete
-    ? [
-        {
-          id: "card",
-          name: "Card",
-          description: "Credit or debit card",
-          icon: <CreditCard className="h-4 w-4" />,
-        },
-      ]
-    : []),
+      ? [
+          {
+            id: "card",
+            name: "Card",
+            description: "Credit or debit card",
+            icon: <CreditCard className="h-4 w-4" />,
+          },
+        ]
+      : []),
     // {
     //   id: "card",
     //   name: "Card",
@@ -2465,7 +2465,7 @@ const PaymentForm = ({
             donorEmail,
             paymentMethod: paymentMethod.id,
             frequency, // once | monthly
-            paymentSource: selectedPaymentMethod.id,
+            paymentSource: selectedPaymentMethod?.id,
           }),
         },
       );
@@ -2712,6 +2712,28 @@ const PaymentForm = ({
             >
               {/* {campaign?.short_description || campaign?.description} */}
             </CardDescription>
+          </div>
+        </Card>
+
+        <Card className="rounded-3xl overflow-hidden bg-[#FFEFD5] border-0 shadow-sm p-3">
+          <p className="mb-2 font-[12px]">{campaign?.commonDonation === "Less than $100" ? "0 - $100" : campaign?.commonDonation === "$100 - $300" ? "$100 - $300" : "More than $300"}</p>
+
+          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className={`
+        h-full rounded-full
+        ${
+          campaign?.commonDonation === "Less than $100"
+            ? "w-1/4 bg-primary"
+            : campaign?.commonDonation === "$100 - $300"
+              ? "w-2/4 bg-primary"
+              : campaign?.commonDonation === "More than $300"
+                ? "w-3/4 bg-primary"
+                : "w-0"
+        }
+        transition-all duration-500
+      `}
+            ></div>
           </div>
         </Card>
 
