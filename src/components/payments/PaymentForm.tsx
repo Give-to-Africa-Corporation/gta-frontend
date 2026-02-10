@@ -2205,6 +2205,7 @@ const PaymentForm = ({
   const { id } = useParams<{ id: string }>();
   const [step, setStep] = useState<number>(1);
   const [campaign, setCampaign] = useState<CampaignResponse | null>(null);
+  console.log(campaign, "campaign....");
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [frequency, setFrequency] = useState<"yearly" | "monthly" | "once">(
     "once",
@@ -2382,6 +2383,17 @@ const PaymentForm = ({
 
   // Default quick amounts (similar to screenshot)
   const defaultAmounts = [40, 100, 250];
+
+  const filtered =
+    campaign?.suggestedAmounts
+      ?.filter(
+        (i) =>
+          i.type === frequency ||
+          (frequency === "once" && i.type === "oneTime"),
+      )
+      .map((i) => i.amount) || [];
+
+  const amountsToShow = filtered.length ? filtered : defaultAmounts;
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -2678,6 +2690,11 @@ const PaymentForm = ({
     yearly: "Yearly",
   };
 
+  const total = campaign?.totalRaised || 0;
+  const goal = campaign?.fundingGoal || 1;
+
+  const percent = Math.min(Math.round((total / goal) * 100), 100);
+
   return (
     <div
       className={`w-full max-w-7xl mx-auto flex ${
@@ -2716,25 +2733,20 @@ const PaymentForm = ({
         </Card>
 
         <Card className="rounded-3xl overflow-hidden bg-[#FFEFD5] border-0 shadow-sm p-3">
-          <p className="mb-2 font-[12px]">{campaign?.commonDonation === "Less than $100" ? "0 - $100" : campaign?.commonDonation === "$100 - $300" ? "$100 - $300" : "More than $300"}</p>
+          <p className="mb-2 px-2 text-[12px]">
+            ${total} of ${goal}
+          </p>
 
           <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
-              className={`
-        h-full rounded-full
-        ${
-          campaign?.commonDonation === "Less than $100"
-            ? "w-1/4 bg-primary"
-            : campaign?.commonDonation === "$100 - $300"
-              ? "w-2/4 bg-primary"
-              : campaign?.commonDonation === "More than $300"
-                ? "w-3/4 bg-primary"
-                : "w-0"
-        }
-        transition-all duration-500
-      `}
-            ></div>
+              className="h-full bg-primary rounded-full transition-all duration-500"
+              style={{ width: `${percent}%` }}
+            />
           </div>
+
+          <p className="text-[12px] px-2 mt-1 text-gray-600">
+            {percent}% funded
+          </p>
         </Card>
 
         {/* Start fundraiser */}
@@ -2905,7 +2917,7 @@ const PaymentForm = ({
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    {defaultAmounts.map((amt) => (
+                    {amountsToShow.map((amt) => (
                       <button
                         key={amt}
                         type="button"

@@ -77,10 +77,10 @@ const StripeOnboardingReturn: React.FC = () => {
   if (loading) {
     return (
       <div className="p-4 mx-auto max-w-md text-center my-20">
-        <h1 className="text-lg font-semibold mb-2">
+        <h1 className="text-xl font-semibold mb-2">
           Checking your Stripe onboarding status...
         </h1>
-        <p className="text-sm text-gray-600">Please wait.</p>
+        <p className="text-md text-gray-600">Please wait.</p>
       </div>
     );
   }
@@ -130,7 +130,7 @@ const StripeOnboardingReturn: React.FC = () => {
       <div className="p-4 mx-auto max-w-md text-center my-20">
         <h1 className="text-xl font-semibold mb-2">Stripe onboarding status</h1>
 
-        <p className="text-sm text-gray-700 mb-2">
+        <p className="text-md text-gray-700 mb-2">
           Your Stripe account is not fully ready yet.
         </p>
 
@@ -142,7 +142,7 @@ const StripeOnboardingReturn: React.FC = () => {
         {missingFields && missingFields.length > 0 && (
           <div className="mb-4">
             <p className="text-sm font-semibold mb-1">Stripe still needs:</p>
-            <ul className="list-disc list-inside text-sm text-gray-700">
+            <ul className="list-disc list-inside text-md text-gray-700">
               {missingFields.map((f, i) => (
                 <li key={i}>{f}</li>
               ))}
