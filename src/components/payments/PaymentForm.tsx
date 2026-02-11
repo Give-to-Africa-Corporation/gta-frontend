@@ -2693,7 +2693,8 @@ const PaymentForm = ({
   const total = campaign?.totalRaised || 0;
   const goal = campaign?.fundingGoal || 1;
 
-  const percent = Math.min(Math.round((total / goal) * 100), 100);
+  const raw = (total / goal) * 100;
+  const percent = raw > 0 && raw < 1 ? 1 : Math.min(Math.round(raw), 100);
 
   return (
     <div
