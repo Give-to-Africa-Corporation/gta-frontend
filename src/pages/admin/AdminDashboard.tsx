@@ -49,6 +49,7 @@ const AdminDashboard = () => {
     isLoading,
     loadAdminData,
     organizationTypes,
+    fetchOrganizationTypes,
     addOrganizationType,
     updateOrganizationType,
     deleteOrganizationType,
@@ -105,6 +106,10 @@ const AdminDashboard = () => {
 
 
   // organizationTypes
+
+  useEffect(() => {
+    fetchOrganizationTypes();
+  }, []);
 
   const [form, setForm] = useState({
     typeName: "",

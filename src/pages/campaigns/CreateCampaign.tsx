@@ -2299,12 +2299,12 @@ const steps = [
   "Color",
   "Banner",
   "Logo",
-  "Common Donation",
+  // "Common Donation",
   "Suggested Amounts", // NEW STEP ADDED HERE
-  "Tax Receipts",
+  // "Tax Receipts",
   "Custom Questions",
   "Thank You Email",
-  "Advanced Settings",
+  // "Advanced Settings",
   "Success",
 ];
 
@@ -2339,7 +2339,7 @@ function CreateCampaign() {
     title: "",
     goalAmount: 1000,
     description:
-      "Your gift fuels practical, local solutions across Africa 🌍When you donate, you help provide classroom supplies, teacher support, basic medical care, and training that strengthens community income. Give To Africa invests in community-led projects—from schools and clinics to small business support—so families can build lasting stability. ❤️Choose an amount that works for you; every contribution helps communities move toward long-term self‑sufficiency.",
+      "When you donate, you help provide classroom supplies, teacher support, basic medical care, and training that strengthens community income.",
     fundraiserOptions: {
       team: true,
       solo: true,
@@ -2357,7 +2357,7 @@ function CreateCampaign() {
     taxReceipt: true,
     customQuestions: [],
     thankYouEmail: {
-      subject: "",
+      subject: "Thank you for your support!",
       body: "",
     },
     fundraiserEmail: "",
@@ -2413,19 +2413,19 @@ function CreateCampaign() {
       yearly: {
         isActive: false,
         amounts: [
-          { id: 5, amount: 10, description: "Will help feed 6 children..." },
+          { id: 9, amount: 10, description: "Will help feed 6 children..." },
           {
-            id: 6,
+            id: 10,
             amount: 25,
             description: "Describe how this amount will make a difference",
           },
           {
-            id: 7,
+            id: 11,
             amount: 35,
             description: "Describe how this amount will make a difference",
           },
           {
-            id: 8,
+            id: 12,
             amount: 45,
             description: "Describe how this amount will make a difference",
           },
@@ -2599,8 +2599,8 @@ function CreateCampaign() {
         const openSteps: Record<number, boolean> = {};
         if (c.goalAmount) openSteps[2] = true;
         if (c.description) openSteps[3] = true;
-        if (c.customQuestions?.length) openSteps[10] = true; // Adjusted index
-        if (c.suggestedAmounts?.length > 0) openSteps[8] = true; // New step index for suggested amounts
+        if (c.customQuestions?.length) openSteps[8] = true; // Adjusted index
+        if (c.suggestedAmounts?.length > 0) openSteps[7] = true; // New step index for suggested amounts
 
         setShowInputSteps((prev) => ({ ...prev, ...openSteps }));
       } catch (err: any) {
@@ -2727,13 +2727,13 @@ function CreateCampaign() {
         }
         break;
 
-      case 7:
-        if (!campaignData.commonDonation) {
-          newErrors.commonDonation = "Please select a common donation range.";
-        }
-        break;
+      // case 7:
+      //   if (!campaignData.commonDonation) {
+      //     newErrors.commonDonation = "Please select a common donation range.";
+      //   }
+      //   break;
 
-      case 8: // NEW: Suggested Amounts validation
+      case 7: // NEW: Suggested Amounts validation
         const types = ["oneTime", "monthly", "yearly"];
         let hasActiveSuggestedAmounts = false;
         types.forEach((type) => {
@@ -2767,10 +2767,10 @@ function CreateCampaign() {
         // }
         break;
 
-      case 9: // OLD: Case 8 - Tax Receipts (No validation needed for a checkbox)
-        break;
+      // case 9: // OLD: Case 8 - Tax Receipts (No validation needed for a checkbox)
+      //   break;
 
-      case 10: // OLD: Case 9 - Custom Questions
+      case 8: // OLD: Case 8 - Custom Questions
         campaignData.customQuestions.forEach((q, index) => {
           if (!q.question?.trim()) {
             newErrors[`customQuestions.${index}.question`] =
@@ -2779,7 +2779,7 @@ function CreateCampaign() {
         });
         break;
 
-      case 11: // OLD: Case 10 - Thank You Email
+      case 9: // OLD: Case 9 - Thank You Email
         if (!campaignData.thankYouEmail.subject.trim()) {
           newErrors.thankYouSubject = "Subject is required.";
         }
@@ -3638,53 +3638,53 @@ function renderStep(
         </div>
       );
 
-    case 7:
-      return (
-        <div>
-          <h1 className="text-xl font-semibold mb-4">
-            What is the most common donation amount you expect to receive on
-            this cause?
-          </h1>
-          <p>
-            Based on your answer, we’ll suggest donation amounts to help you
-            raise more. Our smart recommendations have been shown to increase
-            donations by 10%!
-          </p>
-          <div className="space-y-3">
-            {["Less than $100", "$100 - $300", "More than $300"].map(
-              (amount) => (
-                <button
-                  key={amount}
-                  className={`w-full border p-2 rounded-lg mt-3 ${
-                    campaignData.commonDonation === amount
-                      ? "border-gray-700 text-gray-700"
-                      : "border-primary text-primary hover:border-gray-700"
-                  }`}
-                  onClick={() =>
-                    setCampaignData((prev) => ({
-                      ...prev,
-                      commonDonation: amount,
-                    }))
-                  }
-                >
-                  {amount}
-                </button>
-              )
-            )}
+    // case 7:
+    //   return (
+    //     <div>
+    //       <h1 className="text-xl font-semibold mb-4">
+    //         What is the most common donation amount you expect to receive on
+    //         this cause?
+    //       </h1>
+    //       <p>
+    //         Based on your answer, we’ll suggest donation amounts to help you
+    //         raise more. Our smart recommendations have been shown to increase
+    //         donations by 10%!
+    //       </p>
+    //       <div className="space-y-3">
+    //         {["Less than $100", "$100 - $300", "More than $300"].map(
+    //           (amount) => (
+    //             <button
+    //               key={amount}
+    //               className={`w-full border p-2 rounded-lg mt-3 ${
+    //                 campaignData.commonDonation === amount
+    //                   ? "border-gray-700 text-gray-700"
+    //                   : "border-primary text-primary hover:border-gray-700"
+    //               }`}
+    //               onClick={() =>
+    //                 setCampaignData((prev) => ({
+    //                   ...prev,
+    //                   commonDonation: amount,
+    //                 }))
+    //               }
+    //             >
+    //               {amount}
+    //             </button>
+    //           )
+    //         )}
 
-            <p className="mt-2">
-              Selected Donation: <strong>{campaignData.commonDonation}</strong>
-            </p>
-            {errors.commonDonation && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.commonDonation}
-              </p>
-            )}
-          </div>
-        </div>
-      );
+    //         <p className="mt-2">
+    //           Selected Donation: <strong>{campaignData.commonDonation}</strong>
+    //         </p>
+    //         {errors.commonDonation && (
+    //           <p className="text-red-500 text-sm mt-1">
+    //             {errors.commonDonation}
+    //           </p>
+    //         )}
+    //       </div>
+    //     </div>
+    //   );
 
-    case 8: // NEW: Suggested Amounts Step
+    case 7: // NEW: Suggested Amounts Step
       const handleToggleSuggestedAmounts = (type) => {
         setCampaignData((prev) => ({
           ...prev,
@@ -3792,39 +3792,39 @@ function renderStep(
         </div>
       );
 
-    case 9: // OLD: Case 8 - Tax Receipts
-      return (
-        <div>
-          <h1 className="text-xl font-semibold mb-4">
-            Would you like to automatically generate & send tax receipts?
-          </h1>
-          <p>
-            Whenever a donation is made on your campaign, Zeffy will
-            automatically generate a tax receipt and send it to the donor
-            directly. For recurring donations, we'll send one consolidated tax
-            receipt for the whole year.
-          </p>
-          <div className="mt-6 flex items-center gap-4">
-            Auto generate & send tax receipts
-            <label className="relative inline-flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={campaignData.taxReceipt}
-                onChange={(e) =>
-                  setCampaignData((prev) => ({
-                    ...prev,
-                    taxReceipt: e.target.checked,
-                  }))
-                }
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary" />
-            </label>
-          </div>
-        </div>
-      );
+    // case 9: // OLD: Case 8 - Tax Receipts
+    //   return (
+    //     <div>
+    //       <h1 className="text-xl font-semibold mb-4">
+    //         Would you like to automatically generate & send tax receipts?
+    //       </h1>
+    //       <p>
+    //         Whenever a donation is made on your campaign, Zeffy will
+    //         automatically generate a tax receipt and send it to the donor
+    //         directly. For recurring donations, we'll send one consolidated tax
+    //         receipt for the whole year.
+    //       </p>
+    //       <div className="mt-6 flex items-center gap-4">
+    //         Auto generate & send tax receipts
+    //         <label className="relative inline-flex items-center gap-3 cursor-pointer">
+    //           <input
+    //             type="checkbox"
+    //             className="sr-only peer"
+    //             checked={campaignData.taxReceipt}
+    //             onChange={(e) =>
+    //               setCampaignData((prev) => ({
+    //                 ...prev,
+    //                 taxReceipt: e.target.checked,
+    //               }))
+    //             }
+    //           />
+    //           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary" />
+    //         </label>
+    //       </div>
+    //     </div>
+    //   );
 
-    case 10: // OLD: Case 9 - Custom Questions
+    case 8: // OLD: Case 9 - Custom Questions
       const handleAddCustomQuestion = () => {
         setCampaignData((prev) => ({
           ...prev,
@@ -3923,19 +3923,19 @@ function renderStep(
         </div>
       );
 
-    case 11: // OLD: Case 10 - Thank You Email
+    case 9: // OLD: Case 10 - Thank You Email
       return (
         <div>
           <h1 className="text-xl font-semibold mb-4">Thank you email</h1>
           <p className="text-gray-600 mb-3">
             This email will be automatically sent to your donors and will
-            include their transaction receipts. If applicable, their tax
-            receipts will also be attached.
+            include their transaction receipts.
           </p>
 
+          <label className="block mb-1 font-medium">Email Subject</label>
           <input
             type="text"
-            className="border w-full p-2 rounded-lg my-3 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="border w-full p-2 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Email subject"
             value={campaignData.thankYouEmail.subject}
             onChange={(e) =>
@@ -3954,6 +3954,7 @@ function renderStep(
             </p>
           )}
 
+          <label className="block mb-1 font-medium">Description</label>
           <ReactQuill
             theme="snow"
             value={campaignData.thankYouEmail.body}
@@ -3977,82 +3978,82 @@ function renderStep(
         </div>
       );
 
-    case 12: // OLD: Case 11 - Advanced Settings
-      return (
-        <div className="flex flex-col gap-4">
-          <h1 className="text-xl font-semibold mb-4">Advanced settings</h1>
-          <div className="bg-gray-100 p-4 rounded-lg mt-3 flex gap-4 flex-col">
-          <label className="flex items-center gap-4">
-            In honor / memory
-            <label className="relative inline-flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={campaignData.advanced.honor}
-                onChange={(e) =>
-                  setCampaignData((prev) => ({
-                    ...prev,
-                    advanced: {
-                      ...prev.advanced,
-                      honor: e.target.checked,
-                    },
-                  }))
-                }
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary" />
-            </label>
-          </label>
+    // case 12: // OLD: Case 11 - Advanced Settings
+    //   return (
+    //     <div className="flex flex-col gap-4">
+    //       <h1 className="text-xl font-semibold mb-4">Advanced settings</h1>
+    //       <div className="bg-gray-100 p-4 rounded-lg mt-3 flex gap-4 flex-col">
+    //       <label className="flex items-center gap-4">
+    //         In honor / memory
+    //         <label className="relative inline-flex items-center gap-3 cursor-pointer">
+    //           <input
+    //             type="checkbox"
+    //             className="sr-only peer"
+    //             checked={campaignData.advanced.honor}
+    //             onChange={(e) =>
+    //               setCampaignData((prev) => ({
+    //                 ...prev,
+    //                 advanced: {
+    //                   ...prev.advanced,
+    //                   honor: e.target.checked,
+    //                 },
+    //               }))
+    //             }
+    //           />
+    //           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary" />
+    //         </label>
+    //       </label>
 
-          <label className="flex items-center gap-4 mt-2">
-            Cheque payments
-            <label className="relative inline-flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={campaignData.advanced.cheque}
-                onChange={(e) =>
-                  setCampaignData((prev) => ({
-                    ...prev,
-                    advanced: {
-                      ...prev.advanced,
-                      cheque: e.target.checked,
-                    },
-                  }))
-                }
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary" />
-            </label>
-          </label>
-          </div>
+    //       <label className="flex items-center gap-4 mt-2">
+    //         Cheque payments
+    //         <label className="relative inline-flex items-center gap-3 cursor-pointer">
+    //           <input
+    //             type="checkbox"
+    //             className="sr-only peer"
+    //             checked={campaignData.advanced.cheque}
+    //             onChange={(e) =>
+    //               setCampaignData((prev) => ({
+    //                 ...prev,
+    //                 advanced: {
+    //                   ...prev.advanced,
+    //                   cheque: e.target.checked,
+    //                 },
+    //               }))
+    //             }
+    //           />
+    //           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary" />
+    //         </label>
+    //       </label>
+    //       </div>
 
-          <div className="bg-gray-100 p-4 rounded-lg mt-3">
-            <label htmlFor="" className="font-medium">
-              Notifications
-            </label>
-            <p className="text-gray-600 text-sm">
-              Email addresses to notify when a payment is made (separate emails
-              with commas)
-            </p>
-            <input
-              type="text"
-              className="border w-full p-2 mt-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Notification emails"
-              value={campaignData.advanced.notificationEmails}
-              onChange={(e) =>
-                setCampaignData((prev) => ({
-                  ...prev,
-                  advanced: {
-                    ...prev.advanced,
-                    notificationEmails: e.target.value,
-                  },
-                }))
-              }
-            />
-          </div>
-        </div>
-      );
+    //       <div className="bg-gray-100 p-4 rounded-lg mt-3">
+    //         <label htmlFor="" className="font-medium">
+    //           Notifications
+    //         </label>
+    //         <p className="text-gray-600 text-sm">
+    //           Email addresses to notify when a payment is made (separate emails
+    //           with commas)
+    //         </p>
+    //         <input
+    //           type="text"
+    //           className="border w-full p-2 mt-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+    //           placeholder="Notification emails"
+    //           value={campaignData.advanced.notificationEmails}
+    //           onChange={(e) =>
+    //             setCampaignData((prev) => ({
+    //               ...prev,
+    //               advanced: {
+    //                 ...prev.advanced,
+    //                 notificationEmails: e.target.value,
+    //               },
+    //             }))
+    //           }
+    //         />
+    //       </div>
+    //     </div>
+    //   );
 
-    case 13: // OLD: Case 12 - Success
+    case 10: // OLD: Case 12 - Success
       return (
         <div className="text-center">
           <div className="flex flex-col items-center gap-3 mb-6">

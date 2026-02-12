@@ -12,8 +12,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useModal } from "@/context/ModalContext";
+import { africanCountries } from "@/lib/countries";
 import { NgoProfileResponse, UpdateProfileRequest } from "@/lib/types";
 import { ngoApi } from "@/service/apiService";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Check, Loader2, Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -25,7 +33,7 @@ const ProfileTab = () => {
   const [saving, setSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [profileData, setProfileData] = useState<NgoProfileResponse | null>(
-    null
+    null,
   );
   // console.log(profileData, "profileData");
   const profileImageInputRef = useRef<HTMLInputElement>(null);
@@ -34,6 +42,7 @@ const ProfileTab = () => {
     name: "",
     email: "",
     phone: "",
+    country: "",
     website: "",
     mission: "",
     profileImage: "",
@@ -55,6 +64,7 @@ const ProfileTab = () => {
           name: response.data.ngo.name || "",
           email: response.data.ngo.email || "",
           phone: response.data.ngo.contactPhone || "",
+          country: response.data.ngo.country || "",
           website: response.data.ngo.website || "",
           mission: response.data.ngo.missionStatement || "",
           profileImage: response.data.ngo.profileImage || "",
@@ -76,14 +86,14 @@ const ProfileTab = () => {
   }, []);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setNgoData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleProfileImageUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -119,6 +129,7 @@ const ProfileTab = () => {
       const updateData: UpdateProfileRequest = {
         name: ngoData.name,
         phoneNumber: ngoData.phone,
+        country: ngoData.country,
         website: ngoData.website,
         description: ngoData.mission,
         socialLinks: ngoData.socialLinks,
@@ -138,9 +149,9 @@ const ProfileTab = () => {
         updateData.officialEmail = profileData.ngo.officialEmail;
       }
 
-      if (profileData?.ngo.country) {
-        updateData.country = profileData.ngo.country;
-      }
+      // if (profileData?.ngo.country) {
+      //   updateData.country = profileData.ngo.country;
+      // }
 
       const response = await ngoApi.updateProfile(updateData);
 
@@ -166,6 +177,7 @@ const ProfileTab = () => {
         name: profileData.ngo.name || "",
         email: profileData.ngo.email || "",
         phone: profileData.ngo.contactPhone || "",
+        country: profileData.ngo.country || "",
         website: profileData.ngo.website || "",
         mission: profileData.ngo.missionStatement || "",
         profileImage: profileData.ngo.profileImage || "",
@@ -323,6 +335,32 @@ const ProfileTab = () => {
                       onChange={handleInputChange}
                       disabled={!isEditing}
                     />
+                  </div>
+                  <div>
+                    <Label htmlFor="country">Country</Label>
+                    <Select
+  disabled={!isEditing}
+  value={ngoData.country}
+  onValueChange={(value) =>
+    setNgoData(prev => ({
+      ...prev,
+      country: value,
+    }))
+  }
+>
+  <SelectTrigger className="w-full">
+    <SelectValue placeholder="Select country" />
+  </SelectTrigger>
+
+  <SelectContent>
+    {africanCountries?.map((country) => (
+      <SelectItem key={country.code} value={country.code}>
+        {country.name}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
+
                   </div>
                 </div>
               </div>

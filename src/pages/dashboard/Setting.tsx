@@ -413,7 +413,7 @@ const Dashboard = () => {
                       {getInitials()}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
+                  <div className="text-left">
                     <span className="text-sm font-medium">
                       {user?.name || "NGO User"}
                     </span>

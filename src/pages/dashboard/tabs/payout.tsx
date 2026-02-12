@@ -1,3 +1,4 @@
+
 // @ts-nocheck
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -119,8 +120,16 @@ const PayoutsTab = () => {
   const { user, logout, profileData } = useAppContext();
   const { isOpen, openModal, closeModal } = useModal();
   const [withdrawOpen, setWithdrawOpen] = useState(false);
+  const [payoutMode, setPayoutMode] = useState<string>("");
   const [withdrawAmount, setWithdrawAmount] = useState<string>("");
   const [creatingPayout, setCreatingPayout] = useState(false);
+  const [balanceNgo, setBalanceNgo] = useState({
+    ngoDirectReceived: 0,
+    adminHeldTotal: 0,
+    alreadyPaidByAdmin: 0,
+    adminPendingBalance: 0,
+  });
+  // console.log(balanceNgo, "balance in payout tab");
 
   const [mounted, setMounted] = useState(false);
 
@@ -302,6 +311,7 @@ const PayoutsTab = () => {
         {
           amount: amountNumber,
           currency: primaryCurrency,
+          payoutMode,
         },
         {
           headers: {
@@ -314,6 +324,7 @@ const PayoutsTab = () => {
 
       setWithdrawOpen(false);
       setWithdrawAmount("");
+      setPayoutMode("");
       // Refresh payouts list
       const payoutsRes = await axios.get(`${API_URL}/ngos/stripe/payouts`, {
         headers: {
@@ -328,6 +339,25 @@ const PayoutsTab = () => {
       setCreatingPayout(false);
     }
   };
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get(
+          `${API_URL}/ngos/ngo-balance-payout`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        console.log(res, "balance response");
+        if(res.status === 200) setBalanceNgo(res.data);
+      } catch (err:any) {
+        console.error(err);
+        toast.error("Failed to fetch balance");
+      }
+    };
+
+    fetchBalance();
+  }, []);
 
   // Filters for transactions (only date range, no status filter for now)
   const filteredTransactions = transactions.filter((t) => {
@@ -616,8 +646,8 @@ const PayoutsTab = () => {
                       {getInitials()}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <span className="text-sm font-medium">
+                  <div className="text-left">
+                    <span className="text-sm font-medium ">
                       {user?.name || "NGO User"}
                     </span>
                     <p className="text-sm text-start">Give to Africa</p>
@@ -630,7 +660,7 @@ const PayoutsTab = () => {
                 />
                 {dropdownOpen && (
                   <div className="absolute text-left right-[-180px] bottom-[10px] mt-2 py-3 w-[190px] bg-white shadow-lg rounded-xl border border-gray-100 z-50">
-                    <span className="text-sm font-bold px-4 py-2 text-start">
+                    <span className="text-sm font-bold pl-4 py-2 text-start block">
                       {user?.name || "NGO User"}
                     </span>
                     <p className="text-sm text-start px-4">Give to Africa</p>
@@ -702,10 +732,31 @@ const PayoutsTab = () => {
 
                     <div className="space-y-3 mt-2">
                       <div className="text-sm text-muted-foreground">
-                        Available:{" "}
+                        Available from Stripe:{" "}
                         <span className="font-medium">
                           {formatCurrency(totalAvailable, primaryCurrency)}
                         </span>
+                        <br />
+                        Available from Admin:{" "}
+                        <span className="font-medium">
+                          {balanceNgo.adminPendingBalance > 0
+                            ? formatCurrency(
+                                balanceNgo.adminPendingBalance, primaryCurrency)
+                            : "0.00"}
+                        </span>
+                      </div>
+
+                      <div className="text-sm text-muted-foreground">
+                        <label className="text-sm font-medium mb-1 block">Payout Mode</label>
+                        <Select value={payoutMode} onValueChange={setPayoutMode}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select payout mode" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="direct">Direct Stripe</SelectItem>
+                            <SelectItem value="admin">Request for Admin</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
 
                       <div>
@@ -752,7 +803,28 @@ const PayoutsTab = () => {
                     <div className="flex items-center justify-between">
                       <span className="text-sm flex gap-2 items-center font-bold text-muted-foreground">
                         <div className="h-3 w-3 rounded-full bg-primary"></div>
-                        Ready for payout.
+                        Payout from Admin
+                      </span>
+                      <WalletCards className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="text-xl font-semibold">
+                      {balanceNgo.adminPendingBalance > 0
+                        ? formatCurrency(
+                            balanceNgo.adminPendingBalance,
+                            primaryCurrency
+                          )
+                        : "0.00"}
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Your available balance from admin ready for payout.
+                    </p>
+                  </div>
+
+                  <div className="rounded-lg border bg-white p-4 flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm flex gap-2 items-center font-bold text-muted-foreground">
+                        <div className="h-3 w-3 rounded-full bg-primary"></div>
+                        Ready for payout Stripe.
                       </span>
                       <WalletCards className="h-6 w-6 text-primary" />
                     </div>

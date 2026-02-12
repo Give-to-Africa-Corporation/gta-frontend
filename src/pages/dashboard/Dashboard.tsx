@@ -217,6 +217,8 @@ const { openDeactivateModal } = useModal();
       window.location.href = url;
     } catch (err: any) {
       console.error(err);
+      toast.error(err?.response?.data?.message ||
+          "Failed to start Stripe onboarding. Please try again.",)
       setError(
         err?.response?.data?.message ||
           "Failed to start Stripe onboarding. Please try again.",

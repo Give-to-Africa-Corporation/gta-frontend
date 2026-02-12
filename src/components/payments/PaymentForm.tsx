@@ -2091,6 +2091,7 @@
 
 // export default PaymentForm;
 
+
 // @ts-nocheck
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -2205,20 +2206,29 @@ const PaymentForm = ({
   const { id } = useParams<{ id: string }>();
   const [step, setStep] = useState<number>(1);
   const [campaign, setCampaign] = useState<CampaignResponse | null>(null);
-  console.log(campaign, "campaign....");
-  const [paymentMethod, setPaymentMethod] = useState(null);
+  // console.log(campaign, "campaign....");
+  const [paymentMethod, setPaymentMethod] = useState<{
+    id: string;
+    name: string;
+    description: string;
+  } | null>("card");
   const [frequency, setFrequency] = useState<"yearly" | "monthly" | "once">(
     "once",
   );
-  useEffect(() => {
-    if (!campaign) return;
+useEffect(() => {
+  if (!campaign) return;
 
-    if (campaign.stripeComplete) {
-      setPaymentMethod("card");
-    } else {
-      setPaymentMethod("bank");
-    }
-  }, [campaign?.stripeComplete]);
+  if (campaign.stripeComplete) {
+    setPaymentMethod("card");
+    const defaultMethod = allPaymentMethods.find(m => m.id === "card");
+    setSelectedPaymentMethod(defaultMethod || null);
+  } else {
+    setPaymentMethod("bank");
+    const defaultMethod = allPaymentMethods.find(m => m.id === "bank");
+    setSelectedPaymentMethod(defaultMethod || null);
+  }
+}, [campaign]);
+
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<{
     id: string;
@@ -2505,6 +2515,8 @@ const PaymentForm = ({
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               subscriptionId: data.subscriptionId,
+              donorName,
+              donorEmail,
               type: frequency, // "monthly" | "yearly"
             }),
           },
@@ -2570,6 +2582,8 @@ const PaymentForm = ({
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               paymentIntentId: paymentIntent.id,
+              donorName,
+              donorEmail,
               type: "once",
             }),
           },
